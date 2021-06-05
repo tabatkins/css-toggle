@@ -3,8 +3,8 @@ Title: CSS Toggle States
 Group: CSSWG
 Status: UD
 Work Status: exploring
-ED: http://tabatkins.github.io/specs/css-toggle-states/Overview.html
-Shortname: css-toggle-states
+ED: http://tabatkins.github.io/css-toggle/
+Shortname: css-toggle
 Level: 1
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
 Editor: Miriam Suzanne
