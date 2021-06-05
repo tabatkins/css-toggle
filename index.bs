@@ -1,0 +1,505 @@
+<pre class='metadata'>
+Title: CSS Toggle States
+Group: CSSWG
+Status: UD
+Work Status: exploring
+ED: http://tabatkins.github.io/specs/css-toggle-states/Overview.html
+Shortname: css-toggle-states
+Level: 1
+Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
+Editor: Miriam Suzanne
+Abstract: This specification defines a way to associate a toggleable state with an element which can be used in Selectors to select an element, and declarative ways to set and modify the state on the element.
+</pre>
+
+
+<h2 id="introduction">
+Introduction</h2>
+
+	<em>This section is not normative.</em>
+
+	Some user-interface languages define elements which can have "toggleable state",
+	which can be modified by user interaction and selected using CSS Selectors.
+	For example, in HTML, the <code>&lt;input type=checkbox></code> has a "checked" state
+	which toggles between true and false when the user activates the element,
+	and which is selected by the '':checked'' pseudoclass.
+
+	<div class='example'>
+		The following markup example shows how to lightly abuse HTML semantics to declaratively use toggleable state:
+
+		<pre>
+			&lt;ul class='ingredients'>
+			  &lt;li>&lt;label>&lt;input type=checkbox>&lt;span>1 banana&lt;/span>&lt;/label>
+			  &lt;li>&lt;label>&lt;input type=checkbox>&lt;span>1 cup blueberries&lt;/span>&lt;/label>
+			  ...
+			&lt;/ul>
+			&lt;style>
+			input[type='checkbox'] {
+			  display: none;
+			}
+			input[type='checkbox']:checked + span {
+			  color: silver;
+			  text-decoration: line-through;
+			}
+			&lt;/style>
+		</pre>
+
+		In this markup,
+		one can cross out ingredients as they're used in the recipe
+		by simply clicking on them.
+	</div>
+
+	This module generalizes this ability and allows it to be applied to any element via CSS.
+	Elements can be declared to have toggleable state,
+	with any number of states that can be toggled between.
+	Multiple elements can share access to the same toggleable state,
+	similar to HTML's <code>&lt;input type=radio></code> element.
+	This state can be manipulated by activating the element or other specified elements,
+	or by other user interactions.
+
+<h2 id=toggles>
+Toggle Concepts</h2>
+
+	A <dfn for=CSS>toggle</dfn> is a [=struct=] associated with an [=element=],
+	which represents something that can be toggled on or off by user action,
+	and matched with Selectors.
+	Toggles have the following [=struct/items=]:
+
+	<dl dfn-for=toggle>
+		: <dfn>name</dfn>
+		:: A [=string=],
+			starting with two dashes (U+002D HYPHEN-MINUS).
+
+			In CSS,
+			this name can be provided as either a <<dashed-ident>>
+			or as a <<string>>;
+			in either case, the item's value is the [=toggle/name=].
+
+			<div class=example>
+				For example,
+				''--foo'' and ''"--foo"'' are both valid ways
+				to refer to the same toggle name.
+
+				However, ''--foo'' and ''--FOO''
+				are two different names,
+				since they're not [=string/identical=].
+			</div>
+
+		: <dfn>state</dfn>
+		:: A non-negative integer:
+			either 0 (the <dfn>inactive state</dfn>)
+			or a value 1 or higher (the <dfn lt="active state">active states</dfn>).
+
+		: <dfn>state names</dfn>
+		::
+			A [=list=] of state names,
+			each of which are [=strings=].
+
+			Like the toggle's [=toggle/name=],
+			in CSS they can be given by a <<custom-ident>> or <<string>>,
+			with the value of the item giving the state name.
+
+		: <dfn>group</dfn>
+		::
+			A [=boolean=] indicating whether the [=toggle=] is part of a [=toggle group=]
+			(of the same [=toggle/name=])
+			or not.
+
+		: <dfn>scope</dfn>
+		::
+			A [=string=] enum indicating what sort of [=toggle/scope=] the [=toggle=] uses.
+			It can have two values:
+
+			* <dfn>"wide"</dfn>, indicating the toggle has [=toggle/wide scope=]
+				(it's visible to the element, its descendants,
+				and its following siblings and their descendants).
+			* <dfn>"narrow"</dfn>, indicating the toggle has [=toggle/narrow scope=]
+				(it's visible to the element and its descendants only).
+	</dl>
+
+	[=Toggles=] are persistent state on an element,
+	and are not <em>directly</em> affected by any CSS properties.
+	An element can have any number of [=toggles=].
+
+	----
+
+	A <dfn for=CSS local-lt="group">toggle group</dfn> is a [=struct=] associated with an [=element=],
+	which groups together toggles of the same name
+	so that only one can be in an [=active state=] at a time.
+	[=Toggle groups=] have the following [=struct/items=]:
+
+	<dl dfn-for="toggle group">
+		: <dfn>name</dfn>
+		:: A [=string=],
+			starting with two dashes (U+002D HYPHEN-MINUS).
+
+			Like a toggle's [=toggle/name=],
+			in CSS they can be given by a <<dashed-ident>> or <<string>>,
+			with the value of the item giving the name.
+
+		: <dfn>scope</dfn>
+		::
+			A [=string=] enum indicating what sort of [=toggle/scope=] the [=toggle group=] uses.
+			It can have two values:
+
+			* <dfn>"wide"</dfn>, indicating the toggle has [=toggle/wide scope=]
+				(it's visible to the element, its descendants,
+				and its following siblings and their descendants).
+			* <dfn>"narrow"</dfn>, indicating the toggle has [=toggle/narrow scope=]
+				(it's visible to the element and its descendants only).
+	</dl>
+
+	[=Toggle groups=] are created by the 'toggle-group' property;
+	they are not persistent state on an element.
+	An element can have any number of [=toggle groups=].
+
+	A [=toggle=] is <dfn for=toggle>in a toggle group</dfn>
+	if its [=toggle/group=] boolean is true
+	and its element is [=in scope=] for a [=toggle group=]
+	with the same [=toggle/name=] as the [=toggle=].
+
+	----
+
+	[=Toggles=] and [=toggle groups=] have a scope,
+	defining what additional elements
+	(beyond the element the [=toggle=]/[=group=] is on)
+	can see and interact with the [=toggle=]/[=group=].
+
+	If the [=toggle=] ([=group=]) has <dfn for=toggle>wide scope</dfn>,
+	it's visible to the element it's defined on,
+	its descendants
+	its [=tree/following=] [=tree/siblings=],
+	and their [=tree/descendants=].
+
+	If the [=toggle=] ([=group=]) has <dfn for=toggle>narrow scope</dfn>,
+	it's visible to the element it's defined on
+	and its descendants.
+
+	[=Toggles=] of the same [=toggle/name=] "shadow" earlier ones;
+	if multiple toggles of a given [=toggle/name=] would have overlapping scopes,
+	an element is only <dfn for=toggle>in scope</dfn>
+	for the [=toggle=] created by the nearest [=preceding=] element in [=tree order=].
+	The same applies to [=toggle groups=].
+	However, [=toggles=] and [=toggle groups=] do not interfere with each other's scopes;
+	an element can "see past" a [=toggle=] to find the [=group=] of the same name it's [=in scope=] for,
+	and vice versa.
+
+	----
+
+	A <dfn for=toggle>toggle specifier</dfn> is a [=struct=]
+	associated with an element,
+	defining the initial state of a [=toggle=]
+	if one needs to be created on the element,
+	and how to respond to a [=toggle activation=].
+	It has the following [=struct/items=]:
+
+	<dl dfn-for="toggle specifier">
+		: <dfn>name</dfn>
+		:: A [=string=] specifying the [=toggle's=] [=toggle/name=].
+
+		: <dfn>initial state</dfn>
+		:: A non-negative integer
+			specifying the [=toggle's=] initial [=toggle/state=] upon creation.
+
+		: <dfn>state names</dfn>
+		::
+			A [=list=] of state names,
+			each of which are [=strings=],
+			assigned to the [=toggle=] initially upon creation.
+
+		: <dfn>group</dfn>
+		:: A boolean,
+			specifying the [=toggle's=] initial [=toggle/group=] boolean upon creation.
+
+		: <dfn>scope</dfn>
+		:: A [=string=] (either "wide" or "narrow"),
+			specifying the [=toggle's=] initial [=toggle/scope=] upon creation.
+
+		: <dfn>maximum state</dfn>
+		:: A positive integer
+			specifying the highest [=active state=] the [=toggle=] can reach.
+
+		: <dfn>sticky</dfn>
+		:: A [=boolean=] specifying how to react
+			when a [=toggle activation=] would push the [=state=] past the specified [=maximum state=]:
+			the state either stays at the [=maximum state=] (if true)
+			or cycles back to the [=inactive state=] (if false).
+	</dl>
+
+	[=Toggle specifiers=] are created by the 'toggle-create' property;
+	they are not persistent state on an element.
+	An element can have any number of [=toggle specifiers=].
+
+
+<h3 id="">
+Toggles and CSS Properties</h3>
+
+	To allow for toggles to be responded to by Selectors
+	without causing any circularity issues,
+	[=toggles=] themselves are invisible state on an element,
+	separate from any CSS properties that might apply.
+	The CSS properties merely define which elements can <em>activate</em> a toggle,
+	and which elements can <em>respond</em> to a toggle activation
+	(and how they do so).
+
+	<div class=example>
+		For example, while an element needs 'toggle-create' to establish a toggle,
+		once a toggle is created,
+		removing the 'toggle-create' property does not affect the toggle.
+
+		<pre class=lang-css>
+		.toggleable {
+			toggle-create: --foo 1;
+			toggle-set: --foo;
+		}
+		.toggleable:checked(--foo) {
+			toggle-create: none;
+			toggle-set: none;
+		}
+		</pre>
+
+		In this example, the toggleable element declares that it can establish a ''--foo'' toggle,
+		and activate it.
+		During a rendering update,
+		the ''--foo'' toggle is created on the element
+		(initially with a value of 0, its [=inactive state=]);
+		when the element is clicked, it's incremented to its [=active state=] (1).
+
+		At this point, the '':checked(--foo)'' rule begins to match,
+		and removes the ''toggle-*'' properties.
+		This does not remove the ''--foo'' toggle or affect its value, however;
+		it still exists and is still set to ''1'',
+		so the '':checked()'' pseudo-class will continue matching.
+		However, further activations of the element
+		will no longer affect the ''--foo'' toggle,
+		since 'toggle-set' was changed to ''toggle-set/none''.
+
+		The ''--foo'' toggle is thus "frozen" in the activated state
+		(unless the author has other elements in the toggle's [=scope=] that can also affect it,
+		or tweaks the value manually via JS).
+	</div>
+
+
+<h2 id=toggle-create-property>
+Creating a Toggle: the 'toggle-create' property</h2>
+
+	<pre class='propdef'>
+	Name: toggle-create
+	Value: none | <<toggle-specifier>>#
+	Initial: none
+	Applies to: all elements
+	Inherited: no
+	Percentages: n/a
+	Media: interactive
+	Computed value: as specified
+	Animatable: no
+	</pre>
+
+	<pre class=prod>
+		<dfn><<toggle-specifier>></dfn> =
+			[ <<dashed-ident>> | <<string>> ]
+			[
+				[ <<integer [0, ∞]>> / ]? <<integer [1, ∞]>> ||
+				sticky ||
+				group ||
+				self
+			]?
+	</pre>
+
+	The 'toggle-create' property causes [=toggles=] to be created on an element,
+	and controls how the [=toggles=] are updated when they are activated.
+
+	<dl dfn-type=value dfn-for=toggle-create>
+		<dt><dfn>none</dfn>
+		<dd>
+			The element has no [=toggle specifiers=].
+
+			(This does not remove any [=toggles=] that have already been established on the element.)
+
+		<dt><dfn><<toggle-specifier>>#</dfn>
+		<dd>
+			The element has one or more [=toggle specifiers=],
+			one per <<toggle-specifier>>,
+			which determine how toggles will be initially created,
+			and how they react to being activated.
+
+			Each <<toggle-specifier>> is composed of several parts,
+			most of which are optional,
+			corresponding to the [=struct/items=] of a [=toggle specifier=]:
+
+			* The initial <<dashed-ident>> or <<string>>
+				specifies the [=toggle specifier/name=],
+				as the item's value.
+
+			* The first <<integer>>, if specified,
+				specifies the [=toggle specifier/initial state=].
+				If omitted, it's set to 0.
+
+				It must be less than or equal to the second <<integer>>,
+				or else the declaration is invalid.
+
+			* The second <<integer>>, if specified,
+				specifies the [=toggle specifier/maximum state=].
+				If omitted, it's set to 1.
+
+			* The <dfn>sticky</dfn> keyword, if specified,
+				sets the [=toggle specifier/sticky=] boolean to true.
+				If omitted, it's set to false.
+
+			* The <dfn>group</dfn> keyword, if specified,
+				sets the [=toggle specifier/group=] boolean to true.
+				If omitted, it's set to false.
+
+			* The <dfn>self</dfn> keyword, if specified,
+				sets the [=toggle specifier/scope=] enum to "narrow".
+				If omitted, it's set to "wide".
+	</dl>
+
+	<div class='example'>
+		Revisiting the example in the Introduction,
+		the same ingredient list can be specified in simple HTML and CSS:
+
+		<xmp class=lang-html>
+			<ul class='ingredients'>
+			 	<li>1 banana
+			 	<li>1 cup blueberries
+				...
+			</ul>
+			<style>
+			li {
+				toggle-create: --check self;
+			}
+			li:checked(--check) {
+				color: silver;
+				text-decoration: line-through;
+			}
+			</style>
+		</xmp>
+
+		The effect is identical to what was specified in the Introduction example,
+		except the markup is much simpler and more semantic.
+	</div>
+
+
+<h3 id=toggle-group-property>
+Linking Toggle States: the 'toggle-group' property</h3>
+
+	<pre class='propdef'>
+	Name: toggle-group
+	Value: none | [ [ <<dashed-ident>> | <<string>> ] self? ]#
+	Initial: none
+	Applies to: all elements
+	Inherited: no
+	Percentages: n/a
+	Media: interactive
+	Computed value: as specified
+	Animatable: no
+	</pre>
+
+	By default, each [=toggle's=] [=toggle/state=] is independent;
+	incrementing one has no effect an any other.
+	The 'toggle-group' property allows elements to link their [=toggles=] together:
+	all [=toggles=] with the same [=toggle/name=] as the [=toggle group=]
+	that are on elements [=toggle/in scope=] for the [=toggle group=]
+	are linked,
+	such that only one can be in an [=active state=] at a time,
+	similar to HTML's <code>&lt;input type=radio></code> element.
+
+	<dl dfn-type=value dfn-for=toggle-group>
+		<dt><dfn>none</dfn>
+		<dd>
+			The element does not define a [=toggle group=].
+
+		<dt><dfn>[ <<dashed-ident>> | <<string>> ]#</dfn>
+		<dd>
+			The element defines one or more [=toggle groups=],
+			one per comma-separated item:
+
+			* The <<dashed-ident>> or <<string>>
+				specifies the [=toggle group/name=],
+				as the item's value.
+
+			* The <dfn>self</dfn> keyword, if specified,
+				sets the [=toggle group/scope=] enum to "narrow".
+				If omitted, it's set to "wide".
+
+			Only one [=toggle=] [=in a toggle group=] can be in an [=active state=] at a time;
+			see [[#update-toggles]] for details.
+	</dl>
+
+	<div class='example'>
+		For example, 'toggle-group' can be used to control a tabbed display,
+		so that only one panel is displayed at a time:
+
+		<xmp class=lang-html>
+			<panel-set>
+				<panel-tab>first tab</panel-tab>
+				<panel-card>first panel</panel-card>
+				<panel-tab>second tab</panel-tab>
+				<panel-card>second card</panel-card>
+				...
+			</panel-set>
+			<style>
+			panel-set {
+				/* The common ancestor sets up a group */
+				toggle-group: --tab;
+			}
+			panel-tab {
+				/* Each tab creates a sticky toggle,
+					opts into the group,
+					and declares itself a toggle activator */
+				toggle: --tab 1 group sticky;
+			}
+			panel-tab:first-of-type {
+				/* The first tab also sets its initial state
+					to be active */
+				toggle: --tab 1/1 group sticky;
+			}
+			panel-tab:checked(--tab) {
+				/* styling for the active tab */
+			}
+			panel-card {
+				/* cards are hidden by default */
+				display: none;
+			}
+			panel-card:checked(--tab) {
+				display: block;
+			}
+			</style>
+		</xmp>
+
+		Clicking on any tab will increment its corresponding [=toggle's=] [=toggle/state=] from 0 to 1
+		(and the ''sticky'' keyword will keep it at 1 if activated multiple times),
+		while resetting the rest of the tabs' [=toggle/states=] to 0.
+		Each panel is [=in scope=] for the [=toggle=] defined by its preceding tab,
+		so it can respond to the [=toggle/state=] as well.
+	</div>
+
+
+<h3 id='toggle-set-property'>
+Activating a Toggle: the 'toggle-set' property</h3>
+
+	<pre class='propdef'>
+	Name: toggle-set
+	Value: none | [ <<dashed-ident>> | <<string>> ]#
+	Initial: none
+	Applies to: elements without existing activation behavior (see prose)
+	Inherited: no
+	Percentages: n/a
+	Media: interactive
+	Computed value: as specified
+	Animatable: no
+	</pre>
+
+
+
+<h2 id='checked-pseudoclass'>
+Selecting Elements Based on Toggle State: the '':checked'' and '':checked()'' pseudo-class</h2>
+
+	<pre class=prod>
+		:checked([<<dashed-ident>> | <<string>> ] [ <<integer>> | <<custom-ident>> ]? )
+	</pre>
+
+<h2 id=dom>
+Scripting API</h2>
+
+	Issue: TODO
