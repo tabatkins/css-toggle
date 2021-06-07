@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: CSS Toggle States
+Title: CSS Toggles
 Group: CSSWG
 Status: UD
 Work Status: exploring
@@ -9,8 +9,12 @@ Level: 1
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
 Editor: Miriam E. Suzanne, Invited Expert, http://miriamsuzanne.com/contact
 Abstract: This specification defines a way to associate a toggleable state with an element which can be used in Selectors to select an element, and declarative ways to set and modify the state on the element.
+Ignored Terms: spoiler-text
 </pre>
 
+<pre class=link-defaults>
+spec:css-display-3; type:dfn; text:element
+</pre>
 
 <h2 id="introduction">
 Introduction</h2>
@@ -59,29 +63,33 @@ Introduction</h2>
 <h2 id=toggles>
 Toggle Concepts</h2>
 
-	A <dfn for=CSS>toggle</dfn> is a [=struct=] associated with an [=element=],
+	A <dfn for=CSS export>toggle</dfn> is a [=struct=] associated with an [=element=],
 	which represents something that can be toggled on or off by user action,
 	and matched with Selectors.
 	Toggles have the following [=struct/items=]:
 
-	<dl dfn-for=toggle>
+	<dl dfn-for=toggle export>
 		: <dfn>name</dfn>
-		:: A [=string=],
-			starting with two dashes (U+002D HYPHEN-MINUS).
+		:: A [=string=].
 
 			In CSS,
-			this name can be provided as either a <<dashed-ident>>
+			this name is provided as a <<toggle-name>>,
+			which is either a <<custom-ident>>
 			or as a <<string>>;
 			in either case, the item's value is the [=toggle/name=].
 
+			<pre class=prod>
+				<dfn><<toggle-name>></dfn> = <<custom-ident>> | <<string>>
+			</pre>
+
 			<div class=example>
 				For example,
-				''--foo'' and ''"--foo"'' are both valid ways
+				''foo'' and ''"foo"'' are both valid ways
 				to refer to the same toggle name.
 
-				However, ''--foo'' and ''--FOO''
+				However, ''foo'' and ''FOO''
 				are two different names,
-				since they're not [=string/identical=].
+				since they're not [=string/identical to=] each other.
 			</div>
 
 		: <dfn>state</dfn>
@@ -91,11 +99,11 @@ Toggle Concepts</h2>
 
 		: <dfn>state names</dfn>
 		::
-			A [=list=] of state names,
+			A [=/list=] of state names,
 			each of which are [=strings=].
 
 			Like the toggle's [=toggle/name=],
-			in CSS they can be given by a <<custom-ident>> or <<string>>,
+			in CSS they are <<toggle-name>>s,
 			with the value of the item giving the state name.
 
 		: <dfn>group</dfn>
@@ -122,18 +130,18 @@ Toggle Concepts</h2>
 
 	----
 
-	A <dfn for=CSS local-lt="group">toggle group</dfn> is a [=struct=] associated with an [=element=],
+	A <dfn for=CSS export>toggle group</dfn> is a [=struct=] associated with an [=element=],
 	which groups together toggles of the same name
 	so that only one can be in an [=active state=] at a time.
 	[=Toggle groups=] have the following [=struct/items=]:
 
-	<dl dfn-for="toggle group">
+	<dl dfn-for="toggle group" export>
 		: <dfn>name</dfn>
 		:: A [=string=],
 			starting with two dashes (U+002D HYPHEN-MINUS).
 
 			Like a toggle's [=toggle/name=],
-			in CSS they can be given by a <<dashed-ident>> or <<string>>,
+			in CSS they are given by a <<toggle-name>>,
 			with the value of the item giving the name.
 
 		: <dfn>scope</dfn>
@@ -152,47 +160,50 @@ Toggle Concepts</h2>
 	they are not persistent state on an element.
 	An element can have any number of [=toggle groups=].
 
-	A [=toggle=] is <dfn for=toggle>in a toggle group</dfn>
-	if its [=toggle/group=] boolean is true
-	and its element is [=in scope=] for a [=toggle group=]
-	with the same [=toggle/name=] as the [=toggle=].
+	A [=toggle=] is <dfn for=toggle export>in a toggle group</dfn>
+	if its [=toggle/group=] boolean is true;
+	if the element is [=in scope=] for a [=toggle group=]
+	with the same [=toggle/name=] as the [=toggle=],
+	it's in that group;
+	otherwise, it's in a document-wide <dfn for=CSS export>implicit toggle group</dfn>
+	with the same [=toggle/name=].
 
 	----
 
 	[=Toggles=] and [=toggle groups=] have a scope,
 	defining what additional elements
-	(beyond the element the [=toggle=]/[=group=] is on)
-	can see and interact with the [=toggle=]/[=group=].
+	(beyond the element the [=toggle=]/[=toggle group=] is on)
+	can see and interact with the [=toggle=]/[=toggle group=].
 
-	If the [=toggle=] ([=group=]) has <dfn for=toggle>wide scope</dfn>,
+	If the [=toggle=] ([=toggle group=]) has <dfn for=toggle export>wide scope</dfn>,
 	it's visible to the element it's defined on,
 	its descendants
 	its [=tree/following=] [=tree/siblings=],
 	and their [=tree/descendants=].
 
-	If the [=toggle=] ([=group=]) has <dfn for=toggle>narrow scope</dfn>,
+	If the [=toggle=] ([=toggle group=]) has <dfn for=toggle export>narrow scope</dfn>,
 	it's visible to the element it's defined on
 	and its descendants.
 
 	[=Toggles=] of the same [=toggle/name=] "shadow" earlier ones;
 	if multiple toggles of a given [=toggle/name=] would have overlapping scopes,
-	an element is only <dfn for=toggle>in scope</dfn>
+	an element is only <dfn for=toggle export>in scope</dfn>
 	for the [=toggle=] created by the nearest [=preceding=] element in [=tree order=].
 	The same applies to [=toggle groups=].
 	However, [=toggles=] and [=toggle groups=] do not interfere with each other's scopes;
-	an element can "see past" a [=toggle=] to find the [=group=] of the same name it's [=in scope=] for,
+	an element can "see past" a [=toggle=] to find a [=toggle group=] of the same name it's [=in scope=] for,
 	and vice versa.
 
 	----
 
-	A <dfn for=toggle>toggle specifier</dfn> is a [=struct=]
+	A <dfn for=toggle export>toggle specifier</dfn> is a [=struct=]
 	associated with an element,
 	defining the initial state of a [=toggle=]
 	if one needs to be created on the element,
 	and how to respond to a [=toggle activation=].
 	It has the following [=struct/items=]:
 
-	<dl dfn-for="toggle specifier">
+	<dl dfn-for="toggle specifier" export>
 		: <dfn>name</dfn>
 		:: A [=string=] specifying the [=toggle's=] [=toggle/name=].
 
@@ -202,7 +213,7 @@ Toggle Concepts</h2>
 
 		: <dfn>state names</dfn>
 		::
-			A [=list=] of state names,
+			A [=/list=] of state names,
 			each of which are [=strings=],
 			assigned to the [=toggle=] initially upon creation.
 
@@ -229,8 +240,22 @@ Toggle Concepts</h2>
 	they are not persistent state on an element.
 	An element can have any number of [=toggle specifiers=].
 
+	<div algorithm>
+		A <dfn export>default toggle specifier</dfn> for a given |name|
+		is a [=toggle specifier=]
+		with a [=toggle specifier/name=] of |name|,
+		an [=toggle specifier/initial state=] of 0,
+		a [=toggle specifier/state names=] of an empty [=/list=],
+		a false [=toggle specifier/group=],
+		a [=toggle specifier/scope=] of "wide",
+		a [=toggle specifier/maximum state=] of 1,
+		and a false [=toggle specifier/sticky=].
 
-<h3 id="">
+		Note: This produces behavior similar to a checkbox.
+	</div>
+
+
+<h3 id="toggle-vs-props">
 Toggles and CSS Properties</h3>
 
 	To allow for toggles to be responded to by Selectors
@@ -248,33 +273,33 @@ Toggles and CSS Properties</h3>
 
 		<pre class=lang-css>
 		.toggleable {
-			toggle-create: --foo 1;
-			toggle-set: --foo;
+			toggle-create: foo 1;
+			toggle-set: foo;
 		}
-		.toggleable:checked(--foo) {
+		.toggleable:checked(foo) {
 			toggle-create: none;
 			toggle-set: none;
 		}
 		</pre>
 
-		In this example, the toggleable element declares that it can establish a ''--foo'' toggle,
+		In this example, the toggleable element declares that it can establish a ''foo'' toggle,
 		and activate it.
 		During a rendering update,
-		the ''--foo'' toggle is created on the element
+		the ''foo'' toggle is created on the element
 		(initially with a value of 0, its [=inactive state=]);
 		when the element is clicked, it's incremented to its [=active state=] (1).
 
-		At this point, the '':checked(--foo)'' rule begins to match,
+		At this point, the '':checked(foo)'' rule begins to match,
 		and removes the ''toggle-*'' properties.
-		This does not remove the ''--foo'' toggle or affect its value;
+		This does not remove the ''foo'' toggle or affect its value, however;
 		it still exists and is still set to ''1'',
 		so the '':checked()'' pseudo-class will continue matching.
 		However, further activations of the element
-		will no longer affect the ''--foo'' toggle,
+		will no longer affect the ''foo'' toggle,
 		since 'toggle-set' was changed to ''toggle-set/none''.
 
-		The ''--foo'' toggle is thus "frozen" in the activated state
-		(unless the author has other elements in the toggle's [=scope=] that can also affect it,
+		The ''foo'' toggle is thus "frozen" in the activated state
+		(unless the author has other elements in the toggle's [=toggle/scope=] that can also affect it,
 		or tweaks the value manually via JS).
 	</div>
 
@@ -296,7 +321,7 @@ Creating a Toggle: the 'toggle-create' property</h2>
 
 	<pre class=prod>
 		<dfn><<toggle-specifier>></dfn> =
-			[ <<dashed-ident>> | <<string>> ]
+			<<toggle-name>>
 			[
 				[ <<integer [0, ∞]>> / ]? <<integer [1, ∞]>> ||
 				sticky ||
@@ -326,7 +351,7 @@ Creating a Toggle: the 'toggle-create' property</h2>
 			most of which are optional,
 			corresponding to the [=struct/items=] of a [=toggle specifier=]:
 
-			* The initial <<dashed-ident>> or <<string>>
+			* The initial <<toggle-name>>
 				specifies the [=toggle specifier/name=],
 				as the item's value.
 
@@ -366,9 +391,9 @@ Creating a Toggle: the 'toggle-create' property</h2>
 			</ul>
 			<style>
 			li {
-				toggle-create: --check self;
+				toggle-create: check self;
 			}
-			li:checked(--check) {
+			li:checked(check) {
 				color: silver;
 				text-decoration: line-through;
 			}
@@ -379,13 +404,21 @@ Creating a Toggle: the 'toggle-create' property</h2>
 		except the markup is much simpler and more semantic.
 	</div>
 
+	Issue: TODO create the <css>toggle-states</css> property
+	that defines [=toggle/state names=] for a [=toggle=],
+	and amend the various properties to allow them to take a <<toggle-name>> instead of an <<integer>>.
+
+	Issue: Define the precise point in [=update the rendering=]
+	when toggles are created
+	if 'toggle-create' names a toggle that doesn't exist on the element yet.
+
 
 <h3 id=toggle-group-property>
 Linking Toggle States: the 'toggle-group' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-group
-	Value: none | [ [ <<dashed-ident>> | <<string>> ] self? ]#
+	Value: none | [ <<toggle-name>> self? ]#
 	Initial: none
 	Applies to: all elements
 	Inherited: no
@@ -409,21 +442,21 @@ Linking Toggle States: the 'toggle-group' property</h3>
 		<dd>
 			The element does not define a [=toggle group=].
 
-		<dt><dfn>[ <<dashed-ident>> | <<string>> ]#</dfn>
+		<dt><dfn lt="<toggle-name> | self">[<<toggle-name>> self?]#</dfn>
 		<dd>
 			The element defines one or more [=toggle groups=],
 			one per comma-separated item:
 
-			* The <<dashed-ident>> or <<string>>
+			* The <<toggle-name>>
 				specifies the [=toggle group/name=],
 				as the item's value.
 
-			* The <dfn>self</dfn> keyword, if specified,
+			* The ''toggle-group/self'' keyword, if specified,
 				sets the [=toggle group/scope=] enum to "narrow".
 				If omitted, it's set to "wide".
 
 			Only one [=toggle=] [=in a toggle group=] can be in an [=active state=] at a time;
-			see [[#update-toggles]] for details.
+			see 'toggle-set' for details.
 	</dl>
 
 	<div class='example'>
@@ -441,27 +474,28 @@ Linking Toggle States: the 'toggle-group' property</h3>
 			<style>
 			panel-set {
 				/* The common ancestor sets up a group */
-				toggle-group: --tab;
+				toggle-group: tab;
 			}
 			panel-tab {
-				/* Each tab creates a sticky toggle,
+				/* Each tab creates a sticky toggle
+					(so once it's open, clicking again won't close it),
 					opts into the group,
 					and declares itself a toggle activator */
-				toggle: --tab 1 group sticky;
+				toggle: tab 1 group sticky;
 			}
 			panel-tab:first-of-type {
 				/* The first tab also sets its initial state
 					to be active */
-				toggle: --tab 1/1 group sticky;
+				toggle: tab 1/1 group sticky;
 			}
-			panel-tab:checked(--tab) {
+			panel-tab:checked(tab) {
 				/* styling for the active tab */
 			}
 			panel-card {
 				/* cards are hidden by default */
 				display: none;
 			}
-			panel-card:checked(--tab) {
+			panel-card:checked(tab) {
 				display: block;
 			}
 			</style>
@@ -480,7 +514,7 @@ Activating a Toggle: the 'toggle-set' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-set
-	Value: none | [ <<dashed-ident>> | <<string>> ]#
+	Value: none | [ <<toggle-name>> <<integer [0, ∞]>>? ]#
 	Initial: none
 	Applies to: elements without existing activation behavior (see prose)
 	Inherited: no
@@ -490,36 +524,361 @@ Activating a Toggle: the 'toggle-set' property</h3>
 	Animatable: no
 	</pre>
 
-	Issue: TODO
+	The 'toggle-set' property specifies that an element can be activated
+	to change the state of one or more [=toggles=].
+	It has the following values:
+
+	<dl dfn-type=value dfn-for=toggle-set>
+		: <dfn>none</dfn>
+		::
+			The element does not manipulated any [=toggles=].
+
+		: <dfn><<toggle-name>> <<integer [0, ∞]>>?</dfn>
+		::
+			If the element already has existing activation behavior from the host language,
+			this value does nothing.
+
+			Otherwise, the element becomes activatable,
+			and when activated,
+			for each comma-separated entry in the list,
+			[=fires=] a [=toggle activation=]
+			with the given <<toggle-name>>
+			and, if an <<integer>> is specified,
+			a target state of that integer.
+	</dl>
+
+	A <dfn for=CSS export>toggle activation</dfn> is a struct with the following items:
+
+	<dl dfn-for="toggle activation" export>
+		: <dfn>name</dfn>
+		:: The [=toggle/name=] of the [=toggle=]
+			this is intended activate.
+
+		: <dfn>target state</dfn>
+		:: An optional non-negative integer.
+
+			If specified, gives the [=toggle/state=]
+			that this activation will attempt to put the [=toggle=] into.
+			If unspecified,
+			indicates that this activation will increment the [=toggle's=] current [=toggle/state=].
+	</dl>
+
+	<div algorithm>
+		To <dfn local-lt=fire export>fire a toggle activation</dfn>
+		on an element |initial element|
+		with a [=toggle activation=] |activation|:
+
+		1. Let |el| initially be |initial element|.
+
+		2. If |el| has a [=toggle=]
+			with the same [=toggle/name=] as |activation|,
+			and |initial element| is [=in scope=] for the [=toggle=],
+			then:
+
+			1. Let |toggle| be the [=toggle=].
+
+			2. If |el| has a [=toggle specifier=] with the same [=toggle specifier/name=],
+				let |specifier| be it.
+
+				Otherwise, let |specifier| be a new [=default toggle specifier=]
+				for |activation|'s [=toggle activation/name=].
+
+			3. If |activation|'s [=target state=] is specified,
+				set |toggle|'s [=toggle/state=] to the smaller of the [=target state=]
+				and |specifier|'s [=toggle specifier/maximum state=].
+
+				Otherwise,
+				increment |toggle|'s [=toggle/state=] by 1.
+				If the [=toggle/state=] is now higher than |specifier|'s [=toggle specifier/maximum state=],
+				then set the [=toggle/state=] to the [=toggle specifier/maximum state=]
+				if |specifier|'s [=toggle specifier/sticky=] flag is true,
+				and to 0 if it's false.
+
+			4. If |toggle|'s [=toggle/state=] is now greater than zero
+				and |toggle| is [=in a toggle group=],
+				then for each <em>other</em> [=toggle=] in the same [=toggle group=],
+				set their [=toggle/state=] to 0.
+
+			5. Return from this algorithm.
+
+		3. Otherwise,
+			continue searching for a [=toggle=]:
+
+			* If |el| has a [=previous sibling=],
+				set |el| to that element
+				and return to step 2.
+			* Otherwise, if |el| has a [=parent=] element,
+				set |el| to that element
+				and return to step 2.
+			* Otherwise, return. (No toggle was found, so nothing happens.)
+	</div>
+
+	Issue: Define in much greater precision what it means to "become activatable".
+	The element must become focusable
+	(with a default spot in the focus order)
+	and become capable of being activated by mouse/keyboard/etc.
+	Similarly define the "already activatable" prose in more detail;
+	we want to exclude things like text inputs,
+	which would confuse a11y tooling,
+	but include buttons that aren't, like, submit buttons.
 
 
-<h3 id='toggle-set-property'>
-Shorthand Toggle: the 'toggle' property</h3>
+<h3 id='toggle-property'>
+Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
-	<pre class='propdef'>
+	<pre class="propdef shorthand">
 	Name: toggle
-	Value: none | <<toggle-specifier>>#
-	Initial: none
-	Applies to: all elements
-	Inherited: no
-	Percentages: n/a
-	Media: interactive
-	Computed value: as specified
-	Animatable: no
+	Value: <<'toggle-create'>>
 	</pre>
 
-	Issue: TODO (creates a toggle & establishes activation)
+	While some cases require setting up a [=toggle=] on an ancestor
+	of the elements that will activate and respond to the toggle,
+	in many cases the [=toggle/scope=] rules for [=toggles=]
+	are such that it's fine to create the [=toggle=]
+	on the element intended to activate the toggle as well.
 
+	The 'toggle' shorthand sets both the 'toggle-create' and 'toggle-set' properties on an element together.
+	The entire value of the property is assigned to 'toggle-create',
+	while 'toggle-set' is assigned to just the <<toggle-name>>s specified in the list,
+	if any.
 
+	<div class=example>
+		For example,
+		in the following code for an <{spoiler-text}> element,
+		the show/hide button precedes the content it will show and hide,
+		so we can just create the toggle on it as well:
+
+		<xmp class=lang-html>
+			<spoiler-text>
+				<summary>...</summary>
+				<content>...</content>
+			</spoiler-text>
+			<style>
+				spoiler-text > summary {
+					toggle: show;
+				}
+				spoiler-text > content {
+					toggle-visibility: toggle show;
+				}
+			</style>
+		</xmp>
+	</div>
+
+<h3 id='a11y'>
+Accessibility Implications of Toggles</h3>
+
+	<div class=issue>
+		TODO
+
+		* a 'toggle-set' element needs to become activatable/focusable/etc,
+			and communicate in the a11y tree that it's a checkbox/radio/etc
+		* we can infer what type of control it is
+			by examining the properties of the toggle:
+			if it's part of a group, sticky, etc.
+		* if 'toggle-visibility' is in use,
+			we can also automatically infer all the tab-set ARIA roles
+	</div>
 
 <h2 id='checked-pseudoclass'>
-Selecting Elements Based on Toggle State: the '':checked'' and '':checked()'' pseudo-class</h2>
+Selecting Elements Based on Toggle State: the '':checked()'' pseudo-class</h2>
+
+	[[SELECTORS-4]] defines the '':checked'' pseudo-class,
+	which allows author to match certain elements
+	(as defined by the host language)
+	depending on their "checked" state.
+
+	[=Toggles=] extend the set of elements that can have a "checked" state,
+	and the number of ways an element can <em>be</em> "checked".
+	As such, the '':checked'' pseudo-class
+	is now extended to be a <dfn>:checked()</dfn> functional pseudo-class.
 
 	<pre class=prod>
-		:checked([<<dashed-ident>> | <<string>> ] [ <<integer>> | <<custom-ident>> ]? )
+		:checked( <<toggle-name>> <<integer>>? )
 	</pre>
+
+	An element matches '':checked()''
+	if the element is [=in scope=] for a [=toggle=]
+	with the [=toggle/name=] given by <<toggle-name>>,
+	and either the [=toggle's=] [=toggle/state=] matches the provided <<integer>>,
+	or the <<integer>> is omitted and the [=toggle=] is in any [=active state=].
+
+	<div class=example>
+		For example, if a [=toggle=] named "used"
+		is defined on each element in an recipe's ingredient list,
+		the ingredients can respond to being clicked on easily:
+
+		<pre class=lang-css>
+			.ingredient {
+				toggle: used;
+			}
+			.ingredient:checked(used) {
+				color: silver;
+				text-decoration: line-through;
+			}
+		</pre>
+	</div>
+
+	<div class=example>
+		A checkbox that can represent an "indeterminate" value
+		might have two active states.
+
+		<pre class=lang-css>
+			.tristate-check {
+				toggle: check 0/2;
+			}
+			.tristate-check:checked(1) {
+				/* "checked" styles */
+			}
+			.tristate-check:checked(2) {
+				/* "indeterminate" styles */
+			}
+		</pre>
+	</div>
+
+	<div class=example>
+		While '':not(:checked(foo))'' will correctly match an element
+		whose "foo" toggle is in an [=inactive state=],
+		it will <em>also</em> match any element
+		that doesn't see a "foo" toggle at all.
+
+		If this is inconvenient,
+		only elements that actually know about a particular toggle
+		can be targeted by specifying the [=inactive state=] specifically:
+
+		<pre class=lang-css>
+			.card:checked(show 0) {
+				/* Definitely *not* shown */
+			}
+		</pre>
+	</div>
+
+<h2 id='toggle-visibility-property'>
+Automatically Hiding With A Toggle</h2>
+
+	The 'content-visibility' property
+	allows an element to suppress the layout and rendering of its contents,
+	similar to ''display: none'';
+	however, its ''content-visibility/auto'' value allows the contents
+	to still be visible to various searching and accessibility features,
+	like find-in-page,
+	hash-navigation,
+	or tab order,
+	and then to automatically become visible
+	when the element becomes [=relevant to the user=].
+
+	A common use-case for [=toggles=] is also to control whether an element is shown or hidden,
+	and in many cases it would also be useful to allow the contents of elements "hidden" in this way
+	to be accessible in the same ways.
+	To allow for this,
+	the 'toggle-visibility' property allows an element
+	to both respond to and control a toggle
+	with its visibility.
+
+	<pre class="propdef">
+	Name: toggle-visibility
+	Value: normal | toggle <<toggle-name>>
+	Initial: normal
+	Inherited: no
+	Applies to: all elements
+	Computed value: as specified
+	Animation type: not animatable
+	</pre>
+
+	The 'toggle-visibility' property
+	allows an element to automatically tie its display to a particular [=toggle=] bi-directionally,
+	while still exposing its contents to be focused, found-in-page, etc.,
+	automatically showing itself when relevant.
+
+	<dl dfn-type=value dfn-for=toggle-visibility>
+		: <dfn>normal</dfn>
+		::
+			The property has no effect.
+
+		: <dfn lt="toggle">toggle <<toggle-name>></dfn>
+		::
+			If the element is [=in scope=] for a [=toggle=] of the given <<toggle-name>>,
+			and that [=toggle=] is in the [=inactive state=],
+			the element and its descendants generate no [=boxes=] or [=text runs=],
+			similar to ''display: none'',
+			but must still be available to user-agent features
+			such as find-in-page, tab order navigation, etc.,
+			and must be focusable as normal,
+			similar to ''content-visibility: auto''.
+
+			If the element starts being [=relevant to the user=],
+			it [=fires=] a [=toggle activation=],
+			with a [=toggle activation/name=] of the given <<toggle-name>>
+			and a [=toggle activation/target state=] of 1.
+
+			Note: If the [=toggle=] is currently in an [=inactive state=]
+			and thus not generating any boxes,
+			it can't become [=relevant to the user=] due to being "on-screen"
+			but the other options are still possible.
+
+			Note: If the [=toggle=] is in an [=active state=],
+			or the element can't see the specified [=toggle=] at all,
+			the element renders normally.
+	</dl>
+
+	<div class=example>
+		For example, an "accordion" display,
+		such as used for a page of FAQs,
+		can use 'toggle-visibility' to hide the answers by default,
+		but still make them accessible to find-in-page:
+
+		<xmp class=lang-html>
+			<dl class=accordion>
+				<dt>Question 1?
+				<dd>Long answer......
+				<dt>Question 2?
+				<dd>Another long answer.....
+			</dl>
+			<style>
+				.accordion > dt {
+					toggle: show;
+				}
+				.accordion > dd {
+					toggle-visibility: toggle show;
+				}
+			</style>
+		</xmp>
+
+		Each <{dt}> establishes a separate "show" [=toggle=],
+		with all the defaults filling in to produce a standard "checkbox"-like behavior,
+		all initially in the [=inactive state=].
+		Each <{dt}> can be activated to show or hide the following answer.
+
+		Each <{dd}> can see the [=toggle=] established by its preceding <{dt}>,
+		and will start out not rendering.
+		If the user searches on the page for a term,
+		or visits the page from a link with an #anchor linking into one of the answers,
+		the relevant answer will automatically activate the [=toggle=],
+		causing the <{dd}> to become visible.
+	</div>
+
+	Issue: Define ordering of activations,
+	so if multiple elements become relevant at the same time
+	and they're all part of a [=toggle group=],
+	which one "wins" is well-defined.
+
+
 
 <h2 id=dom>
 Scripting API</h2>
 
-	Issue: TODO
+	<div class=issue>
+		TODO
+
+		* Expose a map of toggles on an element, with {name=>rest of [=toggle=] info}.
+			(Or just a list of toggles, with name built into the object?)
+
+		* Ability to create toggles manually.
+			(Tho without an accompanying 'toggle-create',
+			you just get the [=default toggle specifier=] when it's activated.)
+
+		* Ability to delete toggles manually.
+			(Tho if you don't remove the accompanying 'toggle-create',
+			it'll respawn on the next rendering tick.)
+
+		* Ability to set toggle state manually.
+	</div>
