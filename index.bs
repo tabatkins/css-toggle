@@ -7,7 +7,7 @@ ED: http://tabatkins.github.io/css-toggle/
 Shortname: css-toggle
 Level: 1
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
-Editor: Miriam Suzanne
+Editor: Miriam E. Suzanne, Invited Expert, http://miriamsuzanne.com/contact
 Abstract: This specification defines a way to associate a toggleable state with an element which can be used in Selectors to select an element, and declarative ways to set and modify the state on the element.
 </pre>
 
@@ -266,7 +266,7 @@ Toggles and CSS Properties</h3>
 
 		At this point, the '':checked(--foo)'' rule begins to match,
 		and removes the ''toggle-*'' properties.
-		This does not remove the ''--foo'' toggle or affect its value, however;
+		This does not remove the ''--foo'' toggle or affect its value;
 		it still exists and is still set to ''1'',
 		so the '':checked()'' pseudo-class will continue matching.
 		However, further activations of the element
@@ -489,6 +489,26 @@ Activating a Toggle: the 'toggle-set' property</h3>
 	Computed value: as specified
 	Animatable: no
 	</pre>
+
+	Issue: TODO
+
+
+<h3 id='toggle-set-property'>
+Shorthand Toggle: the 'toggle' property</h3>
+
+	<pre class='propdef'>
+	Name: toggle
+	Value: none | <<toggle-specifier>>#
+	Initial: none
+	Applies to: all elements
+	Inherited: no
+	Percentages: n/a
+	Media: interactive
+	Computed value: as specified
+	Animatable: no
+	</pre>
+
+	Issue: TODO (creates a toggle & establishes activation)
 
 
 
