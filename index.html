@@ -11,7 +11,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-UD" rel="stylesheet" type="text/css">
   <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="81a4a66dea708b075cd8d60969b94492d0620a33" name="document-revision">
+  <meta content="ebaebfcfc0f59a083d8566e2ac4c4832963baec0" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -642,6 +642,7 @@ on screen, on paper, etc.
       <li><a href="#toggle-group-property"><span class="secno">3.1</span> <span class="content"> Linking Toggle States: the <span class="property">toggle-group</span> property</span></a>
       <li><a href="#toggle-set-property"><span class="secno">3.2</span> <span class="content"> Activating a Toggle: the <span class="property">toggle-set</span> property</span></a>
       <li><a href="#toggle-property"><span class="secno">3.3</span> <span class="content"> Creating and Activating Toggles Simultaneously: the <span class="property">toggle</span> shorthand</span></a>
+      <li><a href="#a11y"><span class="secno">3.4</span> <span class="content"> Accessibility Implications of Toggles</span></a>
      </ol>
     <li><a href="#checked-pseudoclass"><span class="secno">4</span> <span class="content"> Selecting Elements Based on Toggle State: the <span class="css">:checked()</span> pseudo-class</span></a>
     <li><a href="#toggle-visibility-property"><span class="secno">5</span> <span class="content"> Automatically Hiding With A Toggle</span></a>
@@ -1293,6 +1294,22 @@ and return to step 2.</p>
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
 </pre>
    </div>
+   <h3 class="heading settled" data-level="3.4" id="a11y"><span class="secno">3.4. </span><span class="content"> Accessibility Implications of Toggles</span><a class="self-link" href="#a11y"></a></h3>
+   <div class="issue" id="issue-6c01b306">
+    <a class="self-link" href="#issue-6c01b306"></a> TODO 
+    <ul>
+     <li data-md>
+      <p>a <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set⑥">toggle-set</a> element needs to become activatable/focusable/etc,
+and communicate in the a11y tree that it’s a checkbox/radio/etc</p>
+     <li data-md>
+      <p>we can infer what type of control it is
+by examining the properties of the toggle:
+if it’s part of a group, sticky, etc.</p>
+     <li data-md>
+      <p>if <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility">toggle-visibility</a> is in use,
+we can also automatically infer all the tab-set ARIA roles</p>
+    </ul>
+   </div>
    <h2 class="heading settled" data-level="4" id="checked-pseudoclass"><span class="secno">4. </span><span class="content"> Selecting Elements Based on Toggle State: the <a class="css" data-link-type="maybe" href="#selectordef-checked" id="ref-for-selectordef-checked①">:checked()</a> pseudo-class</span><a class="self-link" href="#checked-pseudoclass"></a></h2>
    <p><a data-link-type="biblio" href="#biblio-selectors-4">[SELECTORS-4]</a> defines the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#checked-pseudo" id="ref-for-checked-pseudo①">:checked</a> pseudo-class,
 	which allows author to match certain elements
@@ -1362,7 +1379,7 @@ and return to step 2.</p>
 	and in many cases it would also be useful to allow the contents of elements "hidden" in this way
 	to be accessible in the same ways.
 	To allow for this,
-	the <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility">toggle-visibility</a> property allows an element
+	the <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility①">toggle-visibility</a> property allows an element
 	to both respond to and control a toggle
 	with its visibility.</p>
    <table class="def propdef" data-link-for-hint="toggle-visibility">
@@ -1395,7 +1412,7 @@ and return to step 2.</p>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animation type:</a>
       <td>not animatable 
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility①">toggle-visibility</a> property
+   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility②">toggle-visibility</a> property
 	allows an element to automatically tie its display to a particular <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤②">toggle</a> bi-directionally,
 	while still exposing its contents to be focused, found-in-page, etc.,
 	automatically showing itself when relevant.</p>
@@ -1426,7 +1443,7 @@ the element renders normally.</p>
    <div class="example" id="example-c7f898eb">
     <a class="self-link" href="#example-c7f898eb"></a> For example, an "accordion" display,
 		such as used for a page of FAQs,
-		can use <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility②">toggle-visibility</a> to hide the answers by default,
+		can use <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility③">toggle-visibility</a> to hide the answers by default,
 		but still make them accessible to find-in-page: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>dl</c-> <c- e>class</c-><c- o>=</c-><c- s>accordion</c-><c- p>></c->
   <c- p>&lt;</c-><c- f>dt</c-><c- p>></c->Question 1?
@@ -2048,7 +2065,7 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
       <td>as specified
       <td>interactive
      <tr>
-      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set⑥">toggle-set</a>
+      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set⑦">toggle-set</a>
       <td>none | [ &lt;toggle-name> &lt;integer [0,∞]>? ]#
       <td>none
       <td>elements without existing activation behavior (see prose)
@@ -2060,7 +2077,7 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
       <td>as specified
       <td>interactive
      <tr>
-      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility③">toggle-visibility</a>
+      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility④">toggle-visibility</a>
       <td>normal | toggle &lt;toggle-name>
       <td>normal
       <td>all elements
@@ -2088,6 +2105,22 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
 	we want to exclude things like text inputs,
 	which would confuse a11y tooling,
 	but include buttons that aren’t, like, submit buttons.<a href="#issue-d2059411"> ↵ </a></div>
+   <div class="issue">
+     TODO 
+    <ul>
+     <li data-md>
+      <p>a <a class="property" data-link-type="propdesc" href="#propdef-toggle-set">toggle-set</a> element needs to become activatable/focusable/etc,
+and communicate in the a11y tree that it’s a checkbox/radio/etc</p>
+     <li data-md>
+      <p>we can infer what type of control it is
+by examining the properties of the toggle:
+if it’s part of a group, sticky, etc.</p>
+     <li data-md>
+      <p>if <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility">toggle-visibility</a> is in use,
+we can also automatically infer all the tab-set ARIA roles</p>
+    </ul>
+     <a href="#issue-6c01b306"> ↵ </a>
+   </div>
    <div class="issue"> Define ordering of activations,
 	so if multiple elements become relevant at the same time
 	and they’re all part of a <a data-link-type="dfn" href="#css-toggle-group">toggle group</a>,
@@ -2441,6 +2474,8 @@ Linking Toggle States: the toggle-group property</a>
 Activating a Toggle: the toggle-set property</a> <a href="#ref-for-propdef-toggle-set③">(2)</a>
     <li><a href="#ref-for-propdef-toggle-set④">3.3. 
 Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle-set⑤">(2)</a>
+    <li><a href="#ref-for-propdef-toggle-set⑥">3.4. 
+Accessibility Implications of Toggles</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="valdef-toggle-set-none">
@@ -2507,8 +2542,10 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
   <aside class="dfn-panel" data-for="propdef-toggle-visibility">
    <b><a href="#propdef-toggle-visibility">#propdef-toggle-visibility</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-toggle-visibility">5. 
-Automatically Hiding With A Toggle</a> <a href="#ref-for-propdef-toggle-visibility①">(2)</a> <a href="#ref-for-propdef-toggle-visibility②">(3)</a>
+    <li><a href="#ref-for-propdef-toggle-visibility">3.4. 
+Accessibility Implications of Toggles</a>
+    <li><a href="#ref-for-propdef-toggle-visibility①">5. 
+Automatically Hiding With A Toggle</a> <a href="#ref-for-propdef-toggle-visibility②">(2)</a> <a href="#ref-for-propdef-toggle-visibility③">(3)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
