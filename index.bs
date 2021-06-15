@@ -276,7 +276,7 @@ Toggles and CSS Properties</h3>
 			toggle-create: foo 1;
 			toggle-set: foo;
 		}
-		.toggleable:checked(foo) {
+		.toggleable:toggle(foo) {
 			toggle-create: none;
 			toggle-set: none;
 		}
@@ -289,11 +289,11 @@ Toggles and CSS Properties</h3>
 		(initially with a value of 0, its [=inactive state=]);
 		when the element is clicked, it's incremented to its [=active state=] (1).
 
-		At this point, the '':checked(foo)'' rule begins to match,
+		At this point, the '':toggle(foo)'' rule begins to match,
 		and removes the ''toggle-*'' properties.
 		This does not remove the ''foo'' toggle or affect its value, however;
 		it still exists and is still set to ''1'',
-		so the '':checked()'' pseudo-class will continue matching.
+		so the '':toggle()'' pseudo-class will continue matching.
 		However, further activations of the element
 		will no longer affect the ''foo'' toggle,
 		since 'toggle-set' was changed to ''toggle-set/none''.
@@ -393,7 +393,7 @@ Creating a Toggle: the 'toggle-create' property</h2>
 			li {
 				toggle-create: check self;
 			}
-			li:checked(check) {
+			li:toggle(check) {
 				color: silver;
 				text-decoration: line-through;
 			}
@@ -488,14 +488,14 @@ Linking Toggle States: the 'toggle-group' property</h3>
 					to be active */
 				toggle: tab 1/1 group sticky;
 			}
-			panel-tab:checked(tab) {
+			panel-tab:toggle(tab) {
 				/* styling for the active tab */
 			}
 			panel-card {
 				/* cards are hidden by default */
 				display: none;
 			}
-			panel-card:checked(tab) {
+			panel-card:toggle(tab) {
 				display: block;
 			}
 			</style>
@@ -680,23 +680,22 @@ Accessibility Implications of Toggles</h3>
 	</div>
 
 <h2 id='checked-pseudoclass'>
-Selecting Elements Based on Toggle State: the '':checked()'' pseudo-class</h2>
+Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
 
 	[[SELECTORS-4]] defines the '':checked'' pseudo-class,
 	which allows author to match certain elements
 	(as defined by the host language)
 	depending on their "checked" state.
 
-	[=Toggles=] extend the set of elements that can have a "checked" state,
-	and the number of ways an element can <em>be</em> "checked".
-	As such, the '':checked'' pseudo-class
-	is now extended to be a <dfn>:checked()</dfn> functional pseudo-class.
+	[=Toggles=] provides a very similar functionality,
+	allowing elements to be selected based on their [=toggle=] [=toggle/state=],
+	the <dfn>:toggle()</dfn> pseudo-class:
 
 	<pre class=prod>
-		:checked( <<toggle-name>> <<integer>>? )
+		:toggle( <<toggle-name>> <<integer>>? )
 	</pre>
 
-	An element matches '':checked()''
+	An element matches '':toggle()''
 	if the element is [=in scope=] for a [=toggle=]
 	with the [=toggle/name=] given by <<toggle-name>>,
 	and either the [=toggle's=] [=toggle/state=] matches the provided <<integer>>,
@@ -711,7 +710,7 @@ Selecting Elements Based on Toggle State: the '':checked()'' pseudo-class</h2>
 			.ingredient {
 				toggle: used;
 			}
-			.ingredient:checked(used) {
+			.ingredient:toggle(used) {
 				color: silver;
 				text-decoration: line-through;
 			}
@@ -726,17 +725,17 @@ Selecting Elements Based on Toggle State: the '':checked()'' pseudo-class</h2>
 			.tristate-check {
 				toggle: check 0/2;
 			}
-			.tristate-check:checked(1) {
+			.tristate-check:toggle(check 1) {
 				/* "checked" styles */
 			}
-			.tristate-check:checked(2) {
+			.tristate-check:toggle(check 2) {
 				/* "indeterminate" styles */
 			}
 		</pre>
 	</div>
 
 	<div class=example>
-		While '':not(:checked(foo))'' will correctly match an element
+		While '':not(:toggle(foo))'' will correctly match an element
 		whose "foo" toggle is in an [=inactive state=],
 		it will <em>also</em> match any element
 		that doesn't see a "foo" toggle at all.
@@ -746,7 +745,7 @@ Selecting Elements Based on Toggle State: the '':checked()'' pseudo-class</h2>
 		can be targeted by specifying the [=inactive state=] specifically:
 
 		<pre class=lang-css>
-			.card:checked(show 0) {
+			.card:toggle(show 0) {
 				/* Definitely *not* shown */
 			}
 		</pre>
