@@ -232,7 +232,7 @@ Toggle Concepts</h2>
 		: <dfn>sticky</dfn>
 		:: A [=boolean=] specifying how to react
 			when a [=toggle activation=] would push the [=state=] past the specified [=maximum state=]:
-			the state either stays at the [=maximum state=] (if true)
+			the state either stays within the [=active states=] and returns to 1 (if true)
 			or cycles back to the [=inactive state=] (if false).
 	</dl>
 
@@ -590,7 +590,7 @@ Activating a Toggle: the 'toggle-set' property</h3>
 				Otherwise,
 				increment |toggle|'s [=toggle/state=] by 1.
 				If the [=toggle/state=] is now higher than |specifier|'s [=toggle specifier/maximum state=],
-				then set the [=toggle/state=] to the [=toggle specifier/maximum state=]
+				then set the [=toggle/state=] to 1
 				if |specifier|'s [=toggle specifier/sticky=] flag is true,
 				and to 0 if it's false.
 
