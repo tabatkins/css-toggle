@@ -508,6 +508,20 @@ Linking Toggle States: the 'toggle-group' property</h3>
 		so it can respond to the [=toggle/state=] as well.
 	</div>
 
+	<div class=issue>
+		Radio buttons have one particular tabbing/switching/activation behavior
+		(they occupy a single tabindex spot;
+		once reached you can move between them with arrow keys;
+		moving to one auto-activates it),
+		but not all groups will want that behavior.
+		Accordions, in particular, probably don't,
+		and instead just want to effectively be independent checkboxes
+		that happen to only have one active at a time.
+
+		We probably want to add a bool to toggle groups dictating this;
+		are there more than these two behaviors to deal with?
+	</div>
+
 
 <h3 id='toggle-set-property'>
 Activating a Toggle: the 'toggle-set' property</h3>
