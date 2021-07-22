@@ -9,9 +9,9 @@
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-UD" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
+  <meta content="Bikeshed version 3d037a4f7, updated Thu Jul 22 13:20:00 2021 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="ebaebfcfc0f59a083d8566e2ac4c4832963baec0" name="document-revision">
+  <meta content="f6e8643c5ac9990bb4f08ed01f1f6850bbcaa5db" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -579,7 +579,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">CSS Toggles</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Unofficial Proposal Draft, <time class="dt-updated" datetime="2021-06-07">7 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Unofficial Proposal Draft, <time class="dt-updated" datetime="2021-06-15">15 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -644,7 +644,7 @@ on screen, on paper, etc.
       <li><a href="#toggle-property"><span class="secno">3.3</span> <span class="content"> Creating and Activating Toggles Simultaneously: the <span class="property">toggle</span> shorthand</span></a>
       <li><a href="#a11y"><span class="secno">3.4</span> <span class="content"> Accessibility Implications of Toggles</span></a>
      </ol>
-    <li><a href="#checked-pseudoclass"><span class="secno">4</span> <span class="content"> Selecting Elements Based on Toggle State: the <span class="css">:checked()</span> pseudo-class</span></a>
+    <li><a href="#checked-pseudoclass"><span class="secno">4</span> <span class="content"> Selecting Elements Based on Toggle State: the <span class="css">:toggle()</span> pseudo-class</span></a>
     <li><a href="#toggle-visibility-property"><span class="secno">5</span> <span class="content"> Automatically Hiding With A Toggle</span></a>
     <li><a href="#dom"><span class="secno">6</span> <span class="content"> Scripting API</span></a>
     <li>
@@ -847,7 +847,7 @@ specifying the highest <a data-link-type="dfn" href="#toggle-active-state" id="r
     <dd data-md>
      <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a> specifying how to react
 when a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation①">toggle activation</a> would push the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①">state</a> past the specified <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state">maximum state</a>:
-the state either stays at the <span id="ref-for-toggle-specifier-maximum-state①">maximum state</span> (if true)
+the state either stays within the <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state②">active states</a> and returns to 1 (if true)
 or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state">inactive state</a> (if false).</p>
    </dl>
    <p><a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier">Toggle specifiers</a> are created by the <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create">toggle-create</a> property;
@@ -859,7 +859,7 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
 		a <a data-link-type="dfn" href="#toggle-specifier-state-names" id="ref-for-toggle-specifier-state-names">state names</a> of an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a>,
 		a false <a data-link-type="dfn" href="#toggle-specifier-group" id="ref-for-toggle-specifier-group">group</a>,
 		a <a data-link-type="dfn" href="#toggle-specifier-scope" id="ref-for-toggle-specifier-scope">scope</a> of "wide",
-		a <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state②">maximum state</a> of 1,
+		a <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state①">maximum state</a> of 1,
 		and a false <a data-link-type="dfn" href="#toggle-specifier-sticky" id="ref-for-toggle-specifier-sticky">sticky</a>. 
     <p class="note" role="note"><span>Note:</span> This produces behavior similar to a checkbox.</p>
    </div>
@@ -870,15 +870,15 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
 	The CSS properties merely define which elements can <em>activate</em> a toggle,
 	and which elements can <em>respond</em> to a toggle activation
 	(and how they do so).</p>
-   <div class="example" id="example-29c7948d">
-    <a class="self-link" href="#example-29c7948d"></a> For example, while an element needs <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create①">toggle-create</a> to establish a toggle,
+   <div class="example" id="example-2f5c4a18">
+    <a class="self-link" href="#example-2f5c4a18"></a> For example, while an element needs <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create①">toggle-create</a> to establish a toggle,
 		once a toggle is created,
 		removing the <span class="property" id="ref-for-propdef-toggle-create②">toggle-create</span> property does not affect the toggle. 
 <pre class="lang-css highlight">.toggleable <c- p>{</c->
   <c- k>toggle-create</c-><c- p>:</c-> foo <c- m>1</c-><c- p>;</c->
   <c- k>toggle-set</c-><c- p>:</c-> foo<c- p>;</c->
 <c- p>}</c->
-.toggleable<c- nf>:checked</c-><c- p>(</c->foo<c- p>)</c-> <c- p>{</c->
+.toggleable<c- nf>:toggle</c-><c- p>(</c->foo<c- p>)</c-> <c- p>{</c->
   <c- k>toggle-create</c-><c- p>:</c-> none<c- p>;</c->
   <c- k>toggle-set</c-><c- p>:</c-> none<c- p>;</c->
 <c- p>}</c->
@@ -888,12 +888,12 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
 		During a rendering update,
 		the <span class="css">foo</span> toggle is created on the element
 		(initially with a value of 0, its <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state①">inactive state</a>);
-		when the element is clicked, it’s incremented to its <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state②">active state</a> (1).</p>
-    <p>At this point, the <span class="css">:checked(foo)</span> rule begins to match,
+		when the element is clicked, it’s incremented to its <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state③">active state</a> (1).</p>
+    <p>At this point, the <span class="css">:toggle(foo)</span> rule begins to match,
 		and removes the <span class="css">toggle-*</span> properties.
 		This does not remove the <span class="css">foo</span> toggle or affect its value, however;
 		it still exists and is still set to <span class="css">1</span>,
-		so the <a class="css" data-link-type="maybe" href="#selectordef-checked" id="ref-for-selectordef-checked">:checked()</a> pseudo-class will continue matching.
+		so the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle">:toggle()</a> pseudo-class will continue matching.
 		However, further activations of the element
 		will no longer affect the <span class="css">foo</span> toggle,
 		since <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set">toggle-set</a> was changed to <a class="css" data-link-type="maybe" href="#valdef-toggle-set-none" id="ref-for-valdef-toggle-set-none">none</a>.</p>
@@ -972,7 +972,7 @@ If omitted, it’s set to 0.</p>
 or else the declaration is invalid.</p>
       <li data-md>
        <p>The second <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value④">&lt;integer></a>, if specified,
-specifies the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state③">maximum state</a>.
+specifies the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state②">maximum state</a>.
 If omitted, it’s set to 1.</p>
       <li data-md>
        <p>The <dfn class="dfn-paneled css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-sticky">sticky</dfn> keyword, if specified,
@@ -988,8 +988,8 @@ sets the <a data-link-type="dfn" href="#toggle-specifier-scope" id="ref-for-togg
 If omitted, it’s set to "wide".</p>
      </ul>
    </dl>
-   <div class="example" id="example-967d0ee2">
-    <a class="self-link" href="#example-967d0ee2"></a> Revisiting the example in the Introduction,
+   <div class="example" id="example-037e835f">
+    <a class="self-link" href="#example-037e835f"></a> Revisiting the example in the Introduction,
 		the same ingredient list can be specified in simple HTML and CSS: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>ul</c-> <c- e>class</c-><c- o>=</c-><c- s>'ingredients'</c-><c- p>></c->
    <c- p>&lt;</c-><c- f>li</c-><c- p>></c->1 banana
@@ -1000,7 +1000,7 @@ If omitted, it’s set to "wide".</p>
 <c- f>li</c-> <c- p>{</c->
   <c- n>toggle-create</c-><c- p>:</c-> <c- n>check</c-> <c- n>self</c-><c- p>;</c->
 <c- p>}</c->
-<c- f>li</c-><c- p>:</c-><c- nd>checked</c-><c- o>(</c-><c- f>check</c-><c- o>)</c-> <c- p>{</c->
+<c- f>li</c-><c- p>:</c-><c- nd>toggle</c-><c- o>(</c-><c- f>check</c-><c- o>)</c-> <c- p>{</c->
   <c- k>color</c-><c- p>:</c-> <c- kc>silver</c-><c- p>;</c->
   <c- k>text-decoration</c-><c- p>:</c-> <c- kc>line-through</c-><c- p>;</c->
 <c- p>}</c->
@@ -1052,7 +1052,7 @@ If omitted, it’s set to "wide".</p>
 	incrementing one has no effect an any other.
 	The <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group②">toggle-group</a> property allows elements to link their <span id="ref-for-css-toggle②⑧">toggles</span> together:
 	all <span id="ref-for-css-toggle②⑨">toggles</span> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑨">name</a> as the <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①④">toggle group</a> that are on elements <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope②">in scope</a> for the <span id="ref-for-css-toggle-group①⑤">toggle group</span> are linked,
-	such that only one can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state③">active state</a> at a time,
+	such that only one can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state④">active state</a> at a time,
 	similar to HTML’s <code>&lt;input type=radio></code> element.</p>
    <dl>
     <dt><dfn class="css" data-dfn-for="toggle-group" data-dfn-type="value" data-export id="valdef-toggle-group-none">none<a class="self-link" href="#valdef-toggle-group-none"></a></dfn> 
@@ -1070,11 +1070,11 @@ as the item’s value.</p>
 sets the <a data-link-type="dfn" href="#toggle-group-scope" id="ref-for-toggle-group-scope">scope</a> enum to "narrow".
 If omitted, it’s set to "wide".</p>
      </ul>
-     <p>Only one <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⓪">toggle</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group">in a toggle group</a> can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state④">active state</a> at a time;
+     <p>Only one <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⓪">toggle</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group">in a toggle group</a> can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑤">active state</a> at a time;
 			see <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set①">toggle-set</a> for details.</p>
    </dl>
-   <div class="example" id="example-9bde6693">
-    <a class="self-link" href="#example-9bde6693"></a> For example, <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group③">toggle-group</a> can be used to control a tabbed display,
+   <div class="example" id="example-1171420a">
+    <a class="self-link" href="#example-1171420a"></a> For example, <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group③">toggle-group</a> can be used to control a tabbed display,
 		so that only one panel is displayed at a time: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>panel-set</c-><c- p>></c->
   <c- p>&lt;</c-><c- f>panel-tab</c-><c- p>></c->first tab<c- p>&lt;/</c-><c- f>panel-tab</c-><c- p>></c->
@@ -1100,14 +1100,14 @@ If omitted, it’s set to "wide".</p>
 <c- c>    to be active */</c->
   <c- n>toggle</c-><c- p>:</c-> <c- n>tab</c-> <c- mi>1</c-><c- o>/</c-><c- mi>1</c-> <c- n>group</c-> <c- kc>sticky</c-><c- p>;</c->
 <c- p>}</c->
-<c- f>panel-tab</c-><c- p>:</c-><c- nd>checked</c-><c- o>(</c-><c- f>tab</c-><c- o>)</c-> <c- p>{</c->
+<c- f>panel-tab</c-><c- p>:</c-><c- nd>toggle</c-><c- o>(</c-><c- f>tab</c-><c- o>)</c-> <c- p>{</c->
   <c- c>/* styling for the active tab */</c->
 <c- p>}</c->
 <c- f>panel-card</c-> <c- p>{</c->
   <c- c>/* cards are hidden by default */</c->
   <c- k>display</c-><c- p>:</c-> <c- kc>none</c-><c- p>;</c->
 <c- p>}</c->
-<c- f>panel-card</c-><c- p>:</c-><c- nd>checked</c-><c- o>(</c-><c- f>tab</c-><c- o>)</c-> <c- p>{</c->
+<c- f>panel-card</c-><c- p>:</c-><c- nd>toggle</c-><c- o>(</c-><c- f>tab</c-><c- o>)</c-> <c- p>{</c->
   <c- k>display</c-><c- p>:</c-> <c- kc>block</c-><c- p>;</c->
 <c- p>}</c->
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
@@ -1117,6 +1117,18 @@ If omitted, it’s set to "wide".</p>
 		while resetting the rest of the tabs' <span id="ref-for-toggle-state④">states</span> to 0.
 		Each panel is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope③">in scope</a> for the <span id="ref-for-css-toggle③②">toggle</span> defined by its preceding tab,
 		so it can respond to the <span id="ref-for-toggle-state⑤">state</span> as well.</p>
+   </div>
+   <div class="issue" id="issue-47da3fb8">
+    <a class="self-link" href="#issue-47da3fb8"></a> Radio buttons have one particular tabbing/switching/activation behavior
+		(they occupy a single tabindex spot;
+		once reached you can move between them with arrow keys;
+		moving to one auto-activates it),
+		but not all groups will want that behavior.
+		Accordions, in particular, probably don’t,
+		and instead just want to effectively be independent checkboxes
+		that happen to only have one active at a time. 
+    <p>We probably want to add a bool to toggle groups dictating this;
+		are there more than these two behaviors to deal with?</p>
    </div>
    <h3 class="heading settled" data-level="3.2" id="toggle-set-property"><span class="secno">3.2. </span><span class="content"> Activating a Toggle: the <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set②">toggle-set</a> property</span><a class="self-link" href="#toggle-set-property"></a></h3>
    <table class="def propdef" data-link-for-hint="toggle-set">
@@ -1198,11 +1210,12 @@ let <var>specifier</var> be it.</p>
         <p>Otherwise, let <var>specifier</var> be a new <a data-link-type="dfn" href="#default-toggle-specifier" id="ref-for-default-toggle-specifier">default toggle specifier</a> for <var>activation</var>’s <a data-link-type="dfn" href="#toggle-activation-name" id="ref-for-toggle-activation-name">name</a>.</p>
        <li data-md>
         <p>If <var>activation</var>’s <a data-link-type="dfn" href="#toggle-activation-target-state" id="ref-for-toggle-activation-target-state">target state</a> is specified,
-set <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑧">state</a> to the smaller of the <span id="ref-for-toggle-activation-target-state①">target state</span> and <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state④">maximum state</a>.</p>
+set <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑧">state</a> to the smaller of the <span id="ref-for-toggle-activation-target-state①">target state</span> and <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state③">maximum state</a>.</p>
         <p>Otherwise,
 increment <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑨">state</a> by 1.
-If the <span id="ref-for-toggle-state①⓪">state</span> is now higher than <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑤">maximum state</a>,
-then set the <span id="ref-for-toggle-state①①">state</span> to the <span id="ref-for-toggle-specifier-maximum-state⑥">maximum state</span> if <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-sticky" id="ref-for-toggle-specifier-sticky②">sticky</a> flag is true,
+If the <span id="ref-for-toggle-state①⓪">state</span> is now higher than <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state④">maximum state</a>,
+then set the <span id="ref-for-toggle-state①①">state</span> to 1
+if <var>specifier</var>’s <a data-link-type="dfn" href="#toggle-specifier-sticky" id="ref-for-toggle-specifier-sticky②">sticky</a> flag is true,
 and to 0 if it’s false.</p>
        <li data-md>
         <p>If <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①②">state</a> is now greater than zero
@@ -1310,56 +1323,55 @@ if it’s part of a group, sticky, etc.</p>
 we can also automatically infer all the tab-set ARIA roles</p>
     </ul>
    </div>
-   <h2 class="heading settled" data-level="4" id="checked-pseudoclass"><span class="secno">4. </span><span class="content"> Selecting Elements Based on Toggle State: the <a class="css" data-link-type="maybe" href="#selectordef-checked" id="ref-for-selectordef-checked①">:checked()</a> pseudo-class</span><a class="self-link" href="#checked-pseudoclass"></a></h2>
+   <h2 class="heading settled" data-level="4" id="checked-pseudoclass"><span class="secno">4. </span><span class="content"> Selecting Elements Based on Toggle State: the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle①">:toggle()</a> pseudo-class</span><a class="self-link" href="#checked-pseudoclass"></a></h2>
    <p><a data-link-type="biblio" href="#biblio-selectors-4">[SELECTORS-4]</a> defines the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#checked-pseudo" id="ref-for-checked-pseudo①">:checked</a> pseudo-class,
 	which allows author to match certain elements
 	(as defined by the host language)
 	depending on their "checked" state.</p>
-   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">Toggles</a> extend the set of elements that can have a "checked" state,
-	and the number of ways an element can <em>be</em> "checked".
-	As such, the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#checked-pseudo" id="ref-for-checked-pseudo②">:checked</a> pseudo-class
-	is now extended to be a <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-checked">:checked()</dfn> functional pseudo-class.</p>
-<pre class="prod">:checked( <a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①④">&lt;toggle-name></a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑨">&lt;integer></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> )
+   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">Toggles</a> provides a very similar functionality,
+	allowing elements to be selected based on their <span id="ref-for-css-toggle④⑦">toggle</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①④">state</a>,
+	the <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-toggle">:toggle()</dfn> pseudo-class:</p>
+<pre class="prod">:toggle( <a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①④">&lt;toggle-name></a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑨">&lt;integer></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> )
 </pre>
-   <p>An element matches <a class="css" data-link-type="maybe" href="#selectordef-checked" id="ref-for-selectordef-checked②">:checked()</a> if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑤">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑦">toggle</a> with the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①②">name</a> given by <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑤">&lt;toggle-name></a>,
-	and either the <span id="ref-for-css-toggle④⑧">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①④">state</a> matches the provided <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value①⓪">&lt;integer></a>,
-	or the <span class="production" id="ref-for-integer-value①①">&lt;integer></span> is omitted and the <span id="ref-for-css-toggle④⑨">toggle</span> is in any <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑤">active state</a>.</p>
-   <div class="example" id="example-ad5d7a49">
-    <a class="self-link" href="#example-ad5d7a49"></a> For example, if a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⓪">toggle</a> named "used"
+   <p>An element matches <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle②">:toggle()</a> if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑤">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑧">toggle</a> with the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①②">name</a> given by <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑤">&lt;toggle-name></a>,
+	and either the <span id="ref-for-css-toggle④⑨">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑤">state</a> matches the provided <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value①⓪">&lt;integer></a>,
+	or the <span class="production" id="ref-for-integer-value①①">&lt;integer></span> is omitted and the <span id="ref-for-css-toggle⑤⓪">toggle</span> is in any <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑥">active state</a>.</p>
+   <div class="example" id="example-d684b11f">
+    <a class="self-link" href="#example-d684b11f"></a> For example, if a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">toggle</a> named "used"
 		is defined on each element in an recipe’s ingredient list,
 		the ingredients can respond to being clicked on easily: 
 <pre class="lang-css highlight">.ingredient <c- p>{</c->
   <c- k>toggle</c-><c- p>:</c-> used<c- p>;</c->
 <c- p>}</c->
-.ingredient<c- nf>:checked</c-><c- p>(</c->used<c- p>)</c-> <c- p>{</c->
+.ingredient<c- nf>:toggle</c-><c- p>(</c->used<c- p>)</c-> <c- p>{</c->
   <c- k>color</c-><c- p>:</c-> silver<c- p>;</c->
   <c- k>text-decoration</c-><c- p>:</c-> line-through<c- p>;</c->
 <c- p>}</c->
 </pre>
    </div>
-   <div class="example" id="example-e6585699">
-    <a class="self-link" href="#example-e6585699"></a> A checkbox that can represent an "indeterminate" value
+   <div class="example" id="example-c621fdae">
+    <a class="self-link" href="#example-c621fdae"></a> A checkbox that can represent an "indeterminate" value
 		might have two active states. 
 <pre class="lang-css highlight">.tristate-check <c- p>{</c->
   <c- k>toggle</c-><c- p>:</c-> check <c- m>0</c->/<c- m>2</c-><c- p>;</c->
 <c- p>}</c->
-.tristate-check<c- nf>:checked</c-><c- p>(</c-><c- m>1</c-><c- p>)</c-> <c- p>{</c->
+.tristate-check<c- nf>:toggle</c-><c- p>(</c->check <c- m>1</c-><c- p>)</c-> <c- p>{</c->
   <c- c>/* "checked" styles */</c->
 <c- p>}</c->
-.tristate-check<c- nf>:checked</c-><c- p>(</c-><c- m>2</c-><c- p>)</c-> <c- p>{</c->
+.tristate-check<c- nf>:toggle</c-><c- p>(</c->check <c- m>2</c-><c- p>)</c-> <c- p>{</c->
   <c- c>/* "indeterminate" styles */</c->
 <c- p>}</c->
 </pre>
    </div>
-   <div class="example" id="example-4dd61a0b">
-    <a class="self-link" href="#example-4dd61a0b"></a> While <span class="css">:not(:checked(foo))</span> will correctly match an element
+   <div class="example" id="example-afd180be">
+    <a class="self-link" href="#example-afd180be"></a> While <span class="css">:not(:toggle(foo))</span> will correctly match an element
 		whose "foo" toggle is in an <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state②">inactive state</a>,
 		it will <em>also</em> match any element
 		that doesn’t see a "foo" toggle at all. 
     <p>If this is inconvenient,
 		only elements that actually know about a particular toggle
 		can be targeted by specifying the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state③">inactive state</a> specifically:</p>
-<pre class="lang-css highlight">.card<c- nf>:checked</c-><c- p>(</c->show <c- m>0</c-><c- p>)</c-> <c- p>{</c->
+<pre class="lang-css highlight">.card<c- nf>:toggle</c-><c- p>(</c->show <c- m>0</c-><c- p>)</c-> <c- p>{</c->
   <c- c>/* Definitely *not* shown */</c->
 <c- p>}</c->
 </pre>
@@ -1375,7 +1387,7 @@ we can also automatically infer all the tab-set ARIA roles</p>
 	or tab order,
 	and then to automatically become visible
 	when the element becomes <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user">relevant to the user</a>.</p>
-   <p>A common use-case for <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">toggles</a> is also to control whether an element is shown or hidden,
+   <p>A common use-case for <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤②">toggles</a> is also to control whether an element is shown or hidden,
 	and in many cases it would also be useful to allow the contents of elements "hidden" in this way
 	to be accessible in the same ways.
 	To allow for this,
@@ -1413,7 +1425,7 @@ we can also automatically infer all the tab-set ARIA roles</p>
       <td>not animatable 
    </table>
    <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility②">toggle-visibility</a> property
-	allows an element to automatically tie its display to a particular <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤②">toggle</a> bi-directionally,
+	allows an element to automatically tie its display to a particular <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤③">toggle</a> bi-directionally,
 	while still exposing its contents to be focused, found-in-page, etc.,
 	automatically showing itself when relevant.</p>
    <dl>
@@ -1422,8 +1434,8 @@ we can also automatically infer all the tab-set ARIA roles</p>
      <p>The property has no effect.</p>
     <dt data-md><dfn class="css" data-dfn-for="toggle-visibility" data-dfn-type="value" data-export data-lt="toggle" id="valdef-toggle-visibility-toggle">toggle <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑦">&lt;toggle-name></a><a class="self-link" href="#valdef-toggle-visibility-toggle"></a></dfn>
     <dd data-md>
-     <p>If the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑥">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤③">toggle</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑧">&lt;toggle-name></a>,
-and that <span id="ref-for-css-toggle⑤④">toggle</span> is in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state④">inactive state</a>,
+     <p>If the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑥">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤④">toggle</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑧">&lt;toggle-name></a>,
+and that <span id="ref-for-css-toggle⑤⑤">toggle</span> is in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state④">inactive state</a>,
 the element and its descendants generate no <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#box" id="ref-for-box">boxes</a> or <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#text-run" id="ref-for-text-run">text runs</a>,
 similar to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-display-3/#propdef-display" id="ref-for-propdef-display①">display: none</a>,
 but must still be available to user-agent features
@@ -1433,11 +1445,11 @@ similar to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.o
      <p>If the element starts being <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user①">relevant to the user</a>,
 it <a data-link-type="dfn" href="#fire-a-toggle-activation" id="ref-for-fire-a-toggle-activation①">fires</a> a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation④">toggle activation</a>,
 with a <a data-link-type="dfn" href="#toggle-activation-name" id="ref-for-toggle-activation-name①">name</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑨">&lt;toggle-name></a> and a <a data-link-type="dfn" href="#toggle-activation-target-state" id="ref-for-toggle-activation-target-state②">target state</a> of 1.</p>
-     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑤">toggle</a> is currently in an <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑤">inactive state</a> and thus not generating any boxes,
+     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑥">toggle</a> is currently in an <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑤">inactive state</a> and thus not generating any boxes,
 it can’t become <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user②">relevant to the user</a> due to being "on-screen"
 but the other options are still possible.</p>
-     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑥">toggle</a> is in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑥">active state</a>,
-or the element can’t see the specified <span id="ref-for-css-toggle⑤⑦">toggle</span> at all,
+     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑦">toggle</a> is in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑦">active state</a>,
+or the element can’t see the specified <span id="ref-for-css-toggle⑤⑧">toggle</span> at all,
 the element renders normally.</p>
    </dl>
    <div class="example" id="example-c7f898eb">
@@ -1460,15 +1472,15 @@ the element renders normally.</p>
   <c- p>}</c->
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
 </pre>
-    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element">dt</a></code> establishes a separate "show" <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑧">toggle</a>,
+    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element">dt</a></code> establishes a separate "show" <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑨">toggle</a>,
 		with all the defaults filling in to produce a standard "checkbox"-like behavior,
 		all initially in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑥">inactive state</a>.
 		Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element①">dt</a></code> can be activated to show or hide the following answer.</p>
-    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element">dd</a></code> can see the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑨">toggle</a> established by its preceding <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element②">dt</a></code>,
+    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element">dd</a></code> can see the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⓪">toggle</a> established by its preceding <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element②">dt</a></code>,
 		and will start out not rendering.
 		If the user searches on the page for a term,
 		or visits the page from a link with an #anchor linking into one of the answers,
-		the relevant answer will automatically activate the <span id="ref-for-css-toggle⑥⓪">toggle</span>,
+		the relevant answer will automatically activate the <span id="ref-for-css-toggle⑥①">toggle</span>,
 		causing the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element①">dd</a></code> to become visible.</p>
    </div>
    <p class="issue" id="issue-8c43f943"><a class="self-link" href="#issue-8c43f943"></a> Define ordering of activations,
@@ -1480,7 +1492,7 @@ the element renders normally.</p>
     <a class="self-link" href="#issue-8fcfb231"></a> TODO 
     <ul>
      <li data-md>
-      <p>Expose a map of toggles on an element, with {name=>rest of <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥①">toggle</a> info}.
+      <p>Expose a map of toggles on an element, with {name=>rest of <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥②">toggle</a> info}.
 (Or just a list of toggles, with name built into the object?)</p>
      <li data-md>
       <p>Ability to create toggles manually.
@@ -1582,7 +1594,6 @@ it’ll respawn on the next rendering tick.)</p>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#toggle-active-state">active state</a><span>, in §2</span>
-   <li><a href="#selectordef-checked">:checked()</a><span>, in §4</span>
    <li><a href="#default-toggle-specifier">default toggle specifier</a><span>, in §2</span>
    <li><a href="#fire-a-toggle-activation">fire</a><span>, in §3.2</span>
    <li><a href="#fire-a-toggle-activation">fire a toggle activation</a><span>, in §3.2</span>
@@ -1649,6 +1660,7 @@ it’ll respawn on the next rendering tick.)</p>
      <li><a href="#valdef-toggle-create-sticky">value for toggle-create</a><span>, in §3</span>
     </ul>
    <li><a href="#toggle-activation-target-state">target state</a><span>, in §3.2</span>
+   <li><a href="#selectordef-toggle">:toggle()</a><span>, in §4</span>
    <li>
     toggle
     <ul>
@@ -1737,7 +1749,7 @@ Creating a Toggle: the toggle-create property</a> <a href="#ref-for-integer-valu
     <li><a href="#ref-for-integer-value⑥">3.2. 
 Activating a Toggle: the toggle-set property</a> <a href="#ref-for-integer-value⑦">(2)</a> <a href="#ref-for-integer-value⑧">(3)</a>
     <li><a href="#ref-for-integer-value⑨">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-integer-value①⓪">(2)</a> <a href="#ref-for-integer-value①①">(3)</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-integer-value①⓪">(2)</a> <a href="#ref-for-integer-value①①">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-string-value">
@@ -1775,7 +1787,7 @@ Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-mult-opt③">3.2. 
 Activating a Toggle: the toggle-set property</a>
     <li><a href="#ref-for-mult-opt④">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-comb-one">
@@ -1920,7 +1932,7 @@ Toggle Concepts</a> <a href="#ref-for-struct①">(2)</a> <a href="#ref-for-struc
     <li><a href="#ref-for-checked-pseudo">1. 
 Introduction</a>
     <li><a href="#ref-for-checked-pseudo①">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-checked-pseudo②">(2)</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
   </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
@@ -2007,7 +2019,7 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-selectors-4">[SELECTORS-4]
    <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/selectors-4/">Selectors Level 4</a>. 21 November 2018. WD. URL: <a href="https://www.w3.org/TR/selectors-4/">https://www.w3.org/TR/selectors-4/</a>
   </dl>
@@ -2097,6 +2109,19 @@ Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a hre
 	and amend the various properties to allow them to take a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name">&lt;toggle-name></a> instead of an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>.<a href="#issue-80e16e8c"> ↵ </a></div>
    <div class="issue"> Define the precise point in <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering">update the rendering</a> when toggles are created
 	if <a class="property" data-link-type="propdesc" href="#propdef-toggle-create">toggle-create</a> names a toggle that doesn’t exist on the element yet.<a href="#issue-6fc26a25"> ↵ </a></div>
+   <div class="issue">
+     Radio buttons have one particular tabbing/switching/activation behavior
+		(they occupy a single tabindex spot;
+		once reached you can move between them with arrow keys;
+		moving to one auto-activates it),
+		but not all groups will want that behavior.
+		Accordions, in particular, probably don’t,
+		and instead just want to effectively be independent checkboxes
+		that happen to only have one active at a time. 
+    <p>We probably want to add a bool to toggle groups dictating this;
+		are there more than these two behaviors to deal with?</p>
+     <a href="#issue-47da3fb8"> ↵ </a>
+   </div>
    <div class="issue"> Define in much greater precision what it means to "become activatable".
 	The element must become focusable
 	(with a default spot in the focus order)
@@ -2161,10 +2186,10 @@ Activating a Toggle: the toggle-set property</a> <a href="#ref-for-css-toggle③
     <li><a href="#ref-for-css-toggle④③">3.3. 
 Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-css-toggle④④">(2)</a> <a href="#ref-for-css-toggle④⑤">(3)</a>
     <li><a href="#ref-for-css-toggle④⑥">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-css-toggle④⑦">(2)</a> <a href="#ref-for-css-toggle④⑧">(3)</a> <a href="#ref-for-css-toggle④⑨">(4)</a> <a href="#ref-for-css-toggle⑤⓪">(5)</a>
-    <li><a href="#ref-for-css-toggle⑤①">5. 
-Automatically Hiding With A Toggle</a> <a href="#ref-for-css-toggle⑤②">(2)</a> <a href="#ref-for-css-toggle⑤③">(3)</a> <a href="#ref-for-css-toggle⑤④">(4)</a> <a href="#ref-for-css-toggle⑤⑤">(5)</a> <a href="#ref-for-css-toggle⑤⑥">(6)</a> <a href="#ref-for-css-toggle⑤⑦">(7)</a> <a href="#ref-for-css-toggle⑤⑧">(8)</a> <a href="#ref-for-css-toggle⑤⑨">(9)</a> <a href="#ref-for-css-toggle⑥⓪">(10)</a>
-    <li><a href="#ref-for-css-toggle⑥①">6. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-css-toggle④⑦">(2)</a> <a href="#ref-for-css-toggle④⑧">(3)</a> <a href="#ref-for-css-toggle④⑨">(4)</a> <a href="#ref-for-css-toggle⑤⓪">(5)</a> <a href="#ref-for-css-toggle⑤①">(6)</a>
+    <li><a href="#ref-for-css-toggle⑤②">5. 
+Automatically Hiding With A Toggle</a> <a href="#ref-for-css-toggle⑤③">(2)</a> <a href="#ref-for-css-toggle⑤④">(3)</a> <a href="#ref-for-css-toggle⑤⑤">(4)</a> <a href="#ref-for-css-toggle⑤⑥">(5)</a> <a href="#ref-for-css-toggle⑤⑦">(6)</a> <a href="#ref-for-css-toggle⑤⑧">(7)</a> <a href="#ref-for-css-toggle⑤⑨">(8)</a> <a href="#ref-for-css-toggle⑥⓪">(9)</a> <a href="#ref-for-css-toggle⑥①">(10)</a>
+    <li><a href="#ref-for-css-toggle⑥②">6. 
 Scripting API</a>
    </ul>
   </aside>
@@ -2178,7 +2203,7 @@ Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-toggle-name①⓪">3.2. 
 Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-name①①">(2)</a>
     <li><a href="#ref-for-toggle-name①②">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-toggle-toggle-name">
@@ -2195,7 +2220,7 @@ Activating a Toggle: the toggle-set property</a> <a href="#ref-for-typedef-toggl
     <li><a href="#ref-for-typedef-toggle-toggle-name①③">3.3. 
 Creating and Activating Toggles Simultaneously: the toggle shorthand</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name①④">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-typedef-toggle-toggle-name①⑤">(2)</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-typedef-toggle-toggle-name①⑤">(2)</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name①⑥">5. 
 Automatically Hiding With A Toggle</a> <a href="#ref-for-typedef-toggle-toggle-name①⑦">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name①⑧">(3)</a> <a href="#ref-for-typedef-toggle-toggle-name①⑨">(4)</a>
    </ul>
@@ -2210,7 +2235,7 @@ Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-st
     <li><a href="#ref-for-toggle-state⑥">3.2. 
 Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-state⑦">(2)</a> <a href="#ref-for-toggle-state⑧">(3)</a> <a href="#ref-for-toggle-state⑨">(4)</a> <a href="#ref-for-toggle-state①⓪">(5)</a> <a href="#ref-for-toggle-state①①">(6)</a> <a href="#ref-for-toggle-state①②">(7)</a> <a href="#ref-for-toggle-state①③">(8)</a>
     <li><a href="#ref-for-toggle-state①④">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-toggle-state①⑤">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-inactive-state">
@@ -2221,7 +2246,7 @@ Toggle Concepts</a>
     <li><a href="#ref-for-toggle-inactive-state①">2.1. 
 Toggles and CSS Properties</a>
     <li><a href="#ref-for-toggle-inactive-state②">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-toggle-inactive-state③">(2)</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-toggle-inactive-state③">(2)</a>
     <li><a href="#ref-for-toggle-inactive-state④">5. 
 Automatically Hiding With A Toggle</a> <a href="#ref-for-toggle-inactive-state⑤">(2)</a> <a href="#ref-for-toggle-inactive-state⑥">(3)</a>
    </ul>
@@ -2230,14 +2255,14 @@ Automatically Hiding With A Toggle</a> <a href="#ref-for-toggle-inactive-state�
    <b><a href="#toggle-active-state">#toggle-active-state</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-active-state">2. 
-Toggle Concepts</a> <a href="#ref-for-toggle-active-state①">(2)</a>
-    <li><a href="#ref-for-toggle-active-state②">2.1. 
+Toggle Concepts</a> <a href="#ref-for-toggle-active-state①">(2)</a> <a href="#ref-for-toggle-active-state②">(3)</a>
+    <li><a href="#ref-for-toggle-active-state③">2.1. 
 Toggles and CSS Properties</a>
-    <li><a href="#ref-for-toggle-active-state③">3.1. 
-Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-active-state④">(2)</a>
-    <li><a href="#ref-for-toggle-active-state⑤">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a>
-    <li><a href="#ref-for-toggle-active-state⑥">5. 
+    <li><a href="#ref-for-toggle-active-state④">3.1. 
+Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-active-state⑤">(2)</a>
+    <li><a href="#ref-for-toggle-active-state⑥">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
+    <li><a href="#ref-for-toggle-active-state⑦">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
   </aside>
@@ -2326,7 +2351,7 @@ Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-in
     <li><a href="#ref-for-toggle-in-scope④">3.2. 
 Activating a Toggle: the toggle-set property</a>
     <li><a href="#ref-for-toggle-in-scope⑤">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a>
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
     <li><a href="#ref-for-toggle-in-scope⑥">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2391,11 +2416,11 @@ Creating a Toggle: the toggle-create property</a>
    <b><a href="#toggle-specifier-maximum-state">#toggle-specifier-maximum-state</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-specifier-maximum-state">2. 
-Toggle Concepts</a> <a href="#ref-for-toggle-specifier-maximum-state①">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state②">(3)</a>
-    <li><a href="#ref-for-toggle-specifier-maximum-state③">3. 
+Toggle Concepts</a> <a href="#ref-for-toggle-specifier-maximum-state①">(2)</a>
+    <li><a href="#ref-for-toggle-specifier-maximum-state②">3. 
 Creating a Toggle: the toggle-create property</a>
-    <li><a href="#ref-for-toggle-specifier-maximum-state④">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-specifier-maximum-state⑤">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state⑥">(3)</a>
+    <li><a href="#ref-for-toggle-specifier-maximum-state③">3.2. 
+Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-specifier-maximum-state④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-sticky">
@@ -2530,13 +2555,13 @@ Automatically Hiding With A Toggle</a>
 Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle①">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="selectordef-checked">
-   <b><a href="#selectordef-checked">#selectordef-checked</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="selectordef-toggle">
+   <b><a href="#selectordef-toggle">#selectordef-toggle</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-checked">2.1. 
+    <li><a href="#ref-for-selectordef-toggle">2.1. 
 Toggles and CSS Properties</a>
-    <li><a href="#ref-for-selectordef-checked①">4. 
-Selecting Elements Based on Toggle State: the :checked() pseudo-class</a> <a href="#ref-for-selectordef-checked②">(2)</a>
+    <li><a href="#ref-for-selectordef-toggle①">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-selectordef-toggle②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-toggle-visibility">
