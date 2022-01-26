@@ -8,10 +8,10 @@
   <meta content="This specification defines a way to associate a toggleable state with an element which can be used in Selectors to select an element, and declarative ways to set and modify the state on the element." name="abstract">
   <link href="../default.css" rel="stylesheet" type="text/css">
   <link href="../csslogo.ico" rel="shortcut icon" type="image/x-icon">
-  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-UD" rel="stylesheet" type="text/css">
-  <meta content="Bikeshed version 3d037a4f7, updated Thu Jul 22 13:20:00 2021 -0700" name="generator">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet" type="text/css">
+  <meta content="Bikeshed version 15125077e, updated Fri Jan 14 14:49:38 2022 -0800" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="f6e8643c5ac9990bb4f08ed01f1f6850bbcaa5db" name="document-revision">
+  <meta content="ca579d91b27506c36b08f7a49b8e6b0dca7b9f30" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -252,6 +252,16 @@ figcaption:not(.no-marker)::before {
 }
 
 .dfn-paneled { cursor: pointer; }
+</style>
+<style>/* style-issues */
+
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
 </style>
 <style>/* style-md-lists */
 
@@ -579,7 +589,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">CSS Toggles</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Unofficial Proposal Draft, <time class="dt-updated" datetime="2021-06-15">15 June 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Unofficial Proposal Draft, <time class="dt-updated" datetime="2022-01-26">26 January 2022</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -591,11 +601,11 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://xanthir.com/contact">Tab Atkins Jr.</a> (<span class="p-org org">Google</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="http://miriamsuzanne.com/contact">Miriam E. Suzanne</a> (<span class="p-org org">Invited Expert</span>)
      <dt>Suggest an Edit for this Spec:
-     <dd><a href="https://github.com/w3c/csswg-drafts/blob/master/css-toggle-1/Overview.bs">GitHub Editor</a>
+     <dd><a href="https://github.com/w3c/csswg-drafts/blob/main/css-toggle-1/Overview.bs">GitHub Editor</a>
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -637,10 +647,10 @@ on screen, on paper, etc.
       <li><a href="#toggle-vs-props"><span class="secno">2.1</span> <span class="content"> Toggles and CSS Properties</span></a>
      </ol>
     <li>
-     <a href="#toggle-create-property"><span class="secno">3</span> <span class="content"> Creating a Toggle: the <span class="property">toggle-create</span> property</span></a>
+     <a href="#toggle-root-property"><span class="secno">3</span> <span class="content"> Creating a Toggle: the <span class="property">toggle-root</span> property</span></a>
      <ol class="toc">
       <li><a href="#toggle-group-property"><span class="secno">3.1</span> <span class="content"> Linking Toggle States: the <span class="property">toggle-group</span> property</span></a>
-      <li><a href="#toggle-set-property"><span class="secno">3.2</span> <span class="content"> Activating a Toggle: the <span class="property">toggle-set</span> property</span></a>
+      <li><a href="#toggle-trigger-property"><span class="secno">3.2</span> <span class="content"> Activating a Toggle: the <span class="property">toggle-trigger</span> property</span></a>
       <li><a href="#toggle-property"><span class="secno">3.3</span> <span class="content"> Creating and Activating Toggles Simultaneously: the <span class="property">toggle</span> shorthand</span></a>
       <li><a href="#a11y"><span class="secno">3.4</span> <span class="content"> Accessibility Implications of Toggles</span></a>
      </ol>
@@ -703,13 +713,31 @@ input[type='checkbox']:checked + span {
 		one can cross out ingredients as they’re used in the recipe
 		by simply clicking on them.</p>
    </div>
-   <p>This module generalizes this ability and allows it to be applied to any element via CSS.
-	Elements can be declared to have toggleable state,
-	with any number of states that can be toggled between.
-	Multiple elements can share access to the same toggleable state,
-	similar to HTML’s <code>&lt;input type=radio></code> element.
-	This state can be manipulated by activating the element or other specified elements,
-	or by other user interactions.</p>
+   <p>This module generalizes this ability and allows it to be applied to any element via CSS.</p>
+   <p>Any element can become a <dfn class="dfn-paneled" data-dfn-type="dfn" data-export id="toggle-root">toggle root</dfn>,
+	meaning it hosts one or more <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle">toggles</a>,
+	each of which has a name,
+	a value between 0 and some maximum,
+	and a few other bits of metadata,
+	via the <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root">toggle-root</a> property.
+	The toggle is visible to the <a data-link-type="dfn" href="#toggle-root" id="ref-for-toggle-root">toggle root</a>,
+	its descendants,
+	and possibly its siblings and their descendants
+	(if the toggle says they can);
+	any element that can "see" a <span id="ref-for-css-toggle①">toggle</span> can use the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle">:toggle()</a> pseudo-class.</p>
+   <p>Any element that can see a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②">toggle</a> can also <em>trigger</em> a toggle,
+	changing its value when the element is "activated",
+	via the <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger">toggle-trigger</a> property.
+	This means you can have elements that self-trigger their own toggle,
+	like checkboxes,
+	but also have toggles that are visible to wide sections of a page
+	and are triggered by buttons (or tabs, or headings, etc)
+	inside that section,
+	so multiple elements can use <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle①">:toggle()</a> to respond to the toggle.</p>
+   <p>Toggles can also be grouped together,
+	so that only one of the toggles in the group
+	can have a non-zero value at a time,
+	like how radio buttons work in HTML.</p>
    <h2 class="heading settled" data-level="2" id="toggles"><span class="secno">2. </span><span class="content"> Toggle Concepts</span><a class="self-link" href="#toggles"></a></h2>
    <p>A <dfn class="dfn-paneled" data-dfn-for="CSS" data-dfn-type="dfn" data-export id="css-toggle">toggle</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct">struct</a> associated with an <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#elements" id="ref-for-elements">element</a>,
 	which represents something that can be toggled on or off by user action,
@@ -721,9 +749,9 @@ input[type='checkbox']:checked + span {
      <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string">string</a>.</p>
      <p>In CSS,
 this name is provided as a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name">&lt;toggle-name></a>,
-which is either a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value">&lt;custom-ident></a> or as a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#string-value" id="ref-for-string-value">&lt;string></a>;
+which is either a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value">&lt;custom-ident></a> or as a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#string-value" id="ref-for-string-value">&lt;string></a>;
 in either case, the item’s value is the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name">name</a>.</p>
-<pre class="prod"><dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="type" data-export id="typedef-toggle-toggle-name"><a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①">&lt;toggle-name></a></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value①">&lt;custom-ident></a> <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one">|</a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#string-value" id="ref-for-string-value①">&lt;string></a>
+<pre class="prod"><dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="type" data-export id="typedef-toggle-toggle-name"><a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①">&lt;toggle-name></a></dfn> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value①">&lt;custom-ident></a> <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one">|</a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#string-value" id="ref-for-string-value①">&lt;string></a>
 </pre>
      <div class="example" id="example-00eb57a7">
       <a class="self-link" href="#example-00eb57a7"></a> For example, <span class="css">foo</span> and <span class="css">"foo"</span> are both valid ways
@@ -745,11 +773,11 @@ in CSS they are <a class="production css" data-link-type="type" href="#typedef-t
 with the value of the item giving the state name.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-group">group</dfn>
     <dd data-md>
-     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a> indicating whether the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle">toggle</a> is part of a <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group">toggle group</a> (of the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name②">name</a>)
+     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a> indicating whether the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③">toggle</a> is part of a <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group">toggle group</a> (of the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name②">name</a>)
 or not.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-scope">scope</dfn>
     <dd data-md>
-     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string②">string</a> enum indicating what sort of <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope">scope</a> the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①">toggle</a> uses.
+     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string②">string</a> enum indicating what sort of <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope">scope</a> the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④">toggle</a> uses.
 It can have two values:</p>
      <ul>
       <li data-md>
@@ -759,9 +787,9 @@ and its following siblings and their descendants).</p>
        <p><dfn data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-narrow">"narrow"<a class="self-link" href="#toggle-narrow"></a></dfn>, indicating the toggle has <a data-link-type="dfn" href="#toggle-narrow-scope" id="ref-for-toggle-narrow-scope">narrow scope</a> (it’s visible to the element and its descendants only).</p>
      </ul>
    </dl>
-   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②">Toggles</a> are persistent state on an element,
+   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤">Toggles</a> are persistent state on an element,
 	and are not <em>directly</em> affected by any CSS properties.
-	An element can have any number of <span id="ref-for-css-toggle③">toggles</span>.</p>
+	An element can have any number of <span id="ref-for-css-toggle⑥">toggles</span>.</p>
    <hr>
    <p>A <dfn class="dfn-paneled" data-dfn-for="CSS" data-dfn-type="dfn" data-export id="css-toggle-group">toggle group</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct①">struct</a> associated with an <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#elements" id="ref-for-elements①">element</a>,
 	which groups together toggles of the same name
@@ -786,63 +814,63 @@ and its following siblings and their descendants).</p>
        <p><dfn data-dfn-for="toggle group" data-dfn-type="dfn" data-export id="toggle-group-narrow">"narrow"<a class="self-link" href="#toggle-group-narrow"></a></dfn>, indicating the toggle has <a data-link-type="dfn" href="#toggle-narrow-scope" id="ref-for-toggle-narrow-scope①">narrow scope</a> (it’s visible to the element and its descendants only).</p>
      </ul>
    </dl>
-   <p><a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group③">Toggle groups</a> are created by the <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group">toggle-group</a> property;
+   <p><a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group③">Toggle groups</a> are created by the <a class="property css" data-link-type="property" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group">toggle-group</a> property;
 	they are not persistent state on an element.
 	An element can have any number of <span id="ref-for-css-toggle-group④">toggle groups</span>.</p>
-   <p>A <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④">toggle</a> is <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-in-a-toggle-group">in a toggle group</dfn> if its <a data-link-type="dfn" href="#toggle-group" id="ref-for-toggle-group">group</a> boolean is true;
-	if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope">in scope</a> for a <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑤">toggle group</a> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name④">name</a> as the <span id="ref-for-css-toggle⑤">toggle</span>,
+   <p>A <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑦">toggle</a> is <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-in-a-toggle-group">in a toggle group</dfn> if its <a data-link-type="dfn" href="#toggle-group" id="ref-for-toggle-group">group</a> boolean is true;
+	if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope">in scope</a> for a <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑤">toggle group</a> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name④">name</a> as the <span id="ref-for-css-toggle⑧">toggle</span>,
 	it’s in that group;
 	otherwise, it’s in a document-wide <dfn data-dfn-for="CSS" data-dfn-type="dfn" data-export id="css-implicit-toggle-group">implicit toggle group<a class="self-link" href="#css-implicit-toggle-group"></a></dfn> with the same <span id="ref-for-toggle-name⑤">name</span>.</p>
    <hr>
-   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥">Toggles</a> and <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑥">toggle groups</a> have a scope,
+   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑨">Toggles</a> and <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑥">toggle groups</a> have a scope,
 	defining what additional elements
-	(beyond the element the <span id="ref-for-css-toggle⑦">toggle</span>/<span id="ref-for-css-toggle-group⑦">toggle group</span> is on)
-	can see and interact with the <span id="ref-for-css-toggle⑧">toggle</span>/<span id="ref-for-css-toggle-group⑧">toggle group</span>.</p>
-   <p>If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑨">toggle</a> (<a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑨">toggle group</a>) has <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-wide-scope">wide scope</dfn>,
+	(beyond the element the <span id="ref-for-css-toggle①⓪">toggle</span>/<span id="ref-for-css-toggle-group⑦">toggle group</span> is on)
+	can see and interact with the <span id="ref-for-css-toggle①①">toggle</span>/<span id="ref-for-css-toggle-group⑧">toggle group</span>.</p>
+   <p>If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①②">toggle</a> (<a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group⑨">toggle group</a>) has <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-wide-scope">wide scope</dfn>,
 	it’s visible to the element it’s defined on,
 	its descendants
 	its <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-following" id="ref-for-concept-tree-following">following</a> <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-sibling" id="ref-for-concept-tree-sibling">siblings</a>,
 	and their <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-descendant" id="ref-for-concept-tree-descendant">descendants</a>.</p>
-   <p>If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⓪">toggle</a> (<a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⓪">toggle group</a>) has <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-narrow-scope">narrow scope</dfn>,
+   <p>If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①③">toggle</a> (<a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⓪">toggle group</a>) has <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-narrow-scope">narrow scope</dfn>,
 	it’s visible to the element it’s defined on
 	and its descendants.</p>
-   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①①">Toggles</a> of the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑥">name</a> "shadow" earlier ones;
+   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①④">Toggles</a> of the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑥">name</a> "shadow" earlier ones;
 	if multiple toggles of a given <span id="ref-for-toggle-name⑦">name</span> would have overlapping scopes,
-	an element is only <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-in-scope">in scope</dfn> for the <span id="ref-for-css-toggle①②">toggle</span> created by the nearest <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-preceding" id="ref-for-concept-tree-preceding">preceding</a> element in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-order" id="ref-for-concept-tree-order">tree order</a>.
+	an element is only <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-in-scope">in scope</dfn> for the <span id="ref-for-css-toggle①⑤">toggle</span> created by the nearest <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-preceding" id="ref-for-concept-tree-preceding">preceding</a> element in <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-order" id="ref-for-concept-tree-order">tree order</a>.
 	The same applies to <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①①">toggle groups</a>.
-	However, <span id="ref-for-css-toggle①③">toggles</span> and <span id="ref-for-css-toggle-group①②">toggle groups</span> do not interfere with each other’s scopes;
-	an element can "see past" a <span id="ref-for-css-toggle①④">toggle</span> to find a <span id="ref-for-css-toggle-group①③">toggle group</span> of the same name it’s <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope①">in scope</a> for,
+	However, <span id="ref-for-css-toggle①⑥">toggles</span> and <span id="ref-for-css-toggle-group①②">toggle groups</span> do not interfere with each other’s scopes;
+	an element can "see past" a <span id="ref-for-css-toggle①⑦">toggle</span> to find a <span id="ref-for-css-toggle-group①③">toggle group</span> of the same name it’s <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope①">in scope</a> for,
 	and vice versa.</p>
    <hr>
    <p>A <dfn class="dfn-paneled" data-dfn-for="toggle" data-dfn-type="dfn" data-export id="toggle-toggle-specifier">toggle specifier</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct" id="ref-for-struct②">struct</a> associated with an element,
-	defining the initial state of a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑤">toggle</a> if one needs to be created on the element,
+	defining the initial state of a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑧">toggle</a> if one needs to be created on the element,
 	and how to respond to a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation">toggle activation</a>.
 	It has the following <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#struct-item" id="ref-for-struct-item②">items</a>:</p>
    <dl>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-name">name</dfn>
     <dd data-md>
-     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string⑤">string</a> specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑥">toggle’s</a> <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑧">name</a>.</p>
+     <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string⑤">string</a> specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑨">toggle’s</a> <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑧">name</a>.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-initial-state">initial state</dfn>
     <dd data-md>
      <p>A non-negative integer
-specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑦">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state">state</a> upon creation.</p>
+specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⓪">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state">state</a> upon creation.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-state-names">state names</dfn>
     <dd data-md>
      <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a> of state names,
 each of which are <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string⑥">strings</a>,
-assigned to the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑧">toggle</a> initially upon creation.</p>
+assigned to the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②①">toggle</a> initially upon creation.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-group">group</dfn>
     <dd data-md>
      <p>A boolean,
-specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle①⑨">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-group" id="ref-for-toggle-group①">group</a> boolean upon creation.</p>
+specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②②">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-group" id="ref-for-toggle-group①">group</a> boolean upon creation.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-scope">scope</dfn>
     <dd data-md>
      <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string⑦">string</a> (either "wide" or "narrow"),
-specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⓪">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope②">scope</a> upon creation.</p>
+specifying the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②③">toggle’s</a> initial <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope②">scope</a> upon creation.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-maximum-state">maximum state</dfn>
     <dd data-md>
      <p>A positive integer
-specifying the highest <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state①">active state</a> the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②①">toggle</a> can reach.</p>
+specifying the highest <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state①">active state</a> the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②④">toggle</a> can reach.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle specifier" data-dfn-type="dfn" data-export id="toggle-specifier-sticky">sticky</dfn>
     <dd data-md>
      <p>A <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a> specifying how to react
@@ -850,7 +878,7 @@ when a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-tog
 the state either stays within the <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state②">active states</a> and returns to 1 (if true)
 or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state">inactive state</a> (if false).</p>
    </dl>
-   <p><a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier">Toggle specifiers</a> are created by the <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create">toggle-create</a> property;
+   <p><a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier">Toggle specifiers</a> are created by the <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root①">toggle-root</a> property;
 	they are not persistent state on an element.
 	An element can have any number of <span id="ref-for-toggle-toggle-specifier①">toggle specifiers</span>.</p>
    <div class="algorithm" data-algorithm="default toggle specifier">
@@ -865,22 +893,22 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
    </div>
    <h3 class="heading settled" data-level="2.1" id="toggle-vs-props"><span class="secno">2.1. </span><span class="content"> Toggles and CSS Properties</span><a class="self-link" href="#toggle-vs-props"></a></h3>
    <p>To allow for toggles to be responded to by Selectors
-	without causing any circularity issues, <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②②">toggles</a> themselves are invisible state on an element,
+	without causing any circularity issues, <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑤">toggles</a> themselves are invisible state on an element,
 	separate from any CSS properties that might apply.
 	The CSS properties merely define which elements can <em>activate</em> a toggle,
 	and which elements can <em>respond</em> to a toggle activation
 	(and how they do so).</p>
-   <div class="example" id="example-2f5c4a18">
-    <a class="self-link" href="#example-2f5c4a18"></a> For example, while an element needs <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create①">toggle-create</a> to establish a toggle,
+   <div class="example" id="example-091f5f44">
+    <a class="self-link" href="#example-091f5f44"></a> For example, while an element needs <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root②">toggle-root</a> to establish a toggle,
 		once a toggle is created,
-		removing the <span class="property" id="ref-for-propdef-toggle-create②">toggle-create</span> property does not affect the toggle. 
+		removing the <span class="property" id="ref-for-propdef-toggle-root③">toggle-root</span> property does not affect the toggle. 
 <pre class="lang-css highlight">.toggleable <c- p>{</c->
-  <c- k>toggle-create</c-><c- p>:</c-> foo <c- m>1</c-><c- p>;</c->
-  <c- k>toggle-set</c-><c- p>:</c-> foo<c- p>;</c->
+  <c- k>toggle-root</c-><c- p>:</c-> foo <c- m>1</c-><c- p>;</c->
+  <c- k>toggle-trigger</c-><c- p>:</c-> foo<c- p>;</c->
 <c- p>}</c->
 .toggleable<c- nf>:toggle</c-><c- p>(</c->foo<c- p>)</c-> <c- p>{</c->
-  <c- k>toggle-create</c-><c- p>:</c-> none<c- p>;</c->
-  <c- k>toggle-set</c-><c- p>:</c-> none<c- p>;</c->
+  <c- k>toggle-root</c-><c- p>:</c-> none<c- p>;</c->
+  <c- k>toggle-trigger</c-><c- p>:</c-> none<c- p>;</c->
 <c- p>}</c->
 </pre>
     <p>In this example, the toggleable element declares that it can establish a <span class="css">foo</span> toggle,
@@ -893,20 +921,20 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
 		and removes the <span class="css">toggle-*</span> properties.
 		This does not remove the <span class="css">foo</span> toggle or affect its value, however;
 		it still exists and is still set to <span class="css">1</span>,
-		so the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle">:toggle()</a> pseudo-class will continue matching.
+		so the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle②">:toggle()</a> pseudo-class will continue matching.
 		However, further activations of the element
 		will no longer affect the <span class="css">foo</span> toggle,
-		since <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set">toggle-set</a> was changed to <a class="css" data-link-type="maybe" href="#valdef-toggle-set-none" id="ref-for-valdef-toggle-set-none">none</a>.</p>
+		since <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger①">toggle-trigger</a> was changed to <a class="css" data-link-type="maybe" href="#valdef-toggle-trigger-none" id="ref-for-valdef-toggle-trigger-none">none</a>.</p>
     <p>The <span class="css">foo</span> toggle is thus "frozen" in the activated state
 		(unless the author has other elements in the toggle’s <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope③">scope</a> that can also affect it,
 		or tweaks the value manually via JS).</p>
    </div>
-   <h2 class="heading settled" data-level="3" id="toggle-create-property"><span class="secno">3. </span><span class="content"> Creating a Toggle: the <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create③">toggle-create</a> property</span><a class="self-link" href="#toggle-create-property"></a></h2>
-   <table class="def propdef" data-link-for-hint="toggle-create">
+   <h2 class="heading settled" data-level="3" id="toggle-root-property"><span class="secno">3. </span><span class="content"> Creating a Toggle: the <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root④">toggle-root</a> property</span><a class="self-link" href="#toggle-root-property"></a></h2>
+   <table class="def propdef" data-link-for-hint="toggle-root">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-toggle-create">toggle-create</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-toggle-root">toggle-root</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
       <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one①">|</a> <a class="production css" data-link-type="type" href="#typedef-toggle-specifier" id="ref-for-typedef-toggle-specifier">&lt;toggle-specifier></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-comma" id="ref-for-mult-comma">#</a> 
@@ -914,7 +942,7 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>none 
      <tr>
-      <th>Applies to:
+      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
       <td><a href="https://www.w3.org/TR/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
@@ -926,7 +954,7 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
       <th><a href="https://www.w3.org/TR/css-cascade/#computed">Computed value:</a>
       <td>as specified 
      <tr>
-      <th>Canonical order:
+      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
       <td>per grammar 
      <tr>
       <th>Media:
@@ -938,20 +966,20 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
 <pre class="prod"><dfn class="dfn-paneled" data-dfn-type="type" data-export id="typedef-toggle-specifier"><a class="production" data-link-type="type" href="#typedef-toggle-specifier" id="ref-for-typedef-toggle-specifier①">&lt;toggle-specifier></a></dfn> =
   <a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name④">&lt;toggle-name></a>
   [
-    [ <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value">&lt;integer [0,∞]></a> / ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt">?</a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value①">&lt;integer [1,∞]></a> <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-any" id="ref-for-comb-any">||</a>
+    [ <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value">&lt;integer [0,∞]></a> / ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt">?</a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value①">&lt;integer [1,∞]></a> <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-any" id="ref-for-comb-any">||</a>
     sticky <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-any" id="ref-for-comb-any①">||</a>
     group <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-any" id="ref-for-comb-any②">||</a>
     self
   ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt①">?</a>
 </pre>
-   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create④">toggle-create</a> property causes <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②③">toggles</a> to be created on an element,
-	and controls how the <span id="ref-for-css-toggle②④">toggles</span> are updated when they are activated.</p>
+   <p>The <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root⑤">toggle-root</a> property causes <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑥">toggles</a> to be created on an element,
+	and controls how the <span id="ref-for-css-toggle②⑦">toggles</span> are updated when they are activated.</p>
    <dl>
-    <dt><dfn class="css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-none">none<a class="self-link" href="#valdef-toggle-create-none"></a></dfn> 
+    <dt><dfn class="css" data-dfn-for="toggle-root" data-dfn-type="value" data-export id="valdef-toggle-root-none">none<a class="self-link" href="#valdef-toggle-root-none"></a></dfn> 
     <dd>
       The element has no <a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier③">toggle specifiers</a>. 
-     <p>(This does not remove any <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑤">toggles</a> that have already been established on the element.)</p>
-    <dt><dfn class="css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-toggle-specifier"><a class="production css" data-link-type="type" href="#typedef-toggle-specifier" id="ref-for-typedef-toggle-specifier②">&lt;toggle-specifier></a>#<a class="self-link" href="#valdef-toggle-create-toggle-specifier"></a></dfn> 
+     <p>(This does not remove any <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑧">toggles</a> that have already been established on the element.)</p>
+    <dt><dfn class="css" data-dfn-for="toggle-root" data-dfn-type="value" data-export id="valdef-toggle-root-toggle-specifier"><a class="production css" data-link-type="type" href="#typedef-toggle-specifier" id="ref-for-typedef-toggle-specifier②">&lt;toggle-specifier></a>#<a class="self-link" href="#valdef-toggle-root-toggle-specifier"></a></dfn> 
     <dd>
       The element has one or more <a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier④">toggle specifiers</a>,
 			one per <a class="production css" data-link-type="type" href="#typedef-toggle-specifier" id="ref-for-typedef-toggle-specifier③">&lt;toggle-specifier></a>,
@@ -965,31 +993,31 @@ or cycles back to the <a data-link-type="dfn" href="#toggle-inactive-state" id="
        <p>The initial <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name⑤">&lt;toggle-name></a> specifies the <a data-link-type="dfn" href="#toggle-specifier-name" id="ref-for-toggle-specifier-name①">name</a>,
 as the item’s value.</p>
       <li data-md>
-       <p>The first <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value②">&lt;integer></a>, if specified,
+       <p>The first <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value②">&lt;integer></a>, if specified,
 specifies the <a data-link-type="dfn" href="#toggle-specifier-initial-state" id="ref-for-toggle-specifier-initial-state①">initial state</a>.
 If omitted, it’s set to 0.</p>
-       <p>It must be less than or equal to the second <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value③">&lt;integer></a>,
+       <p>It must be less than or equal to the second <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value③">&lt;integer></a>,
 or else the declaration is invalid.</p>
       <li data-md>
-       <p>The second <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value④">&lt;integer></a>, if specified,
+       <p>The second <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value④">&lt;integer></a>, if specified,
 specifies the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state②">maximum state</a>.
 If omitted, it’s set to 1.</p>
       <li data-md>
-       <p>The <dfn class="dfn-paneled css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-sticky">sticky</dfn> keyword, if specified,
+       <p>The <dfn class="dfn-paneled css" data-dfn-for="toggle-root" data-dfn-type="value" data-export id="valdef-toggle-root-sticky">sticky</dfn> keyword, if specified,
 sets the <a data-link-type="dfn" href="#toggle-specifier-sticky" id="ref-for-toggle-specifier-sticky①">sticky</a> boolean to true.
 If omitted, it’s set to false.</p>
       <li data-md>
-       <p>The <dfn class="css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-group">group<a class="self-link" href="#valdef-toggle-create-group"></a></dfn> keyword, if specified,
+       <p>The <dfn class="css" data-dfn-for="toggle-root" data-dfn-type="value" data-export id="valdef-toggle-root-group">group<a class="self-link" href="#valdef-toggle-root-group"></a></dfn> keyword, if specified,
 sets the <a data-link-type="dfn" href="#toggle-specifier-group" id="ref-for-toggle-specifier-group①">group</a> boolean to true.
 If omitted, it’s set to false.</p>
       <li data-md>
-       <p>The <dfn class="css" data-dfn-for="toggle-create" data-dfn-type="value" data-export id="valdef-toggle-create-self">self<a class="self-link" href="#valdef-toggle-create-self"></a></dfn> keyword, if specified,
+       <p>The <dfn class="css" data-dfn-for="toggle-root" data-dfn-type="value" data-export id="valdef-toggle-root-self">self<a class="self-link" href="#valdef-toggle-root-self"></a></dfn> keyword, if specified,
 sets the <a data-link-type="dfn" href="#toggle-specifier-scope" id="ref-for-toggle-specifier-scope①">scope</a> enum to "narrow".
 If omitted, it’s set to "wide".</p>
      </ul>
    </dl>
-   <div class="example" id="example-037e835f">
-    <a class="self-link" href="#example-037e835f"></a> Revisiting the example in the Introduction,
+   <div class="example" id="example-8d9f5102">
+    <a class="self-link" href="#example-8d9f5102"></a> Revisiting the example in the Introduction,
 		the same ingredient list can be specified in simple HTML and CSS: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>ul</c-> <c- e>class</c-><c- o>=</c-><c- s>'ingredients'</c-><c- p>></c->
    <c- p>&lt;</c-><c- f>li</c-><c- p>></c->1 banana
@@ -998,7 +1026,7 @@ If omitted, it’s set to "wide".</p>
 <c- p>&lt;/</c-><c- f>ul</c-><c- p>></c->
 <c- p>&lt;</c-><c- f>style</c-><c- p>></c->
 <c- f>li</c-> <c- p>{</c->
-  <c- n>toggle-create</c-><c- p>:</c-> <c- n>check</c-> <c- n>self</c-><c- p>;</c->
+  <c- n>toggle-root</c-><c- p>:</c-> <c- n>check</c-> <c- n>self</c-><c- p>;</c->
 <c- p>}</c->
 <c- f>li</c-><c- p>:</c-><c- nd>toggle</c-><c- o>(</c-><c- f>check</c-><c- o>)</c-> <c- p>{</c->
   <c- k>color</c-><c- p>:</c-> <c- kc>silver</c-><c- p>;</c->
@@ -1010,11 +1038,11 @@ If omitted, it’s set to "wide".</p>
 		except the markup is much simpler and more semantic.</p>
    </div>
    <p class="issue" id="issue-80e16e8c"><a class="self-link" href="#issue-80e16e8c"></a> TODO create the <span class="css">toggle-states</span> property
-	that defines <a data-link-type="dfn" href="#toggle-state-names" id="ref-for-toggle-state-names">state names</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑥">toggle</a>,
-	and amend the various properties to allow them to take a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name⑥">&lt;toggle-name></a> instead of an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑤">&lt;integer></a>.</p>
-   <p class="issue" id="issue-6fc26a25"><a class="self-link" href="#issue-6fc26a25"></a> Define the precise point in <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering" id="ref-for-update-the-rendering">update the rendering</a> when toggles are created
-	if <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create⑤">toggle-create</a> names a toggle that doesn’t exist on the element yet.</p>
-   <h3 class="heading settled" data-level="3.1" id="toggle-group-property"><span class="secno">3.1. </span><span class="content"> Linking Toggle States: the <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group①">toggle-group</a> property</span><a class="self-link" href="#toggle-group-property"></a></h3>
+	that defines <a data-link-type="dfn" href="#toggle-state-names" id="ref-for-toggle-state-names">state names</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑨">toggle</a>,
+	and amend the various properties to allow them to take a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name⑥">&lt;toggle-name></a> instead of an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑤">&lt;integer></a>.</p>
+   <p class="issue" id="issue-f7fd1228"><a class="self-link" href="#issue-f7fd1228"></a> Define the precise point in <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering" id="ref-for-update-the-rendering">update the rendering</a> when toggles are created
+	if <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root⑥">toggle-root</a> names a toggle that doesn’t exist on the element yet.</p>
+   <h3 class="heading settled" data-level="3.1" id="toggle-group-property"><span class="secno">3.1. </span><span class="content"> Linking Toggle States: the <a class="property css" data-link-type="property" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group①">toggle-group</a> property</span><a class="self-link" href="#toggle-group-property"></a></h3>
    <table class="def propdef" data-link-for-hint="toggle-group">
     <tbody>
      <tr>
@@ -1027,7 +1055,7 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>none 
      <tr>
-      <th>Applies to:
+      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
       <td><a href="https://www.w3.org/TR/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
@@ -1039,7 +1067,7 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/css-cascade/#computed">Computed value:</a>
       <td>as specified 
      <tr>
-      <th>Canonical order:
+      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
       <td>per grammar 
      <tr>
       <th>Media:
@@ -1048,10 +1076,10 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animatable:</a>
       <td>no 
    </table>
-   <p>By default, each <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle②⑦">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state②">state</a> is independent;
+   <p>By default, each <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⓪">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state②">state</a> is independent;
 	incrementing one has no effect an any other.
-	The <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group②">toggle-group</a> property allows elements to link their <span id="ref-for-css-toggle②⑧">toggles</span> together:
-	all <span id="ref-for-css-toggle②⑨">toggles</span> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑨">name</a> as the <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①④">toggle group</a> that are on elements <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope②">in scope</a> for the <span id="ref-for-css-toggle-group①⑤">toggle group</span> are linked,
+	The <a class="property css" data-link-type="property" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group②">toggle-group</a> property allows elements to link their <span id="ref-for-css-toggle③①">toggles</span> together:
+	all <span id="ref-for-css-toggle③②">toggles</span> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑨">name</a> as the <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①④">toggle group</a> that are on elements <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope②">in scope</a> for the <span id="ref-for-css-toggle-group①⑤">toggle group</span> are linked,
 	such that only one can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state④">active state</a> at a time,
 	similar to HTML’s <code>&lt;input type=radio></code> element.</p>
    <dl>
@@ -1070,11 +1098,11 @@ as the item’s value.</p>
 sets the <a data-link-type="dfn" href="#toggle-group-scope" id="ref-for-toggle-group-scope">scope</a> enum to "narrow".
 If omitted, it’s set to "wide".</p>
      </ul>
-     <p>Only one <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⓪">toggle</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group">in a toggle group</a> can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑤">active state</a> at a time;
-			see <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set①">toggle-set</a> for details.</p>
+     <p>Only one <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③③">toggle</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group">in a toggle group</a> can be in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑤">active state</a> at a time;
+			see <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger②">toggle-trigger</a> for details.</p>
    </dl>
    <div class="example" id="example-1171420a">
-    <a class="self-link" href="#example-1171420a"></a> For example, <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group③">toggle-group</a> can be used to control a tabbed display,
+    <a class="self-link" href="#example-1171420a"></a> For example, <a class="property css" data-link-type="property" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group③">toggle-group</a> can be used to control a tabbed display,
 		so that only one panel is displayed at a time: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>panel-set</c-><c- p>></c->
   <c- p>&lt;</c-><c- f>panel-tab</c-><c- p>></c->first tab<c- p>&lt;/</c-><c- f>panel-tab</c-><c- p>></c->
@@ -1112,10 +1140,10 @@ If omitted, it’s set to "wide".</p>
 <c- p>}</c->
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
 </pre>
-    <p>Clicking on any tab will increment its corresponding <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③①">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state③">state</a> from 0 to 1
-		(and the <a class="css" data-link-type="maybe" href="#valdef-toggle-create-sticky" id="ref-for-valdef-toggle-create-sticky">sticky</a> keyword will keep it at 1 if activated multiple times),
+    <p>Clicking on any tab will increment its corresponding <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③④">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state③">state</a> from 0 to 1
+		(and the <a class="css" data-link-type="maybe" href="#valdef-toggle-root-sticky" id="ref-for-valdef-toggle-root-sticky">sticky</a> keyword will keep it at 1 if activated multiple times),
 		while resetting the rest of the tabs' <span id="ref-for-toggle-state④">states</span> to 0.
-		Each panel is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope③">in scope</a> for the <span id="ref-for-css-toggle③②">toggle</span> defined by its preceding tab,
+		Each panel is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope③">in scope</a> for the <span id="ref-for-css-toggle③⑤">toggle</span> defined by its preceding tab,
 		so it can respond to the <span id="ref-for-toggle-state⑤">state</span> as well.</p>
    </div>
    <div class="issue" id="issue-47da3fb8">
@@ -1130,20 +1158,20 @@ If omitted, it’s set to "wide".</p>
     <p>We probably want to add a bool to toggle groups dictating this;
 		are there more than these two behaviors to deal with?</p>
    </div>
-   <h3 class="heading settled" data-level="3.2" id="toggle-set-property"><span class="secno">3.2. </span><span class="content"> Activating a Toggle: the <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set②">toggle-set</a> property</span><a class="self-link" href="#toggle-set-property"></a></h3>
-   <table class="def propdef" data-link-for-hint="toggle-set">
+   <h3 class="heading settled" data-level="3.2" id="toggle-trigger-property"><span class="secno">3.2. </span><span class="content"> Activating a Toggle: the <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger③">toggle-trigger</a> property</span><a class="self-link" href="#toggle-trigger-property"></a></h3>
+   <table class="def propdef" data-link-for-hint="toggle-trigger">
     <tbody>
      <tr>
       <th>Name:
-      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-toggle-set">toggle-set</dfn>
+      <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-toggle-trigger">toggle-trigger</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one③">|</a> [ <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⓪">&lt;toggle-name></a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑥">&lt;integer [0,∞]></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt③">?</a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-comma" id="ref-for-mult-comma②">#</a> 
+      <td class="prod">none <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one③">|</a> [ <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⓪">&lt;toggle-name></a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑥">&lt;integer [0,∞]></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt③">?</a> ]<a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-comma" id="ref-for-mult-comma②">#</a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>none 
      <tr>
-      <th>Applies to:
+      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
       <td>elements without existing activation behavior (see prose) 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
@@ -1155,7 +1183,7 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/css-cascade/#computed">Computed value:</a>
       <td>as specified 
      <tr>
-      <th>Canonical order:
+      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
       <td>per grammar 
      <tr>
       <th>Media:
@@ -1164,33 +1192,33 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animatable:</a>
       <td>no 
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set③">toggle-set</a> property specifies that an element can be activated
-	to change the state of one or more <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③③">toggles</a>.
+   <p>The <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger④">toggle-trigger</a> property specifies that an element can be activated
+	to change the state of one or more <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑥">toggles</a>.
 	It has the following values:</p>
    <dl>
-    <dt data-md><dfn class="dfn-paneled css" data-dfn-for="toggle-set" data-dfn-type="value" data-export id="valdef-toggle-set-none">none</dfn>
+    <dt data-md><dfn class="dfn-paneled css" data-dfn-for="toggle-trigger" data-dfn-type="value" data-export id="valdef-toggle-trigger-none">none</dfn>
     <dd data-md>
-     <p>The element does not manipulated any <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③④">toggles</a>.</p>
-    <dt data-md><dfn class="css" data-dfn-for="toggle-set" data-dfn-type="value" data-export id="valdef-toggle-set-toggle-name-integer-0"><a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①①">&lt;toggle-name></a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑦">&lt;integer [0,∞]></a>?<a class="self-link" href="#valdef-toggle-set-toggle-name-integer-0"></a></dfn>
+     <p>The element does not manipulated any <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑦">toggles</a>.</p>
+    <dt data-md><dfn class="css" data-dfn-for="toggle-trigger" data-dfn-type="value" data-export id="valdef-toggle-trigger-toggle-name-integer-0"><a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①①">&lt;toggle-name></a> <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑦">&lt;integer [0,∞]></a>?<a class="self-link" href="#valdef-toggle-trigger-toggle-name-integer-0"></a></dfn>
     <dd data-md>
      <p>If the element already has existing activation behavior from the host language,
 this value does nothing.</p>
      <p>Otherwise, the element becomes activatable,
 and when activated,
-for each comma-separated entry in the list, <a data-link-type="dfn" href="#fire-a-toggle-activation" id="ref-for-fire-a-toggle-activation">fires</a> a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation②">toggle activation</a> with the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①②">&lt;toggle-name></a> and, if an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑧">&lt;integer></a> is specified,
+for each comma-separated entry in the list, <a data-link-type="dfn" href="#fire-a-toggle-activation" id="ref-for-fire-a-toggle-activation">fires</a> a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation②">toggle activation</a> with the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①②">&lt;toggle-name></a> and, if an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑧">&lt;integer></a> is specified,
 a target state of that integer.</p>
    </dl>
    <p>A <dfn class="dfn-paneled" data-dfn-for="CSS" data-dfn-type="dfn" data-export id="css-toggle-activation">toggle activation</dfn> is a struct with the following items:</p>
    <dl>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle activation" data-dfn-type="dfn" data-export id="toggle-activation-name">name</dfn>
     <dd data-md>
-     <p>The <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①⓪">name</a> of the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑤">toggle</a> this is intended activate.</p>
+     <p>The <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①⓪">name</a> of the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑧">toggle</a> this is intended activate.</p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-for="toggle activation" data-dfn-type="dfn" data-export id="toggle-activation-target-state">target state</dfn>
     <dd data-md>
      <p>An optional non-negative integer.</p>
-     <p>If specified, gives the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑥">state</a> that this activation will attempt to put the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑥">toggle</a> into.
+     <p>If specified, gives the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑥">state</a> that this activation will attempt to put the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑨">toggle</a> into.
 If unspecified,
-indicates that this activation will increment the <span id="ref-for-css-toggle③⑦">toggle’s</span> current <span id="ref-for-toggle-state⑦">state</span>.</p>
+indicates that this activation will increment the <span id="ref-for-css-toggle④⓪">toggle’s</span> current <span id="ref-for-toggle-state⑦">state</span>.</p>
    </dl>
    <div class="algorithm" data-algorithm="fire a toggle activation">
      To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="fire" id="fire-a-toggle-activation">fire a toggle activation</dfn> on an element <var>initial element</var> with a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation③">toggle activation</a> <var>activation</var>: 
@@ -1198,12 +1226,12 @@ indicates that this activation will increment the <span id="ref-for-css-toggle�
      <li data-md>
       <p>Let <var>el</var> initially be <var>initial element</var>.</p>
      <li data-md>
-      <p>If <var>el</var> has a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑧">toggle</a> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①①">name</a> as <var>activation</var>,
-and <var>initial element</var> is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope④">in scope</a> for the <span id="ref-for-css-toggle③⑨">toggle</span>,
+      <p>If <var>el</var> has a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④①">toggle</a> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①①">name</a> as <var>activation</var>,
+and <var>initial element</var> is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope④">in scope</a> for the <span id="ref-for-css-toggle④②">toggle</span>,
 then:</p>
       <ol>
        <li data-md>
-        <p>Let <var>toggle</var> be the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⓪">toggle</a>.</p>
+        <p>Let <var>toggle</var> be the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④③">toggle</a>.</p>
        <li data-md>
         <p>If <var>el</var> has a <a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier⑥">toggle specifier</a> with the same <a data-link-type="dfn" href="#toggle-specifier-name" id="ref-for-toggle-specifier-name②">name</a>,
 let <var>specifier</var> be it.</p>
@@ -1220,14 +1248,14 @@ and to 0 if it’s false.</p>
        <li data-md>
         <p>If <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①②">state</a> is now greater than zero
 and <var>toggle</var> is <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group①">in a toggle group</a>,
-then for each <em>other</em> <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④①">toggle</a> in the same <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⑧">toggle group</a>,
+then for each <em>other</em> <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④④">toggle</a> in the same <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⑧">toggle group</a>,
 set their <span id="ref-for-toggle-state①③">state</span> to 0.</p>
        <li data-md>
         <p>Return from this algorithm.</p>
       </ol>
      <li data-md>
       <p>Otherwise,
-continue searching for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④②">toggle</a>:</p>
+continue searching for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑤">toggle</a>:</p>
       <ul>
        <li data-md>
         <p>If <var>el</var> has a <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-tree-previous-sibling" id="ref-for-concept-tree-previous-sibling">previous sibling</a>,
@@ -1250,7 +1278,7 @@ and return to step 2.</p>
 	we want to exclude things like text inputs,
 	which would confuse a11y tooling,
 	but include buttons that aren’t, like, submit buttons.</p>
-   <h3 class="heading settled" data-level="3.3" id="toggle-property"><span class="secno">3.3. </span><span class="content"> Creating and Activating Toggles Simultaneously: the <a class="property" data-link-type="propdesc" href="#propdef-toggle" id="ref-for-propdef-toggle">toggle</a> shorthand</span><a class="self-link" href="#toggle-property"></a></h3>
+   <h3 class="heading settled" data-level="3.3" id="toggle-property"><span class="secno">3.3. </span><span class="content"> Creating and Activating Toggles Simultaneously: the <a class="property css" data-link-type="property" href="#propdef-toggle" id="ref-for-propdef-toggle">toggle</a> shorthand</span><a class="self-link" href="#toggle-property"></a></h3>
    <table class="def propdef" data-link-for-hint="toggle">
     <tbody>
      <tr>
@@ -1258,12 +1286,12 @@ and return to step 2.</p>
       <td><dfn class="dfn-paneled css" data-dfn-type="property" data-export id="propdef-toggle">toggle</dfn>
      <tr class="value">
       <th><a href="https://www.w3.org/TR/css-values/#value-defs">Value:</a>
-      <td class="prod"><a class="production" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create⑥">&lt;'toggle-create'></a> 
+      <td class="prod"><a class="production css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root⑦">&lt;'toggle-root'></a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>see individual properties 
      <tr>
-      <th>Applies to:
+      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
       <td>see individual properties 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
@@ -1278,15 +1306,15 @@ and return to step 2.</p>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animation type:</a>
       <td>see individual properties 
      <tr>
-      <th>Canonical order:
+      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
       <td>per grammar 
    </table>
-   <p>While some cases require setting up a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④③">toggle</a> on an ancestor
+   <p>While some cases require setting up a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">toggle</a> on an ancestor
 	of the elements that will activate and respond to the toggle,
-	in many cases the <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope④">scope</a> rules for <span id="ref-for-css-toggle④④">toggles</span> are such that it’s fine to create the <span id="ref-for-css-toggle④⑤">toggle</span> on the element intended to activate the toggle as well.</p>
-   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle" id="ref-for-propdef-toggle①">toggle</a> shorthand sets both the <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create⑦">toggle-create</a> and <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set④">toggle-set</a> properties on an element together.
-	The entire value of the property is assigned to <span class="property" id="ref-for-propdef-toggle-create⑧">toggle-create</span>,
-	while <span class="property" id="ref-for-propdef-toggle-set⑤">toggle-set</span> is assigned to just the <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①③">&lt;toggle-name></a>s specified in the list,
+	in many cases the <a data-link-type="dfn" href="#toggle-scope" id="ref-for-toggle-scope④">scope</a> rules for <span id="ref-for-css-toggle④⑦">toggles</span> are such that it’s fine to create the <span id="ref-for-css-toggle④⑧">toggle</span> on the element intended to activate the toggle as well.</p>
+   <p>The <a class="property css" data-link-type="property" href="#propdef-toggle" id="ref-for-propdef-toggle①">toggle</a> shorthand sets both the <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root⑧">toggle-root</a> and <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger⑤">toggle-trigger</a> properties on an element together.
+	The entire value of the property is assigned to <span class="property" id="ref-for-propdef-toggle-root⑨">toggle-root</span>,
+	while <span class="property" id="ref-for-propdef-toggle-trigger⑥">toggle-trigger</span> is assigned to just the <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①③">&lt;toggle-name></a>s specified in the list,
 	if any.</p>
    <div class="example" id="example-9e93d6b5">
     <a class="self-link" href="#example-9e93d6b5"></a> For example,
@@ -1308,36 +1336,36 @@ and return to step 2.</p>
 </pre>
    </div>
    <h3 class="heading settled" data-level="3.4" id="a11y"><span class="secno">3.4. </span><span class="content"> Accessibility Implications of Toggles</span><a class="self-link" href="#a11y"></a></h3>
-   <div class="issue" id="issue-6c01b306">
-    <a class="self-link" href="#issue-6c01b306"></a> TODO 
+   <div class="issue" id="issue-d75619e8">
+    <a class="self-link" href="#issue-d75619e8"></a> TODO 
     <ul>
      <li data-md>
-      <p>a <a class="property" data-link-type="propdesc" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set⑥">toggle-set</a> element needs to become activatable/focusable/etc,
+      <p>a <a class="property css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger⑦">toggle-trigger</a> element needs to become activatable/focusable/etc,
 and communicate in the a11y tree that it’s a checkbox/radio/etc</p>
      <li data-md>
       <p>we can infer what type of control it is
 by examining the properties of the toggle:
 if it’s part of a group, sticky, etc.</p>
      <li data-md>
-      <p>if <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility">toggle-visibility</a> is in use,
+      <p>if <a class="property css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility">toggle-visibility</a> is in use,
 we can also automatically infer all the tab-set ARIA roles</p>
     </ul>
    </div>
-   <h2 class="heading settled" data-level="4" id="checked-pseudoclass"><span class="secno">4. </span><span class="content"> Selecting Elements Based on Toggle State: the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle①">:toggle()</a> pseudo-class</span><a class="self-link" href="#checked-pseudoclass"></a></h2>
+   <h2 class="heading settled" data-level="4" id="checked-pseudoclass"><span class="secno">4. </span><span class="content"> Selecting Elements Based on Toggle State: the <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle③">:toggle()</a> pseudo-class</span><a class="self-link" href="#checked-pseudoclass"></a></h2>
    <p><a data-link-type="biblio" href="#biblio-selectors-4">[SELECTORS-4]</a> defines the <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/selectors-4/#checked-pseudo" id="ref-for-checked-pseudo①">:checked</a> pseudo-class,
 	which allows author to match certain elements
 	(as defined by the host language)
 	depending on their "checked" state.</p>
-   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">Toggles</a> provides a very similar functionality,
-	allowing elements to be selected based on their <span id="ref-for-css-toggle④⑦">toggle</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①④">state</a>,
+   <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑨">Toggles</a> provides a very similar functionality,
+	allowing elements to be selected based on their <span id="ref-for-css-toggle⑤⓪">toggle</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①④">state</a>,
 	the <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-toggle">:toggle()</dfn> pseudo-class:</p>
-<pre class="prod">:toggle( <a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①④">&lt;toggle-name></a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value⑨">&lt;integer></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> )
+<pre class="prod">:toggle( <a class="production" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①④">&lt;toggle-name></a> <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑨">&lt;integer></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> )
 </pre>
-   <p>An element matches <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle②">:toggle()</a> if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑤">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑧">toggle</a> with the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①②">name</a> given by <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑤">&lt;toggle-name></a>,
-	and either the <span id="ref-for-css-toggle④⑨">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑤">state</a> matches the provided <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value" id="ref-for-integer-value①⓪">&lt;integer></a>,
-	or the <span class="production" id="ref-for-integer-value①①">&lt;integer></span> is omitted and the <span id="ref-for-css-toggle⑤⓪">toggle</span> is in any <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑥">active state</a>.</p>
+   <p>An element matches <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle④">:toggle()</a> if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑤">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">toggle</a> with the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①②">name</a> given by <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑤">&lt;toggle-name></a>,
+	and either the <span id="ref-for-css-toggle⑤②">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑤">state</a> matches the provided <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value①⓪">&lt;integer></a>,
+	or the <span class="production" id="ref-for-integer-value①①">&lt;integer></span> is omitted and the <span id="ref-for-css-toggle⑤③">toggle</span> is in any <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑥">active state</a>.</p>
    <div class="example" id="example-d684b11f">
-    <a class="self-link" href="#example-d684b11f"></a> For example, if a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">toggle</a> named "used"
+    <a class="self-link" href="#example-d684b11f"></a> For example, if a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤④">toggle</a> named "used"
 		is defined on each element in an recipe’s ingredient list,
 		the ingredients can respond to being clicked on easily: 
 <pre class="lang-css highlight">.ingredient <c- p>{</c->
@@ -1377,7 +1405,7 @@ we can also automatically infer all the tab-set ARIA roles</p>
 </pre>
    </div>
    <h2 class="heading settled" data-level="5" id="toggle-visibility-property"><span class="secno">5. </span><span class="content"> Automatically Hiding With A Toggle</span><a class="self-link" href="#toggle-visibility-property"></a></h2>
-   <p>The <a class="property" data-link-type="propdesc" href="https://drafts.csswg.org/css-contain-2/#propdef-content-visibility" id="ref-for-propdef-content-visibility">content-visibility</a> property
+   <p>The <a class="property css" data-link-type="property" href="https://drafts.csswg.org/css-contain-2/#propdef-content-visibility" id="ref-for-propdef-content-visibility">content-visibility</a> property
 	allows an element to suppress the layout and rendering of its contents,
 	similar to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-display-3/#propdef-display" id="ref-for-propdef-display">display: none</a>;
 	however, its <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-contain-2/#valdef-content-visibility-auto" id="ref-for-valdef-content-visibility-auto">auto</a> value allows the contents
@@ -1387,11 +1415,11 @@ we can also automatically infer all the tab-set ARIA roles</p>
 	or tab order,
 	and then to automatically become visible
 	when the element becomes <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user">relevant to the user</a>.</p>
-   <p>A common use-case for <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤②">toggles</a> is also to control whether an element is shown or hidden,
+   <p>A common use-case for <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑤">toggles</a> is also to control whether an element is shown or hidden,
 	and in many cases it would also be useful to allow the contents of elements "hidden" in this way
 	to be accessible in the same ways.
 	To allow for this,
-	the <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility①">toggle-visibility</a> property allows an element
+	the <a class="property css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility①">toggle-visibility</a> property allows an element
 	to both respond to and control a toggle
 	with its visibility.</p>
    <table class="def propdef" data-link-for-hint="toggle-visibility">
@@ -1406,7 +1434,7 @@ we can also automatically infer all the tab-set ARIA roles</p>
       <th><a href="https://www.w3.org/TR/css-cascade/#initial-values">Initial:</a>
       <td>normal 
      <tr>
-      <th>Applies to:
+      <th><a href="https://www.w3.org/TR/css-cascade/#applies-to">Applies to:</a>
       <td><a href="https://www.w3.org/TR/css-pseudo/#generated-content" title="Includes ::before and ::after pseudo-elements.">all elements</a> 
      <tr>
       <th><a href="https://www.w3.org/TR/css-cascade/#inherited-property">Inherited:</a>
@@ -1418,14 +1446,14 @@ we can also automatically infer all the tab-set ARIA roles</p>
       <th><a href="https://www.w3.org/TR/css-cascade/#computed">Computed value:</a>
       <td>as specified 
      <tr>
-      <th>Canonical order:
+      <th><a href="https://www.w3.org/TR/cssom/#serializing-css-values">Canonical order:</a>
       <td>per grammar 
      <tr>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animation type:</a>
       <td>not animatable 
    </table>
-   <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility②">toggle-visibility</a> property
-	allows an element to automatically tie its display to a particular <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤③">toggle</a> bi-directionally,
+   <p>The <a class="property css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility②">toggle-visibility</a> property
+	allows an element to automatically tie its display to a particular <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑥">toggle</a> bi-directionally,
 	while still exposing its contents to be focused, found-in-page, etc.,
 	automatically showing itself when relevant.</p>
    <dl>
@@ -1434,8 +1462,8 @@ we can also automatically infer all the tab-set ARIA roles</p>
      <p>The property has no effect.</p>
     <dt data-md><dfn class="css" data-dfn-for="toggle-visibility" data-dfn-type="value" data-export data-lt="toggle" id="valdef-toggle-visibility-toggle">toggle <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑦">&lt;toggle-name></a><a class="self-link" href="#valdef-toggle-visibility-toggle"></a></dfn>
     <dd data-md>
-     <p>If the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑥">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤④">toggle</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑧">&lt;toggle-name></a>,
-and that <span id="ref-for-css-toggle⑤⑤">toggle</span> is in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state④">inactive state</a>,
+     <p>If the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑥">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑦">toggle</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑧">&lt;toggle-name></a>,
+and that <span id="ref-for-css-toggle⑤⑧">toggle</span> is in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state④">inactive state</a>,
 the element and its descendants generate no <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#box" id="ref-for-box">boxes</a> or <a data-link-type="dfn" href="https://drafts.csswg.org/css-display-3/#text-run" id="ref-for-text-run">text runs</a>,
 similar to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.org/css-display-3/#propdef-display" id="ref-for-propdef-display①">display: none</a>,
 but must still be available to user-agent features
@@ -1445,17 +1473,17 @@ similar to <a class="css" data-link-type="propdesc" href="https://drafts.csswg.o
      <p>If the element starts being <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user①">relevant to the user</a>,
 it <a data-link-type="dfn" href="#fire-a-toggle-activation" id="ref-for-fire-a-toggle-activation①">fires</a> a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation④">toggle activation</a>,
 with a <a data-link-type="dfn" href="#toggle-activation-name" id="ref-for-toggle-activation-name①">name</a> of the given <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name" id="ref-for-typedef-toggle-toggle-name①⑨">&lt;toggle-name></a> and a <a data-link-type="dfn" href="#toggle-activation-target-state" id="ref-for-toggle-activation-target-state②">target state</a> of 1.</p>
-     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑥">toggle</a> is currently in an <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑤">inactive state</a> and thus not generating any boxes,
+     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑨">toggle</a> is currently in an <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑤">inactive state</a> and thus not generating any boxes,
 it can’t become <a data-link-type="dfn" href="https://drafts.csswg.org/css-contain-2/#relevant-to-the-user" id="ref-for-relevant-to-the-user②">relevant to the user</a> due to being "on-screen"
 but the other options are still possible.</p>
-     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑦">toggle</a> is in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑦">active state</a>,
-or the element can’t see the specified <span id="ref-for-css-toggle⑤⑧">toggle</span> at all,
+     <p class="note" role="note"><span>Note:</span> If the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⓪">toggle</a> is in an <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑦">active state</a>,
+or the element can’t see the specified <span id="ref-for-css-toggle⑥①">toggle</span> at all,
 the element renders normally.</p>
    </dl>
    <div class="example" id="example-c7f898eb">
     <a class="self-link" href="#example-c7f898eb"></a> For example, an "accordion" display,
 		such as used for a page of FAQs,
-		can use <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility③">toggle-visibility</a> to hide the answers by default,
+		can use <a class="property css" data-link-type="property" href="#propdef-toggle-visibility" id="ref-for-propdef-toggle-visibility③">toggle-visibility</a> to hide the answers by default,
 		but still make them accessible to find-in-page: 
 <pre class="lang-html highlight"><c- p>&lt;</c-><c- f>dl</c-> <c- e>class</c-><c- o>=</c-><c- s>accordion</c-><c- p>></c->
   <c- p>&lt;</c-><c- f>dt</c-><c- p>></c->Question 1?
@@ -1472,15 +1500,15 @@ the element renders normally.</p>
   <c- p>}</c->
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
 </pre>
-    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element">dt</a></code> establishes a separate "show" <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤⑨">toggle</a>,
+    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element">dt</a></code> establishes a separate "show" <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥②">toggle</a>,
 		with all the defaults filling in to produce a standard "checkbox"-like behavior,
 		all initially in the <a data-link-type="dfn" href="#toggle-inactive-state" id="ref-for-toggle-inactive-state⑥">inactive state</a>.
 		Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element①">dt</a></code> can be activated to show or hide the following answer.</p>
-    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element">dd</a></code> can see the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⓪">toggle</a> established by its preceding <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element②">dt</a></code>,
+    <p>Each <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element">dd</a></code> can see the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥③">toggle</a> established by its preceding <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dt-element" id="ref-for-the-dt-element②">dt</a></code>,
 		and will start out not rendering.
 		If the user searches on the page for a term,
 		or visits the page from a link with an #anchor linking into one of the answers,
-		the relevant answer will automatically activate the <span id="ref-for-css-toggle⑥①">toggle</span>,
+		the relevant answer will automatically activate the <span id="ref-for-css-toggle⑥④">toggle</span>,
 		causing the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/grouping-content.html#the-dd-element" id="ref-for-the-dd-element①">dd</a></code> to become visible.</p>
    </div>
    <p class="issue" id="issue-8c43f943"><a class="self-link" href="#issue-8c43f943"></a> Define ordering of activations,
@@ -1488,19 +1516,19 @@ the element renders normally.</p>
 	and they’re all part of a <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⑨">toggle group</a>,
 	which one "wins" is well-defined.</p>
    <h2 class="heading settled" data-level="6" id="dom"><span class="secno">6. </span><span class="content"> Scripting API</span><a class="self-link" href="#dom"></a></h2>
-   <div class="issue" id="issue-8fcfb231">
-    <a class="self-link" href="#issue-8fcfb231"></a> TODO 
+   <div class="issue" id="issue-adf5ca30">
+    <a class="self-link" href="#issue-adf5ca30"></a> TODO 
     <ul>
      <li data-md>
-      <p>Expose a map of toggles on an element, with {name=>rest of <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥②">toggle</a> info}.
+      <p>Expose a map of toggles on an element, with {name=>rest of <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⑤">toggle</a> info}.
 (Or just a list of toggles, with name built into the object?)</p>
      <li data-md>
       <p>Ability to create toggles manually.
-(Tho without an accompanying <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create⑨">toggle-create</a>,
+(Tho without an accompanying <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root①⓪">toggle-root</a>,
 you just get the <a data-link-type="dfn" href="#default-toggle-specifier" id="ref-for-default-toggle-specifier①">default toggle specifier</a> when it’s activated.)</p>
      <li data-md>
       <p>Ability to delete toggles manually.
-(Tho if you don’t remove the accompanying <a class="property" data-link-type="propdesc" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create①⓪">toggle-create</a>,
+(Tho if you don’t remove the accompanying <a class="property css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root①①">toggle-root</a>,
 it’ll respawn on the next rendering tick.)</p>
      <li data-md>
       <p>Ability to set toggle state manually.</p>
@@ -1593,104 +1621,105 @@ it’ll respawn on the next rendering tick.)</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#toggle-active-state">active state</a><span>, in §2</span>
-   <li><a href="#default-toggle-specifier">default toggle specifier</a><span>, in §2</span>
-   <li><a href="#fire-a-toggle-activation">fire</a><span>, in §3.2</span>
-   <li><a href="#fire-a-toggle-activation">fire a toggle activation</a><span>, in §3.2</span>
+   <li><a href="#toggle-active-state">active state</a><span>, in § 2</span>
+   <li><a href="#default-toggle-specifier">default toggle specifier</a><span>, in § 2</span>
+   <li><a href="#fire-a-toggle-activation">fire</a><span>, in § 3.2</span>
+   <li><a href="#fire-a-toggle-activation">fire a toggle activation</a><span>, in § 3.2</span>
    <li>
     group
     <ul>
-     <li><a href="#toggle-group">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-specifier-group">dfn for toggle specifier</a><span>, in §2</span>
-     <li><a href="#valdef-toggle-create-group">value for toggle-create</a><span>, in §3</span>
+     <li><a href="#toggle-group">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-specifier-group">dfn for toggle specifier</a><span>, in § 2</span>
+     <li><a href="#valdef-toggle-root-group">value for toggle-root</a><span>, in § 3</span>
     </ul>
-   <li><a href="#css-implicit-toggle-group">implicit toggle group</a><span>, in §2</span>
-   <li><a href="#toggle-inactive-state">inactive state</a><span>, in §2</span>
-   <li><a href="#toggle-in-a-toggle-group">in a toggle group</a><span>, in §2</span>
-   <li><a href="#toggle-specifier-initial-state">initial state</a><span>, in §2</span>
-   <li><a href="#toggle-in-scope">in scope</a><span>, in §2</span>
-   <li><a href="#toggle-specifier-maximum-state">maximum state</a><span>, in §2</span>
+   <li><a href="#css-implicit-toggle-group">implicit toggle group</a><span>, in § 2</span>
+   <li><a href="#toggle-inactive-state">inactive state</a><span>, in § 2</span>
+   <li><a href="#toggle-in-a-toggle-group">in a toggle group</a><span>, in § 2</span>
+   <li><a href="#toggle-specifier-initial-state">initial state</a><span>, in § 2</span>
+   <li><a href="#toggle-in-scope">in scope</a><span>, in § 2</span>
+   <li><a href="#toggle-specifier-maximum-state">maximum state</a><span>, in § 2</span>
    <li>
     name
     <ul>
-     <li><a href="#toggle-name">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-activation-name">dfn for toggle activation</a><span>, in §3.2</span>
-     <li><a href="#toggle-group-name">dfn for toggle group</a><span>, in §2</span>
-     <li><a href="#toggle-specifier-name">dfn for toggle specifier</a><span>, in §2</span>
+     <li><a href="#toggle-name">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-activation-name">dfn for toggle activation</a><span>, in § 3.2</span>
+     <li><a href="#toggle-group-name">dfn for toggle group</a><span>, in § 2</span>
+     <li><a href="#toggle-specifier-name">dfn for toggle specifier</a><span>, in § 2</span>
     </ul>
    <li>
     "narrow"
     <ul>
-     <li><a href="#toggle-narrow">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-group-narrow">dfn for toggle group</a><span>, in §2</span>
+     <li><a href="#toggle-narrow">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-group-narrow">dfn for toggle group</a><span>, in § 2</span>
     </ul>
-   <li><a href="#toggle-narrow-scope">narrow scope</a><span>, in §2</span>
+   <li><a href="#toggle-narrow-scope">narrow scope</a><span>, in § 2</span>
    <li>
     none
     <ul>
-     <li><a href="#valdef-toggle-create-none">value for toggle-create</a><span>, in §3</span>
-     <li><a href="#valdef-toggle-group-none">value for toggle-group</a><span>, in §3.1</span>
-     <li><a href="#valdef-toggle-set-none">value for toggle-set</a><span>, in §3.2</span>
+     <li><a href="#valdef-toggle-group-none">value for toggle-group</a><span>, in § 3.1</span>
+     <li><a href="#valdef-toggle-root-none">value for toggle-root</a><span>, in § 3</span>
+     <li><a href="#valdef-toggle-trigger-none">value for toggle-trigger</a><span>, in § 3.2</span>
     </ul>
-   <li><a href="#valdef-toggle-visibility-normal">normal</a><span>, in §5</span>
+   <li><a href="#valdef-toggle-visibility-normal">normal</a><span>, in § 5</span>
    <li>
     scope
     <ul>
-     <li><a href="#toggle-scope">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-group-scope">dfn for toggle group</a><span>, in §2</span>
-     <li><a href="#toggle-specifier-scope">dfn for toggle specifier</a><span>, in §2</span>
+     <li><a href="#toggle-scope">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-group-scope">dfn for toggle group</a><span>, in § 2</span>
+     <li><a href="#toggle-specifier-scope">dfn for toggle specifier</a><span>, in § 2</span>
     </ul>
    <li>
     self
     <ul>
-     <li><a href="#valdef-toggle-create-self">value for toggle-create</a><span>, in §3</span>
-     <li><a href="#valdef-toggle-group-toggle-name">value for toggle-group</a><span>, in §3.1</span>
+     <li><a href="#valdef-toggle-group-toggle-name">value for toggle-group</a><span>, in § 3.1</span>
+     <li><a href="#valdef-toggle-root-self">value for toggle-root</a><span>, in § 3</span>
     </ul>
-   <li><a href="#toggle-state">state</a><span>, in §2</span>
+   <li><a href="#toggle-state">state</a><span>, in § 2</span>
    <li>
     state names
     <ul>
-     <li><a href="#toggle-state-names">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-specifier-state-names">dfn for toggle specifier</a><span>, in §2</span>
+     <li><a href="#toggle-state-names">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-specifier-state-names">dfn for toggle specifier</a><span>, in § 2</span>
     </ul>
    <li>
     sticky
     <ul>
-     <li><a href="#toggle-specifier-sticky">dfn for toggle specifier</a><span>, in §2</span>
-     <li><a href="#valdef-toggle-create-sticky">value for toggle-create</a><span>, in §3</span>
+     <li><a href="#toggle-specifier-sticky">dfn for toggle specifier</a><span>, in § 2</span>
+     <li><a href="#valdef-toggle-root-sticky">value for toggle-root</a><span>, in § 3</span>
     </ul>
-   <li><a href="#toggle-activation-target-state">target state</a><span>, in §3.2</span>
-   <li><a href="#selectordef-toggle">:toggle()</a><span>, in §4</span>
+   <li><a href="#toggle-activation-target-state">target state</a><span>, in § 3.2</span>
+   <li><a href="#selectordef-toggle">:toggle()</a><span>, in § 4</span>
    <li>
     toggle
     <ul>
-     <li><a href="#propdef-toggle">(property)</a><span>, in §3.3</span>
-     <li><a href="#css-toggle">dfn for CSS</a><span>, in §2</span>
-     <li><a href="#valdef-toggle-visibility-toggle">value for toggle-visibility</a><span>, in §5</span>
+     <li><a href="#propdef-toggle">(property)</a><span>, in § 3.3</span>
+     <li><a href="#css-toggle">dfn for CSS</a><span>, in § 2</span>
+     <li><a href="#valdef-toggle-visibility-toggle">value for toggle-visibility</a><span>, in § 5</span>
     </ul>
-   <li><a href="#css-toggle-activation">toggle activation</a><span>, in §3.2</span>
-   <li><a href="#propdef-toggle-create">toggle-create</a><span>, in §3</span>
-   <li><a href="#css-toggle-group">toggle group</a><span>, in §2</span>
-   <li><a href="#propdef-toggle-group">toggle-group</a><span>, in §3.1</span>
+   <li><a href="#css-toggle-activation">toggle activation</a><span>, in § 3.2</span>
+   <li><a href="#css-toggle-group">toggle group</a><span>, in § 2</span>
+   <li><a href="#propdef-toggle-group">toggle-group</a><span>, in § 3.1</span>
    <li>
     &lt;toggle-name>
     <ul>
-     <li><a href="#typedef-toggle-toggle-name">type for toggle</a><span>, in §2</span>
-     <li><a href="#valdef-toggle-group-toggle-name">value for toggle-group</a><span>, in §3.1</span>
+     <li><a href="#typedef-toggle-toggle-name">type for toggle</a><span>, in § 2</span>
+     <li><a href="#valdef-toggle-group-toggle-name">value for toggle-group</a><span>, in § 3.1</span>
     </ul>
-   <li><a href="#valdef-toggle-set-toggle-name-integer-0">&lt;toggle-name> &lt;integer [0,∞]>?</a><span>, in §3.2</span>
-   <li><a href="#propdef-toggle-set">toggle-set</a><span>, in §3.2</span>
-   <li><a href="#typedef-toggle-specifier">&lt;toggle-specifier></a><span>, in §3</span>
-   <li><a href="#valdef-toggle-create-toggle-specifier">&lt;toggle-specifier>#</a><span>, in §3</span>
-   <li><a href="#toggle-toggle-specifier">toggle specifier</a><span>, in §2</span>
-   <li><a href="#propdef-toggle-visibility">toggle-visibility</a><span>, in §5</span>
+   <li><a href="#valdef-toggle-trigger-toggle-name-integer-0">&lt;toggle-name> &lt;integer [0,∞]>?</a><span>, in § 3.2</span>
+   <li><a href="#toggle-root">toggle root</a><span>, in § 1</span>
+   <li><a href="#propdef-toggle-root">toggle-root</a><span>, in § 3</span>
+   <li><a href="#typedef-toggle-specifier">&lt;toggle-specifier></a><span>, in § 3</span>
+   <li><a href="#valdef-toggle-root-toggle-specifier">&lt;toggle-specifier>#</a><span>, in § 3</span>
+   <li><a href="#toggle-toggle-specifier">toggle specifier</a><span>, in § 2</span>
+   <li><a href="#propdef-toggle-trigger">toggle-trigger</a><span>, in § 3.2</span>
+   <li><a href="#propdef-toggle-visibility">toggle-visibility</a><span>, in § 5</span>
    <li>
     "wide"
     <ul>
-     <li><a href="#toggle-wide">dfn for toggle</a><span>, in §2</span>
-     <li><a href="#toggle-group-wide">dfn for toggle group</a><span>, in §2</span>
+     <li><a href="#toggle-wide">dfn for toggle</a><span>, in § 2</span>
+     <li><a href="#toggle-group-wide">dfn for toggle group</a><span>, in § 2</span>
     </ul>
-   <li><a href="#toggle-wide-scope">wide scope</a><span>, in §2</span>
+   <li><a href="#toggle-wide-scope">wide scope</a><span>, in § 2</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-valdef-content-visibility-auto">
    <a href="https://drafts.csswg.org/css-contain-2/#valdef-content-visibility-auto">https://drafts.csswg.org/css-contain-2/#valdef-content-visibility-auto</a><b>Referenced in:</b>
@@ -1741,33 +1770,15 @@ Toggle Concepts</a> <a href="#ref-for-elements①">(2)</a>
 Automatically Hiding With A Toggle</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-integer-value">
-   <a href="https://drafts.csswg.org/css-values-3/#integer-value">https://drafts.csswg.org/css-values-3/#integer-value</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-integer-value">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-integer-value①">(2)</a> <a href="#ref-for-integer-value②">(3)</a> <a href="#ref-for-integer-value③">(4)</a> <a href="#ref-for-integer-value④">(5)</a> <a href="#ref-for-integer-value⑤">(6)</a>
-    <li><a href="#ref-for-integer-value⑥">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-integer-value⑦">(2)</a> <a href="#ref-for-integer-value⑧">(3)</a>
-    <li><a href="#ref-for-integer-value⑨">4. 
-Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-integer-value①⓪">(2)</a> <a href="#ref-for-integer-value①①">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-string-value">
-   <a href="https://drafts.csswg.org/css-values-3/#string-value">https://drafts.csswg.org/css-values-3/#string-value</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-string-value">2. 
-Toggle Concepts</a> <a href="#ref-for-string-value①">(2)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-mult-comma">
    <a href="https://drafts.csswg.org/css-values-4/#mult-comma">https://drafts.csswg.org/css-values-4/#mult-comma</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-mult-comma">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-mult-comma①">3.1. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-mult-comma②">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-identifier-value">
@@ -1777,15 +1788,33 @@ Activating a Toggle: the toggle-set property</a>
 Toggle Concepts</a> <a href="#ref-for-identifier-value①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-integer-value">
+   <a href="https://drafts.csswg.org/css-values-4/#integer-value">https://drafts.csswg.org/css-values-4/#integer-value</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-integer-value">3. 
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-integer-value①">(2)</a> <a href="#ref-for-integer-value②">(3)</a> <a href="#ref-for-integer-value③">(4)</a> <a href="#ref-for-integer-value④">(5)</a> <a href="#ref-for-integer-value⑤">(6)</a>
+    <li><a href="#ref-for-integer-value⑥">3.2. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-integer-value⑦">(2)</a> <a href="#ref-for-integer-value⑧">(3)</a>
+    <li><a href="#ref-for-integer-value⑨">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-integer-value①⓪">(2)</a> <a href="#ref-for-integer-value①①">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-string-value">
+   <a href="https://drafts.csswg.org/css-values-4/#string-value">https://drafts.csswg.org/css-values-4/#string-value</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-string-value">2. 
+Toggle Concepts</a> <a href="#ref-for-string-value①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-mult-opt">
    <a href="https://drafts.csswg.org/css-values-4/#mult-opt">https://drafts.csswg.org/css-values-4/#mult-opt</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-mult-opt">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-mult-opt①">(2)</a>
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-mult-opt①">(2)</a>
     <li><a href="#ref-for-mult-opt②">3.1. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-mult-opt③">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-mult-opt④">4. 
 Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
@@ -1796,11 +1825,11 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
     <li><a href="#ref-for-comb-one">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-comb-one①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-comb-one②">3.1. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-comb-one③">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-comb-one④">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -1809,7 +1838,7 @@ Automatically Hiding With A Toggle</a>
    <a href="https://drafts.csswg.org/css-values-4/#comb-any">https://drafts.csswg.org/css-values-4/#comb-any</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-comb-any">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-comb-any①">(2)</a> <a href="#ref-for-comb-any②">(3)</a>
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-comb-any①">(2)</a> <a href="#ref-for-comb-any②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-descendant">
@@ -1830,7 +1859,7 @@ Toggle Concepts</a>
    <a href="https://dom.spec.whatwg.org/#concept-tree-parent">https://dom.spec.whatwg.org/#concept-tree-parent</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-tree-parent">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-preceding">
@@ -1844,7 +1873,7 @@ Toggle Concepts</a>
    <a href="https://dom.spec.whatwg.org/#concept-tree-previous-sibling">https://dom.spec.whatwg.org/#concept-tree-previous-sibling</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-tree-previous-sibling">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-sibling">
@@ -1879,7 +1908,7 @@ Automatically Hiding With A Toggle</a> <a href="#ref-for-the-dt-element①">(2)<
    <a href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering">https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-update-the-rendering">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-boolean">
@@ -1902,7 +1931,7 @@ Toggle Concepts</a>
     <li><a href="#ref-for-struct-item">2. 
 Toggle Concepts</a> <a href="#ref-for-struct-item①">(2)</a> <a href="#ref-for-struct-item②">(3)</a>
     <li><a href="#ref-for-struct-item③">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-list">
@@ -1953,16 +1982,12 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
      <li><span class="dfn-paneled" id="term-for-text-run">text run</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[css-values-3]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-integer-value">&lt;integer></span>
-     <li><span class="dfn-paneled" id="term-for-string-value">&lt;string></span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[css-values-4]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-mult-comma">#</span>
      <li><span class="dfn-paneled" id="term-for-identifier-value">&lt;custom-ident></span>
+     <li><span class="dfn-paneled" id="term-for-integer-value">&lt;integer></span>
+     <li><span class="dfn-paneled" id="term-for-string-value">&lt;string></span>
      <li><span class="dfn-paneled" id="term-for-mult-opt">?</span>
      <li><span class="dfn-paneled" id="term-for-comb-one">|</span>
      <li><span class="dfn-paneled" id="term-for-comb-any">||</span>
@@ -2005,23 +2030,21 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-css-contain-2">[CSS-CONTAIN-2]
-   <dd>Tab Atkins Jr.; Florian Rivoal; Vladimir Levin. <a href="https://www.w3.org/TR/css-contain-2/">CSS Containment Module Level 2</a>. 16 December 2020. WD. URL: <a href="https://www.w3.org/TR/css-contain-2/">https://www.w3.org/TR/css-contain-2/</a>
+   <dd>Tab Atkins Jr.; Florian Rivoal; Vladimir Levin. <a href="https://www.w3.org/TR/css-contain-2/"><cite>CSS Containment Module Level 2</cite></a>. 16 December 2020. WD. URL: <a href="https://www.w3.org/TR/css-contain-2/">https://www.w3.org/TR/css-contain-2/</a>
    <dt id="biblio-css-display-3">[CSS-DISPLAY-3]
-   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-display-3/">CSS Display Module Level 3</a>. 18 December 2020. CR. URL: <a href="https://www.w3.org/TR/css-display-3/">https://www.w3.org/TR/css-display-3/</a>
-   <dt id="biblio-css-values-3">[CSS-VALUES-3]
-   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-values-3/">CSS Values and Units Module Level 3</a>. 6 June 2019. CR. URL: <a href="https://www.w3.org/TR/css-values-3/">https://www.w3.org/TR/css-values-3/</a>
+   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-display-3/"><cite>CSS Display Module Level 3</cite></a>. 3 September 2021. CR. URL: <a href="https://www.w3.org/TR/css-display-3/">https://www.w3.org/TR/css-display-3/</a>
    <dt id="biblio-css-values-4">[CSS-VALUES-4]
-   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-values-4/">CSS Values and Units Module Level 4</a>. 11 November 2020. WD. URL: <a href="https://www.w3.org/TR/css-values-4/">https://www.w3.org/TR/css-values-4/</a>
+   <dd>Tab Atkins Jr.; Elika Etemad. <a href="https://www.w3.org/TR/css-values-4/"><cite>CSS Values and Units Module Level 4</cite></a>. 16 October 2021. WD. URL: <a href="https://www.w3.org/TR/css-values-4/">https://www.w3.org/TR/css-values-4/</a>
    <dt id="biblio-dom">[DOM]
-   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/"><cite>DOM Standard</cite></a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-html">[HTML]
-   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
-   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-selectors-4">[SELECTORS-4]
-   <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/selectors-4/">Selectors Level 4</a>. 21 November 2018. WD. URL: <a href="https://www.w3.org/TR/selectors-4/">https://www.w3.org/TR/selectors-4/</a>
+   <dd>Elika Etemad; Tab Atkins Jr.. <a href="https://www.w3.org/TR/selectors-4/"><cite>Selectors Level 4</cite></a>. 21 November 2018. WD. URL: <a href="https://www.w3.org/TR/selectors-4/">https://www.w3.org/TR/selectors-4/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="property-index"><span class="content">Property Index</span><a class="self-link" href="#property-index"></a></h2>
   <div class="big-element-wrapper">
@@ -2042,7 +2065,7 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
     <tbody>
      <tr>
       <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle" id="ref-for-propdef-toggle②">toggle</a>
-      <td>&lt;'toggle-create'>
+      <td>&lt;'toggle-root'>
       <td>see individual properties
       <td>see individual properties
       <td>see individual properties
@@ -2052,18 +2075,6 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
       <td>per grammar
       <td>see individual properties
       <td>
-     <tr>
-      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-create" id="ref-for-propdef-toggle-create①①">toggle-create</a>
-      <td>none | &lt;toggle-specifier>#
-      <td>none
-      <td>all elements
-      <td>no
-      <td>n/a
-      <td>no
-      <td>
-      <td>per grammar
-      <td>as specified
-      <td>interactive
      <tr>
       <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group④">toggle-group</a>
       <td>none | [ &lt;toggle-name> self? ]#
@@ -2077,7 +2088,19 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
       <td>as specified
       <td>interactive
      <tr>
-      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-set" id="ref-for-propdef-toggle-set⑦">toggle-set</a>
+      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root①②">toggle-root</a>
+      <td>none | &lt;toggle-specifier>#
+      <td>none
+      <td>all elements
+      <td>no
+      <td>n/a
+      <td>no
+      <td>
+      <td>per grammar
+      <td>as specified
+      <td>interactive
+     <tr>
+      <th scope="row"><a class="css" data-link-type="property" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger⑧">toggle-trigger</a>
       <td>none | [ &lt;toggle-name> &lt;integer [0,∞]>? ]#
       <td>none
       <td>elements without existing activation behavior (see prose)
@@ -2106,9 +2129,9 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
   <div style="counter-reset:issue">
    <div class="issue"> TODO create the <span class="css">toggle-states</span> property
 	that defines <a data-link-type="dfn" href="#toggle-state-names">state names</a> for a <a data-link-type="dfn" href="#css-toggle">toggle</a>,
-	and amend the various properties to allow them to take a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name">&lt;toggle-name></a> instead of an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#integer-value">&lt;integer></a>.<a href="#issue-80e16e8c"> ↵ </a></div>
+	and amend the various properties to allow them to take a <a class="production css" data-link-type="type" href="#typedef-toggle-toggle-name">&lt;toggle-name></a> instead of an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value">&lt;integer></a>. <a class="issue-return" href="#issue-80e16e8c" title="Jump to section">↵</a></div>
    <div class="issue"> Define the precise point in <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering">update the rendering</a> when toggles are created
-	if <a class="property" data-link-type="propdesc" href="#propdef-toggle-create">toggle-create</a> names a toggle that doesn’t exist on the element yet.<a href="#issue-6fc26a25"> ↵ </a></div>
+	if <a class="property css" data-link-type="property" href="#propdef-toggle-root">toggle-root</a> names a toggle that doesn’t exist on the element yet. <a class="issue-return" href="#issue-f7fd1228" title="Jump to section">↵</a></div>
    <div class="issue">
      Radio buttons have one particular tabbing/switching/activation behavior
 		(they occupy a single tabindex spot;
@@ -2120,7 +2143,7 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
 		that happen to only have one active at a time. 
     <p>We probably want to add a bool to toggle groups dictating this;
 		are there more than these two behaviors to deal with?</p>
-     <a href="#issue-47da3fb8"> ↵ </a>
+     <a class="issue-return" href="#issue-47da3fb8" title="Jump to section">↵</a>
    </div>
    <div class="issue"> Define in much greater precision what it means to "become activatable".
 	The element must become focusable
@@ -2129,27 +2152,27 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
 	Similarly define the "already activatable" prose in more detail;
 	we want to exclude things like text inputs,
 	which would confuse a11y tooling,
-	but include buttons that aren’t, like, submit buttons.<a href="#issue-d2059411"> ↵ </a></div>
+	but include buttons that aren’t, like, submit buttons. <a class="issue-return" href="#issue-d2059411" title="Jump to section">↵</a></div>
    <div class="issue">
      TODO 
     <ul>
      <li data-md>
-      <p>a <a class="property" data-link-type="propdesc" href="#propdef-toggle-set">toggle-set</a> element needs to become activatable/focusable/etc,
+      <p>a <a class="property css" data-link-type="property" href="#propdef-toggle-trigger">toggle-trigger</a> element needs to become activatable/focusable/etc,
 and communicate in the a11y tree that it’s a checkbox/radio/etc</p>
      <li data-md>
       <p>we can infer what type of control it is
 by examining the properties of the toggle:
 if it’s part of a group, sticky, etc.</p>
      <li data-md>
-      <p>if <a class="property" data-link-type="propdesc" href="#propdef-toggle-visibility">toggle-visibility</a> is in use,
+      <p>if <a class="property css" data-link-type="property" href="#propdef-toggle-visibility">toggle-visibility</a> is in use,
 we can also automatically infer all the tab-set ARIA roles</p>
     </ul>
-     <a href="#issue-6c01b306"> ↵ </a>
+     <a class="issue-return" href="#issue-d75619e8" title="Jump to section">↵</a>
    </div>
    <div class="issue"> Define ordering of activations,
 	so if multiple elements become relevant at the same time
 	and they’re all part of a <a data-link-type="dfn" href="#css-toggle-group">toggle group</a>,
-	which one "wins" is well-defined.<a href="#issue-8c43f943"> ↵ </a></div>
+	which one "wins" is well-defined. <a class="issue-return" href="#issue-8c43f943" title="Jump to section">↵</a></div>
    <div class="issue">
      TODO 
     <ul>
@@ -2158,38 +2181,47 @@ we can also automatically infer all the tab-set ARIA roles</p>
 (Or just a list of toggles, with name built into the object?)</p>
      <li data-md>
       <p>Ability to create toggles manually.
-(Tho without an accompanying <a class="property" data-link-type="propdesc" href="#propdef-toggle-create">toggle-create</a>,
+(Tho without an accompanying <a class="property css" data-link-type="property" href="#propdef-toggle-root">toggle-root</a>,
 you just get the <a data-link-type="dfn" href="#default-toggle-specifier">default toggle specifier</a> when it’s activated.)</p>
      <li data-md>
       <p>Ability to delete toggles manually.
-(Tho if you don’t remove the accompanying <a class="property" data-link-type="propdesc" href="#propdef-toggle-create">toggle-create</a>,
+(Tho if you don’t remove the accompanying <a class="property css" data-link-type="property" href="#propdef-toggle-root">toggle-root</a>,
 it’ll respawn on the next rendering tick.)</p>
      <li data-md>
       <p>Ability to set toggle state manually.</p>
     </ul>
-     <a href="#issue-8fcfb231"> ↵ </a>
+     <a class="issue-return" href="#issue-adf5ca30" title="Jump to section">↵</a>
    </div>
   </div>
+  <aside class="dfn-panel" data-for="toggle-root">
+   <b><a href="#toggle-root">#toggle-root</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-toggle-root">1. 
+Introduction</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="css-toggle">
    <b><a href="#css-toggle">#css-toggle</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-css-toggle">2. 
-Toggle Concepts</a> <a href="#ref-for-css-toggle①">(2)</a> <a href="#ref-for-css-toggle②">(3)</a> <a href="#ref-for-css-toggle③">(4)</a> <a href="#ref-for-css-toggle④">(5)</a> <a href="#ref-for-css-toggle⑤">(6)</a> <a href="#ref-for-css-toggle⑥">(7)</a> <a href="#ref-for-css-toggle⑦">(8)</a> <a href="#ref-for-css-toggle⑧">(9)</a> <a href="#ref-for-css-toggle⑨">(10)</a> <a href="#ref-for-css-toggle①⓪">(11)</a> <a href="#ref-for-css-toggle①①">(12)</a> <a href="#ref-for-css-toggle①②">(13)</a> <a href="#ref-for-css-toggle①③">(14)</a> <a href="#ref-for-css-toggle①④">(15)</a> <a href="#ref-for-css-toggle①⑤">(16)</a> <a href="#ref-for-css-toggle①⑥">(17)</a> <a href="#ref-for-css-toggle①⑦">(18)</a> <a href="#ref-for-css-toggle①⑧">(19)</a> <a href="#ref-for-css-toggle①⑨">(20)</a> <a href="#ref-for-css-toggle②⓪">(21)</a> <a href="#ref-for-css-toggle②①">(22)</a>
-    <li><a href="#ref-for-css-toggle②②">2.1. 
+    <li><a href="#ref-for-css-toggle">1. 
+Introduction</a> <a href="#ref-for-css-toggle①">(2)</a> <a href="#ref-for-css-toggle②">(3)</a>
+    <li><a href="#ref-for-css-toggle③">2. 
+Toggle Concepts</a> <a href="#ref-for-css-toggle④">(2)</a> <a href="#ref-for-css-toggle⑤">(3)</a> <a href="#ref-for-css-toggle⑥">(4)</a> <a href="#ref-for-css-toggle⑦">(5)</a> <a href="#ref-for-css-toggle⑧">(6)</a> <a href="#ref-for-css-toggle⑨">(7)</a> <a href="#ref-for-css-toggle①⓪">(8)</a> <a href="#ref-for-css-toggle①①">(9)</a> <a href="#ref-for-css-toggle①②">(10)</a> <a href="#ref-for-css-toggle①③">(11)</a> <a href="#ref-for-css-toggle①④">(12)</a> <a href="#ref-for-css-toggle①⑤">(13)</a> <a href="#ref-for-css-toggle①⑥">(14)</a> <a href="#ref-for-css-toggle①⑦">(15)</a> <a href="#ref-for-css-toggle①⑧">(16)</a> <a href="#ref-for-css-toggle①⑨">(17)</a> <a href="#ref-for-css-toggle②⓪">(18)</a> <a href="#ref-for-css-toggle②①">(19)</a> <a href="#ref-for-css-toggle②②">(20)</a> <a href="#ref-for-css-toggle②③">(21)</a> <a href="#ref-for-css-toggle②④">(22)</a>
+    <li><a href="#ref-for-css-toggle②⑤">2.1. 
 Toggles and CSS Properties</a>
-    <li><a href="#ref-for-css-toggle②③">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-css-toggle②④">(2)</a> <a href="#ref-for-css-toggle②⑤">(3)</a> <a href="#ref-for-css-toggle②⑥">(4)</a>
-    <li><a href="#ref-for-css-toggle②⑦">3.1. 
-Linking Toggle States: the toggle-group property</a> <a href="#ref-for-css-toggle②⑧">(2)</a> <a href="#ref-for-css-toggle②⑨">(3)</a> <a href="#ref-for-css-toggle③⓪">(4)</a> <a href="#ref-for-css-toggle③①">(5)</a> <a href="#ref-for-css-toggle③②">(6)</a>
-    <li><a href="#ref-for-css-toggle③③">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-css-toggle③④">(2)</a> <a href="#ref-for-css-toggle③⑤">(3)</a> <a href="#ref-for-css-toggle③⑥">(4)</a> <a href="#ref-for-css-toggle③⑦">(5)</a> <a href="#ref-for-css-toggle③⑧">(6)</a> <a href="#ref-for-css-toggle③⑨">(7)</a> <a href="#ref-for-css-toggle④⓪">(8)</a> <a href="#ref-for-css-toggle④①">(9)</a> <a href="#ref-for-css-toggle④②">(10)</a>
-    <li><a href="#ref-for-css-toggle④③">3.3. 
-Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-css-toggle④④">(2)</a> <a href="#ref-for-css-toggle④⑤">(3)</a>
-    <li><a href="#ref-for-css-toggle④⑥">4. 
-Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-css-toggle④⑦">(2)</a> <a href="#ref-for-css-toggle④⑧">(3)</a> <a href="#ref-for-css-toggle④⑨">(4)</a> <a href="#ref-for-css-toggle⑤⓪">(5)</a> <a href="#ref-for-css-toggle⑤①">(6)</a>
-    <li><a href="#ref-for-css-toggle⑤②">5. 
-Automatically Hiding With A Toggle</a> <a href="#ref-for-css-toggle⑤③">(2)</a> <a href="#ref-for-css-toggle⑤④">(3)</a> <a href="#ref-for-css-toggle⑤⑤">(4)</a> <a href="#ref-for-css-toggle⑤⑥">(5)</a> <a href="#ref-for-css-toggle⑤⑦">(6)</a> <a href="#ref-for-css-toggle⑤⑧">(7)</a> <a href="#ref-for-css-toggle⑤⑨">(8)</a> <a href="#ref-for-css-toggle⑥⓪">(9)</a> <a href="#ref-for-css-toggle⑥①">(10)</a>
-    <li><a href="#ref-for-css-toggle⑥②">6. 
+    <li><a href="#ref-for-css-toggle②⑥">3. 
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-css-toggle②⑦">(2)</a> <a href="#ref-for-css-toggle②⑧">(3)</a> <a href="#ref-for-css-toggle②⑨">(4)</a>
+    <li><a href="#ref-for-css-toggle③⓪">3.1. 
+Linking Toggle States: the toggle-group property</a> <a href="#ref-for-css-toggle③①">(2)</a> <a href="#ref-for-css-toggle③②">(3)</a> <a href="#ref-for-css-toggle③③">(4)</a> <a href="#ref-for-css-toggle③④">(5)</a> <a href="#ref-for-css-toggle③⑤">(6)</a>
+    <li><a href="#ref-for-css-toggle③⑥">3.2. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-css-toggle③⑦">(2)</a> <a href="#ref-for-css-toggle③⑧">(3)</a> <a href="#ref-for-css-toggle③⑨">(4)</a> <a href="#ref-for-css-toggle④⓪">(5)</a> <a href="#ref-for-css-toggle④①">(6)</a> <a href="#ref-for-css-toggle④②">(7)</a> <a href="#ref-for-css-toggle④③">(8)</a> <a href="#ref-for-css-toggle④④">(9)</a> <a href="#ref-for-css-toggle④⑤">(10)</a>
+    <li><a href="#ref-for-css-toggle④⑥">3.3. 
+Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-css-toggle④⑦">(2)</a> <a href="#ref-for-css-toggle④⑧">(3)</a>
+    <li><a href="#ref-for-css-toggle④⑨">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-css-toggle⑤⓪">(2)</a> <a href="#ref-for-css-toggle⑤①">(3)</a> <a href="#ref-for-css-toggle⑤②">(4)</a> <a href="#ref-for-css-toggle⑤③">(5)</a> <a href="#ref-for-css-toggle⑤④">(6)</a>
+    <li><a href="#ref-for-css-toggle⑤⑤">5. 
+Automatically Hiding With A Toggle</a> <a href="#ref-for-css-toggle⑤⑥">(2)</a> <a href="#ref-for-css-toggle⑤⑦">(3)</a> <a href="#ref-for-css-toggle⑤⑧">(4)</a> <a href="#ref-for-css-toggle⑤⑨">(5)</a> <a href="#ref-for-css-toggle⑥⓪">(6)</a> <a href="#ref-for-css-toggle⑥①">(7)</a> <a href="#ref-for-css-toggle⑥②">(8)</a> <a href="#ref-for-css-toggle⑥③">(9)</a> <a href="#ref-for-css-toggle⑥④">(10)</a>
+    <li><a href="#ref-for-css-toggle⑥⑤">6. 
 Scripting API</a>
    </ul>
   </aside>
@@ -2201,7 +2233,7 @@ Toggle Concepts</a> <a href="#ref-for-toggle-name①">(2)</a> <a href="#ref-for-
     <li><a href="#ref-for-toggle-name⑨">3.1. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-toggle-name①⓪">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-name①①">(2)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-name①①">(2)</a>
     <li><a href="#ref-for-toggle-name①②">4. 
 Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
@@ -2212,11 +2244,11 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name">2. 
 Toggle Concepts</a> <a href="#ref-for-typedef-toggle-toggle-name①">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name②">(3)</a> <a href="#ref-for-typedef-toggle-toggle-name③">(4)</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name④">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-typedef-toggle-toggle-name⑤">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name⑥">(3)</a>
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-typedef-toggle-toggle-name⑤">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name⑥">(3)</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name⑦">3.1. 
 Linking Toggle States: the toggle-group property</a> <a href="#ref-for-typedef-toggle-toggle-name⑧">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name⑨">(3)</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name①⓪">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-typedef-toggle-toggle-name①①">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name①②">(3)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-typedef-toggle-toggle-name①①">(2)</a> <a href="#ref-for-typedef-toggle-toggle-name①②">(3)</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name①③">3.3. 
 Creating and Activating Toggles Simultaneously: the toggle shorthand</a>
     <li><a href="#ref-for-typedef-toggle-toggle-name①④">4. 
@@ -2233,7 +2265,7 @@ Toggle Concepts</a> <a href="#ref-for-toggle-state①">(2)</a>
     <li><a href="#ref-for-toggle-state②">3.1. 
 Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-state③">(2)</a> <a href="#ref-for-toggle-state④">(3)</a> <a href="#ref-for-toggle-state⑤">(4)</a>
     <li><a href="#ref-for-toggle-state⑥">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-state⑦">(2)</a> <a href="#ref-for-toggle-state⑧">(3)</a> <a href="#ref-for-toggle-state⑨">(4)</a> <a href="#ref-for-toggle-state①⓪">(5)</a> <a href="#ref-for-toggle-state①①">(6)</a> <a href="#ref-for-toggle-state①②">(7)</a> <a href="#ref-for-toggle-state①③">(8)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-state⑦">(2)</a> <a href="#ref-for-toggle-state⑧">(3)</a> <a href="#ref-for-toggle-state⑨">(4)</a> <a href="#ref-for-toggle-state①⓪">(5)</a> <a href="#ref-for-toggle-state①①">(6)</a> <a href="#ref-for-toggle-state①②">(7)</a> <a href="#ref-for-toggle-state①③">(8)</a>
     <li><a href="#ref-for-toggle-state①④">4. 
 Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-toggle-state①⑤">(2)</a>
    </ul>
@@ -2270,7 +2302,7 @@ Automatically Hiding With A Toggle</a>
    <b><a href="#toggle-state-names">#toggle-state-names</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-state-names">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-group">
@@ -2299,7 +2331,7 @@ Toggle Concepts</a> <a href="#ref-for-css-toggle-group①">(2)</a> <a href="#ref
     <li><a href="#ref-for-css-toggle-group①④">3.1. 
 Linking Toggle States: the toggle-group property</a> <a href="#ref-for-css-toggle-group①⑤">(2)</a> <a href="#ref-for-css-toggle-group①⑥">(3)</a> <a href="#ref-for-css-toggle-group①⑦">(4)</a>
     <li><a href="#ref-for-css-toggle-group①⑧">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-css-toggle-group①⑨">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2324,7 +2356,7 @@ Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-toggle-in-a-toggle-group">3.1. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-toggle-in-a-toggle-group①">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-wide-scope">
@@ -2349,7 +2381,7 @@ Toggle Concepts</a> <a href="#ref-for-toggle-in-scope①">(2)</a>
     <li><a href="#ref-for-toggle-in-scope②">3.1. 
 Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-in-scope③">(2)</a>
     <li><a href="#ref-for-toggle-in-scope④">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-toggle-in-scope⑤">4. 
 Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
     <li><a href="#ref-for-toggle-in-scope⑥">5. 
@@ -2362,9 +2394,9 @@ Automatically Hiding With A Toggle</a>
     <li><a href="#ref-for-toggle-toggle-specifier">2. 
 Toggle Concepts</a> <a href="#ref-for-toggle-toggle-specifier①">(2)</a> <a href="#ref-for-toggle-toggle-specifier②">(3)</a>
     <li><a href="#ref-for-toggle-toggle-specifier③">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-toggle-toggle-specifier④">(2)</a> <a href="#ref-for-toggle-toggle-specifier⑤">(3)</a>
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-toggle-toggle-specifier④">(2)</a> <a href="#ref-for-toggle-toggle-specifier⑤">(3)</a>
     <li><a href="#ref-for-toggle-toggle-specifier⑥">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-name">
@@ -2373,9 +2405,9 @@ Activating a Toggle: the toggle-set property</a>
     <li><a href="#ref-for-toggle-specifier-name">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-name①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-toggle-specifier-name②">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-initial-state">
@@ -2384,7 +2416,7 @@ Activating a Toggle: the toggle-set property</a>
     <li><a href="#ref-for-toggle-specifier-initial-state">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-initial-state①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-state-names">
@@ -2400,7 +2432,7 @@ Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-group">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-group①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-scope">
@@ -2409,7 +2441,7 @@ Creating a Toggle: the toggle-create property</a>
     <li><a href="#ref-for-toggle-specifier-scope">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-scope①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-maximum-state">
@@ -2418,9 +2450,9 @@ Creating a Toggle: the toggle-create property</a>
     <li><a href="#ref-for-toggle-specifier-maximum-state">2. 
 Toggle Concepts</a> <a href="#ref-for-toggle-specifier-maximum-state①">(2)</a>
     <li><a href="#ref-for-toggle-specifier-maximum-state②">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-toggle-specifier-maximum-state③">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-specifier-maximum-state④">(2)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-specifier-maximum-state④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-sticky">
@@ -2429,46 +2461,48 @@ Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-specif
     <li><a href="#ref-for-toggle-specifier-sticky">2. 
 Toggle Concepts</a>
     <li><a href="#ref-for-toggle-specifier-sticky①">3. 
-Creating a Toggle: the toggle-create property</a>
+Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-toggle-specifier-sticky②">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="default-toggle-specifier">
    <b><a href="#default-toggle-specifier">#default-toggle-specifier</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-default-toggle-specifier">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-default-toggle-specifier①">6. 
 Scripting API</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="propdef-toggle-create">
-   <b><a href="#propdef-toggle-create">#propdef-toggle-create</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="propdef-toggle-root">
+   <b><a href="#propdef-toggle-root">#propdef-toggle-root</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-toggle-create">2. 
+    <li><a href="#ref-for-propdef-toggle-root">1. 
+Introduction</a>
+    <li><a href="#ref-for-propdef-toggle-root①">2. 
 Toggle Concepts</a>
-    <li><a href="#ref-for-propdef-toggle-create①">2.1. 
-Toggles and CSS Properties</a> <a href="#ref-for-propdef-toggle-create②">(2)</a>
-    <li><a href="#ref-for-propdef-toggle-create③">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-propdef-toggle-create④">(2)</a> <a href="#ref-for-propdef-toggle-create⑤">(3)</a>
-    <li><a href="#ref-for-propdef-toggle-create⑥">3.3. 
-Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle-create⑦">(2)</a> <a href="#ref-for-propdef-toggle-create⑧">(3)</a>
-    <li><a href="#ref-for-propdef-toggle-create⑨">6. 
-Scripting API</a> <a href="#ref-for-propdef-toggle-create①⓪">(2)</a>
+    <li><a href="#ref-for-propdef-toggle-root②">2.1. 
+Toggles and CSS Properties</a> <a href="#ref-for-propdef-toggle-root③">(2)</a>
+    <li><a href="#ref-for-propdef-toggle-root④">3. 
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-propdef-toggle-root⑤">(2)</a> <a href="#ref-for-propdef-toggle-root⑥">(3)</a>
+    <li><a href="#ref-for-propdef-toggle-root⑦">3.3. 
+Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle-root⑧">(2)</a> <a href="#ref-for-propdef-toggle-root⑨">(3)</a>
+    <li><a href="#ref-for-propdef-toggle-root①⓪">6. 
+Scripting API</a> <a href="#ref-for-propdef-toggle-root①①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="typedef-toggle-specifier">
    <b><a href="#typedef-toggle-specifier">#typedef-toggle-specifier</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-typedef-toggle-specifier">3. 
-Creating a Toggle: the toggle-create property</a> <a href="#ref-for-typedef-toggle-specifier①">(2)</a> <a href="#ref-for-typedef-toggle-specifier②">(3)</a> <a href="#ref-for-typedef-toggle-specifier③">(4)</a> <a href="#ref-for-typedef-toggle-specifier④">(5)</a>
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-typedef-toggle-specifier①">(2)</a> <a href="#ref-for-typedef-toggle-specifier②">(3)</a> <a href="#ref-for-typedef-toggle-specifier③">(4)</a> <a href="#ref-for-typedef-toggle-specifier④">(5)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="valdef-toggle-create-sticky">
-   <b><a href="#valdef-toggle-create-sticky">#valdef-toggle-create-sticky</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="valdef-toggle-root-sticky">
+   <b><a href="#valdef-toggle-root-sticky">#valdef-toggle-root-sticky</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-toggle-create-sticky">3.1. 
+    <li><a href="#ref-for-valdef-toggle-root-sticky">3.1. 
 Linking Toggle States: the toggle-group property</a>
    </ul>
   </aside>
@@ -2488,25 +2522,27 @@ Linking Toggle States: the toggle-group property</a> <a href="#ref-for-propdef-t
 Linking Toggle States: the toggle-group property</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="propdef-toggle-set">
-   <b><a href="#propdef-toggle-set">#propdef-toggle-set</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="propdef-toggle-trigger">
+   <b><a href="#propdef-toggle-trigger">#propdef-toggle-trigger</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-propdef-toggle-set">2.1. 
+    <li><a href="#ref-for-propdef-toggle-trigger">1. 
+Introduction</a>
+    <li><a href="#ref-for-propdef-toggle-trigger①">2.1. 
 Toggles and CSS Properties</a>
-    <li><a href="#ref-for-propdef-toggle-set①">3.1. 
+    <li><a href="#ref-for-propdef-toggle-trigger②">3.1. 
 Linking Toggle States: the toggle-group property</a>
-    <li><a href="#ref-for-propdef-toggle-set②">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-propdef-toggle-set③">(2)</a>
-    <li><a href="#ref-for-propdef-toggle-set④">3.3. 
-Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle-set⑤">(2)</a>
-    <li><a href="#ref-for-propdef-toggle-set⑥">3.4. 
+    <li><a href="#ref-for-propdef-toggle-trigger③">3.2. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-propdef-toggle-trigger④">(2)</a>
+    <li><a href="#ref-for-propdef-toggle-trigger⑤">3.3. 
+Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href="#ref-for-propdef-toggle-trigger⑥">(2)</a>
+    <li><a href="#ref-for-propdef-toggle-trigger⑦">3.4. 
 Accessibility Implications of Toggles</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="valdef-toggle-set-none">
-   <b><a href="#valdef-toggle-set-none">#valdef-toggle-set-none</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="valdef-toggle-trigger-none">
+   <b><a href="#valdef-toggle-trigger-none">#valdef-toggle-trigger-none</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-valdef-toggle-set-none">2.1. 
+    <li><a href="#ref-for-valdef-toggle-trigger-none">2.1. 
 Toggles and CSS Properties</a>
    </ul>
   </aside>
@@ -2516,7 +2552,7 @@ Toggles and CSS Properties</a>
     <li><a href="#ref-for-css-toggle-activation">2. 
 Toggle Concepts</a> <a href="#ref-for-css-toggle-activation①">(2)</a>
     <li><a href="#ref-for-css-toggle-activation②">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-css-toggle-activation③">(2)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-css-toggle-activation③">(2)</a>
     <li><a href="#ref-for-css-toggle-activation④">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2525,7 +2561,7 @@ Automatically Hiding With A Toggle</a>
    <b><a href="#toggle-activation-name">#toggle-activation-name</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-activation-name">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-toggle-activation-name①">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2534,7 +2570,7 @@ Automatically Hiding With A Toggle</a>
    <b><a href="#toggle-activation-target-state">#toggle-activation-target-state</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-activation-target-state">3.2. 
-Activating a Toggle: the toggle-set property</a> <a href="#ref-for-toggle-activation-target-state①">(2)</a>
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-activation-target-state①">(2)</a>
     <li><a href="#ref-for-toggle-activation-target-state②">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2543,7 +2579,7 @@ Automatically Hiding With A Toggle</a>
    <b><a href="#fire-a-toggle-activation">#fire-a-toggle-activation</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-fire-a-toggle-activation">3.2. 
-Activating a Toggle: the toggle-set property</a>
+Activating a Toggle: the toggle-trigger property</a>
     <li><a href="#ref-for-fire-a-toggle-activation①">5. 
 Automatically Hiding With A Toggle</a>
    </ul>
@@ -2558,10 +2594,12 @@ Creating and Activating Toggles Simultaneously: the toggle shorthand</a> <a href
   <aside class="dfn-panel" data-for="selectordef-toggle">
    <b><a href="#selectordef-toggle">#selectordef-toggle</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-selectordef-toggle">2.1. 
+    <li><a href="#ref-for-selectordef-toggle">1. 
+Introduction</a> <a href="#ref-for-selectordef-toggle①">(2)</a>
+    <li><a href="#ref-for-selectordef-toggle②">2.1. 
 Toggles and CSS Properties</a>
-    <li><a href="#ref-for-selectordef-toggle①">4. 
-Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-selectordef-toggle②">(2)</a>
+    <li><a href="#ref-for-selectordef-toggle③">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-selectordef-toggle④">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="propdef-toggle-visibility">

@@ -53,12 +53,36 @@ Introduction</h2>
 	</div>
 
 	This module generalizes this ability and allows it to be applied to any element via CSS.
-	Elements can be declared to have toggleable state,
-	with any number of states that can be toggled between.
-	Multiple elements can share access to the same toggleable state,
-	similar to HTML's <code>&lt;input type=radio></code> element.
-	This state can be manipulated by activating the element or other specified elements,
-	or by other user interactions.
+
+	Any element can become a <dfn export>toggle root</dfn>,
+	meaning it hosts one or more [=toggles=],
+	each of which has a name,
+	a value between 0 and some maximum,
+	and a few other bits of metadata,
+	via the 'toggle-root' property.
+	The toggle is visible to the [=toggle root=],
+	its descendants,
+	and possibly its siblings and their descendants
+	(if the toggle says they can);
+	any element that can "see" a [=toggle=]
+	can use the '':toggle()'' pseudo-class.
+
+	Any element that can see a [=toggle=]
+	can also <em>trigger</em> a toggle,
+	changing its value when the element is "activated",
+	via the 'toggle-trigger' property.
+	This means you can have elements that self-trigger their own toggle,
+	like checkboxes,
+	but also have toggles that are visible to wide sections of a page
+	and are triggered by buttons (or tabs, or headings, etc)
+	inside that section,
+	so multiple elements can use '':toggle()'' to respond to the toggle.
+
+	Toggles can also be grouped together,
+	so that only one of the toggles in the group
+	can have a non-zero value at a time,
+	like how radio buttons work in HTML.
+
 
 <h2 id=toggles>
 Toggle Concepts</h2>
@@ -231,12 +255,12 @@ Toggle Concepts</h2>
 
 		: <dfn>sticky</dfn>
 		:: A [=boolean=] specifying how to react
-			when a [=toggle activation=] would push the [=state=] past the specified [=maximum state=]:
+			when a [=toggle activation=] would push the [=toggle/state=] past the specified [=maximum state=]:
 			the state either stays within the [=active states=] and returns to 1 (if true)
 			or cycles back to the [=inactive state=] (if false).
 	</dl>
 
-	[=Toggle specifiers=] are created by the 'toggle-create' property;
+	[=Toggle specifiers=] are created by the 'toggle-root' property;
 	they are not persistent state on an element.
 	An element can have any number of [=toggle specifiers=].
 
@@ -267,18 +291,18 @@ Toggles and CSS Properties</h3>
 	(and how they do so).
 
 	<div class=example>
-		For example, while an element needs 'toggle-create' to establish a toggle,
+		For example, while an element needs 'toggle-root' to establish a toggle,
 		once a toggle is created,
-		removing the 'toggle-create' property does not affect the toggle.
+		removing the 'toggle-root' property does not affect the toggle.
 
 		<pre class=lang-css>
 		.toggleable {
-			toggle-create: foo 1;
-			toggle-set: foo;
+			toggle-root: foo 1;
+			toggle-trigger: foo;
 		}
 		.toggleable:toggle(foo) {
-			toggle-create: none;
-			toggle-set: none;
+			toggle-root: none;
+			toggle-trigger: none;
 		}
 		</pre>
 
@@ -296,7 +320,7 @@ Toggles and CSS Properties</h3>
 		so the '':toggle()'' pseudo-class will continue matching.
 		However, further activations of the element
 		will no longer affect the ''foo'' toggle,
-		since 'toggle-set' was changed to ''toggle-set/none''.
+		since 'toggle-trigger' was changed to ''toggle-trigger/none''.
 
 		The ''foo'' toggle is thus "frozen" in the activated state
 		(unless the author has other elements in the toggle's [=toggle/scope=] that can also affect it,
@@ -304,11 +328,11 @@ Toggles and CSS Properties</h3>
 	</div>
 
 
-<h2 id=toggle-create-property>
-Creating a Toggle: the 'toggle-create' property</h2>
+<h2 id=toggle-root-property>
+Creating a Toggle: the 'toggle-root' property</h2>
 
 	<pre class='propdef'>
-	Name: toggle-create
+	Name: toggle-root
 	Value: none | <<toggle-specifier>>#
 	Initial: none
 	Applies to: all elements
@@ -330,10 +354,10 @@ Creating a Toggle: the 'toggle-create' property</h2>
 			]?
 	</pre>
 
-	The 'toggle-create' property causes [=toggles=] to be created on an element,
+	The 'toggle-root' property causes [=toggles=] to be created on an element,
 	and controls how the [=toggles=] are updated when they are activated.
 
-	<dl dfn-type=value dfn-for=toggle-create>
+	<dl dfn-type=value dfn-for=toggle-root>
 		<dt><dfn>none</dfn>
 		<dd>
 			The element has no [=toggle specifiers=].
@@ -391,7 +415,7 @@ Creating a Toggle: the 'toggle-create' property</h2>
 			</ul>
 			<style>
 			li {
-				toggle-create: check self;
+				toggle-root: check self;
 			}
 			li:toggle(check) {
 				color: silver;
@@ -410,7 +434,7 @@ Creating a Toggle: the 'toggle-create' property</h2>
 
 	Issue: Define the precise point in [=update the rendering=]
 	when toggles are created
-	if 'toggle-create' names a toggle that doesn't exist on the element yet.
+	if 'toggle-root' names a toggle that doesn't exist on the element yet.
 
 
 <h3 id=toggle-group-property>
@@ -456,7 +480,7 @@ Linking Toggle States: the 'toggle-group' property</h3>
 				If omitted, it's set to "wide".
 
 			Only one [=toggle=] [=in a toggle group=] can be in an [=active state=] at a time;
-			see 'toggle-set' for details.
+			see 'toggle-trigger' for details.
 	</dl>
 
 	<div class='example'>
@@ -523,11 +547,11 @@ Linking Toggle States: the 'toggle-group' property</h3>
 	</div>
 
 
-<h3 id='toggle-set-property'>
-Activating a Toggle: the 'toggle-set' property</h3>
+<h3 id='toggle-trigger-property'>
+Activating a Toggle: the 'toggle-trigger' property</h3>
 
 	<pre class='propdef'>
-	Name: toggle-set
+	Name: toggle-trigger
 	Value: none | [ <<toggle-name>> <<integer [0, ∞]>>? ]#
 	Initial: none
 	Applies to: elements without existing activation behavior (see prose)
@@ -538,11 +562,11 @@ Activating a Toggle: the 'toggle-set' property</h3>
 	Animatable: no
 	</pre>
 
-	The 'toggle-set' property specifies that an element can be activated
+	The 'toggle-trigger' property specifies that an element can be activated
 	to change the state of one or more [=toggles=].
 	It has the following values:
 
-	<dl dfn-type=value dfn-for=toggle-set>
+	<dl dfn-type=value dfn-for=toggle-trigger>
 		: <dfn>none</dfn>
 		::
 			The element does not manipulated any [=toggles=].
@@ -642,7 +666,7 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
 	<pre class="propdef shorthand">
 	Name: toggle
-	Value: <<'toggle-create'>>
+	Value: <<'toggle-root'>>
 	</pre>
 
 	While some cases require setting up a [=toggle=] on an ancestor
@@ -651,9 +675,9 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 	are such that it's fine to create the [=toggle=]
 	on the element intended to activate the toggle as well.
 
-	The 'toggle' shorthand sets both the 'toggle-create' and 'toggle-set' properties on an element together.
-	The entire value of the property is assigned to 'toggle-create',
-	while 'toggle-set' is assigned to just the <<toggle-name>>s specified in the list,
+	The 'toggle' shorthand sets both the 'toggle-root' and 'toggle-trigger' properties on an element together.
+	The entire value of the property is assigned to 'toggle-root',
+	while 'toggle-trigger' is assigned to just the <<toggle-name>>s specified in the list,
 	if any.
 
 	<div class=example>
@@ -684,7 +708,7 @@ Accessibility Implications of Toggles</h3>
 	<div class=issue>
 		TODO
 
-		* a 'toggle-set' element needs to become activatable/focusable/etc,
+		* a 'toggle-trigger' element needs to become activatable/focusable/etc,
 			and communicate in the a11y tree that it's a checkbox/radio/etc
 		* we can infer what type of control it is
 			by examining the properties of the toggle:
@@ -886,11 +910,11 @@ Scripting API</h2>
 			(Or just a list of toggles, with name built into the object?)
 
 		* Ability to create toggles manually.
-			(Tho without an accompanying 'toggle-create',
+			(Tho without an accompanying 'toggle-root',
 			you just get the [=default toggle specifier=] when it's activated.)
 
 		* Ability to delete toggles manually.
-			(Tho if you don't remove the accompanying 'toggle-create',
+			(Tho if you don't remove the accompanying 'toggle-root',
 			it'll respawn on the next rendering tick.)
 
 		* Ability to set toggle state manually.
