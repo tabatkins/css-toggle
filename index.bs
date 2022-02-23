@@ -105,27 +105,7 @@ Toggle Concepts</h2>
 
 	<dl dfn-for=toggle export>
 		: <dfn>name</dfn>
-		:: A [=string=].
-
-			In CSS,
-			this name is provided as a <<toggle-name>>,
-			which is either a <<custom-ident>>
-			or as a <<string>>;
-			in either case, the item's value is the [=toggle/name=].
-
-			<pre class=prod>
-				<dfn><<toggle-name>></dfn> = <<custom-ident>> | <<string>>
-			</pre>
-
-			<div class=example>
-				For example,
-				''foo'' and ''"foo"'' are both valid ways
-				to refer to the same toggle name.
-
-				However, ''foo'' and ''FOO''
-				are two different names,
-				since they're not [=string/identical to=] each other.
-			</div>
+		:: A <<custom-ident>>.
 
 		: <dfn>state</dfn>
 		:: A non-negative integer:
@@ -135,11 +115,7 @@ Toggle Concepts</h2>
 		: <dfn>state names</dfn>
 		::
 			A [=/list=] of state names,
-			each of which are [=strings=].
-
-			Like the toggle's [=toggle/name=],
-			in CSS they are <<toggle-name>>s,
-			with the value of the item giving the state name.
+			each of which are <<custom-ident>>s.
 
 		: <dfn>group</dfn>
 		::
@@ -149,7 +125,7 @@ Toggle Concepts</h2>
 
 		: <dfn>scope</dfn>
 		::
-			A [=string=] enum indicating what sort of [=toggle/scope=] the [=toggle=] uses.
+			An enum indicating what sort of [=toggle/scope=] the [=toggle=] uses.
 			It can have two values:
 
 			* <dfn>"wide"</dfn>, indicating the toggle has [=toggle/wide scope=]
@@ -172,16 +148,11 @@ Toggle Concepts</h2>
 
 	<dl dfn-for="toggle group" export>
 		: <dfn>name</dfn>
-		:: A [=string=],
-			starting with two dashes (U+002D HYPHEN-MINUS).
-
-			Like a toggle's [=toggle/name=],
-			in CSS they are given by a <<toggle-name>>,
-			with the value of the item giving the name.
+		:: A <<custom-ident>>.
 
 		: <dfn>scope</dfn>
 		::
-			A [=string=] enum indicating what sort of [=toggle/scope=] the [=toggle group=] uses.
+			An enum indicating what sort of [=toggle/scope=] the [=toggle group=] uses.
 			It can have two values:
 
 			* <dfn>"wide"</dfn>, indicating the toggle has [=toggle/wide scope=]
@@ -240,16 +211,20 @@ Toggle Concepts</h2>
 
 	<dl dfn-for="toggle specifier" export>
 		: <dfn>name</dfn>
-		:: A [=string=] specifying the [=toggle's=] [=toggle/name=].
+		:: A <<custom-ident>> specifying the [=toggle's=] [=toggle/name=].
 
 		: <dfn>initial state</dfn>
 		:: A non-negative integer
 			specifying the [=toggle's=] initial [=toggle/state=] upon creation.
 
+		: <dfn>maximum state</dfn>
+		:: A positive integer
+			specifying the highest [=active state=] the [=toggle=] can reach.
+
 		: <dfn>state names</dfn>
 		::
 			A [=/list=] of state names,
-			each of which are [=strings=],
+			each of which are <<custom-ident>>s,
 			assigned to the [=toggle=] initially upon creation.
 
 		: <dfn>group</dfn>
@@ -257,12 +232,8 @@ Toggle Concepts</h2>
 			specifying the [=toggle's=] initial [=toggle/group=] boolean upon creation.
 
 		: <dfn>scope</dfn>
-		:: A [=string=] (either "wide" or "narrow"),
+		:: An enum (either "wide" or "narrow"),
 			specifying the [=toggle's=] initial [=toggle/scope=] upon creation.
-
-		: <dfn>maximum state</dfn>
-		:: A positive integer
-			specifying the highest [=active state=] the [=toggle=] can reach.
 
 		: <dfn>sticky</dfn>
 		:: A [=boolean=] specifying how to react
@@ -356,7 +327,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 
 	<pre class=prod>
 		<dfn><<toggle-specifier>></dfn> =
-			<<toggle-name>>
+			<<cusstom-ident>>
 			[
 				[ <<integer [0, ∞]>> / ]? <<integer [1, ∞]>> ||
 				sticky ||
@@ -386,7 +357,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 			most of which are optional,
 			corresponding to the [=struct/items=] of a [=toggle specifier=]:
 
-			* The initial <<toggle-name>>
+			* The initial <<custom-ident>>
 				specifies the [=toggle specifier/name=],
 				as the item's value.
 
@@ -453,7 +424,7 @@ Linking Toggle States: the 'toggle-group' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-group
-	Value: none | [ <<toggle-name>> self? ]#
+	Value: none | [ <<custom-ident>> self? ]#
 	Initial: none
 	Applies to: all elements
 	Inherited: no
@@ -477,12 +448,12 @@ Linking Toggle States: the 'toggle-group' property</h3>
 		<dd>
 			The element does not define a [=toggle group=].
 
-		<dt><dfn lt="<toggle-name> | self">[<<toggle-name>> self?]#</dfn>
+		<dt><dfn lt="<custom-ident> | self">[<<custom-ident>> self?]#</dfn>
 		<dd>
 			The element defines one or more [=toggle groups=],
 			one per comma-separated item:
 
-			* The <<toggle-name>>
+			* The <<custom-ident>>
 				specifies the [=toggle group/name=],
 				as the item's value.
 
@@ -563,7 +534,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-trigger
-	Value: none | [ <<toggle-name>> <<integer [0, ∞]>>? ]#
+	Value: none | [ <<custom-ident>> <<integer [0, ∞]>>? ]#
 	Initial: none
 	Applies to: elements without existing activation behavior (see prose)
 	Inherited: no
@@ -582,7 +553,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 		::
 			The element does not manipulated any [=toggles=].
 
-		: <dfn><<toggle-name>> <<integer [0, ∞]>>?</dfn>
+		: <dfn><<custom-ident>> <<integer [0, ∞]>>?</dfn>
 		::
 			If the element already has existing activation behavior from the host language,
 			this value does nothing.
@@ -591,7 +562,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			and when activated,
 			for each comma-separated entry in the list,
 			[=fires=] a [=toggle activation=]
-			with the given <<toggle-name>>
+			with the given <<custom-ident>>
 			and, if an <<integer>> is specified,
 			a target state of that integer.
 	</dl>
@@ -688,7 +659,7 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
 	The 'toggle' shorthand sets both the 'toggle-root' and 'toggle-trigger' properties on an element together.
 	The entire value of the property is assigned to 'toggle-root',
-	while 'toggle-trigger' is assigned to just the <<toggle-name>>s specified in the list,
+	while 'toggle-trigger' is assigned to just the <<custom-idents>>s specified in the list,
 	if any.
 
 	<div class=example>
@@ -824,7 +795,7 @@ Automatically Hiding With A Toggle</h2>
 
 	<pre class="propdef">
 	Name: toggle-visibility
-	Value: normal | toggle <<toggle-name>>
+	Value: normal | toggle <<custom-ident>>
 	Initial: normal
 	Inherited: no
 	Applies to: all elements
@@ -842,9 +813,10 @@ Automatically Hiding With A Toggle</h2>
 		::
 			The property has no effect.
 
-		: <dfn lt="toggle">toggle <<toggle-name>></dfn>
+		: <dfn lt="toggle">toggle <<custom-ident>></dfn>
 		::
-			If the element is [=in scope=] for a [=toggle=] of the given <<toggle-name>>,
+			If the element is [=in scope=]
+			for a [=toggle=] whose name matches the <<custom-ident>>,
 			and that [=toggle=] is in the [=inactive state=],
 			the element and its descendants generate no [=boxes=] or [=text runs=],
 			similar to ''display: none'',
