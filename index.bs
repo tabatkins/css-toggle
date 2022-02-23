@@ -818,22 +818,13 @@ Automatically Hiding With A Toggle</h2>
 			If the element is [=in scope=]
 			for a [=toggle=] whose name matches the <<custom-ident>>,
 			and that [=toggle=] is in the [=inactive state=],
-			the element and its descendants generate no [=boxes=] or [=text runs=],
-			similar to ''display: none'',
-			but must still be available to user-agent features
-			such as find-in-page, tab order navigation, etc.,
-			and must be focusable as normal,
-			similar to ''content-visibility: auto''.
+			then the element acts as if ''content-visiblity: auto'' is specified,
+			except that being on-screen does not make it [=relevant to the user=].
 
 			If the element starts being [=relevant to the user=],
 			it [=fires=] a [=toggle activation=],
 			with a [=toggle activation/name=] of the given <<toggle-name>>
 			and a [=toggle activation/target state=] of 1.
-
-			Note: If the [=toggle=] is currently in an [=inactive state=]
-			and thus not generating any boxes,
-			it can't become [=relevant to the user=] due to being "on-screen"
-			but the other options are still possible.
 
 			Note: If the [=toggle=] is in an [=active state=],
 			or the element can't see the specified [=toggle=] at all,
