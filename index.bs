@@ -712,12 +712,12 @@ Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
 	the <dfn>:toggle()</dfn> pseudo-class:
 
 	<pre class=prod>
-		:toggle( <<toggle-name>> <<integer>>? )
+		:toggle( <<custom-ident>> <<integer>>? )
 	</pre>
 
 	An element matches '':toggle()''
 	if the element is [=in scope=] for a [=toggle=]
-	with the [=toggle/name=] given by <<toggle-name>>,
+	with the [=toggle/name=] given by <<custom-ident>>,
 	and either the [=toggle's=] [=toggle/state=] matches the provided <<integer>>,
 	or the <<integer>> is omitted and the [=toggle=] is in any [=active state=].
 
