@@ -52,23 +52,34 @@ Introduction</h2>
 		by simply clicking on them.
 	</div>
 
-	This module generalizes this ability and allows it to be applied to any element via CSS.
+	This module generalizes this ability and allows it to be applied to any element via CSS,
+	so authors do not have to abuse host language semantics for styling purposes.
+	It also defines how to infer reasonable accessibility semantics
+	from the toggle structure,
+	making it simpler and more reliable
+	to produce accessible pages
+	using these sorts of basic interactivity
+	without the author having to manually annotate a page
+	with ARIA attributes or similar.
+
+<h3>Terminology</h3>
 
 	Any element can become a <dfn export>toggle root</dfn>,
-	meaning it hosts one or more [=toggles=],
-	each of which has a name,
+	meaning it hosts one or more [=toggles=].
+	Each [=toggle=] has a name,
 	a value between 0 and some maximum,
 	and a few other bits of metadata,
-	via the 'toggle-root' property.
+	all of which can be set via the 'toggle-root' property.
 	The toggle is visible to the [=toggle root=],
 	its descendants,
 	and possibly its siblings and their descendants
 	(if the toggle says they can);
 	any element that can "see" a [=toggle=]
-	can use the '':toggle()'' pseudo-class.
+	can use the '':toggle()'' pseudo-class
+	to select the element based on the toggle's value.
 
 	Any element that can see a [=toggle=]
-	can also <em>trigger</em> a toggle,
+	can also <em>trigger</em> the toggle,
 	changing its value when the element is "activated",
 	via the 'toggle-trigger' property.
 	This means you can have elements that self-trigger their own toggle,
