@@ -414,6 +414,14 @@ Creating a Toggle: the 'toggle-root' property</h2>
 	that defines [=toggle/state names=] for a [=toggle=],
 	and amend the various properties to allow them to take a <<toggle-name>> instead of an <<integer>>.
 
+<h3 id='toggle-creation'>
+Toggle Creation Details</h3>
+
+	Each [=element=] has a list of <dfn export for=element>established toggles</dfn>,
+	representing [=toggles=] that are active on the element.
+	These are created automatically by the 'toggle-root' property,
+	and/or manually by interacting with the {{Element/toggles|Element.toggles}} map.
+
 	Issue: Define the precise point in [=update the rendering=]
 	when toggles are created
 	if 'toggle-root' names a toggle that doesn't exist on the element yet.
@@ -877,19 +885,50 @@ Automatically Hiding With A Toggle</h2>
 <h2 id=dom>
 Scripting API</h2>
 
-	<div class=issue>
-		TODO
+	<xmp class=idl>
+	partial interface Element {
+		attribute CSSToggleMap toggles;
+	};
 
-		* Expose a map of toggles on an element, with {name=>rest of [=toggle=] info}.
-			(Or just a list of toggles, with name built into the object?)
+	interface CSSToggleMap {
+		maplike<DOMString, CSSToggle>;
 
-		* Ability to create toggles manually.
-			(Tho without an accompanying 'toggle-root',
-			you just get the [=default toggle specifier=] when it's activated.)
+		CSSToggleMap set(DOMString name, CSSToggleData options);
+	};
 
-		* Ability to delete toggles manually.
-			(Tho if you don't remove the accompanying 'toggle-root',
-			it'll respawn on the next rendering tick.)
+	interface CSSToggle {
+		attribute int value;
+		attribute int maximum;
+		attribute bool group;
+		attribute CSSToggleScope scope;
+		attribute CSSToggleCycle cycle;
 
-		* Ability to set toggle state manually.
-	</div>
+		constructor(CSSToggleData options);
+	};
+
+	dictionary CSSToggleData {
+		int value;
+		int maximum;
+		bool group;
+		CSSToggleScope scope;
+		CSSToggleCycle cycle;
+	};
+
+	enum CSSToggleScope {
+		"narrow",
+		"wide",
+	};
+
+	enum CSSToggleCycle {
+		"cycle",
+		"sticky",
+	}
+	</xmp>
+
+	The {{Element/toggles}} attribute on {{Element}}s
+	exposes the [=established toggles=] on the element:
+	each [=toggle=] is represented by an [=map/entry=] in the map,
+	with its key equal to its name
+	and its value a {{CSSToggle}} representing the state of the [=toggle=].
+
+
