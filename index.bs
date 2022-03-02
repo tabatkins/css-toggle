@@ -310,6 +310,16 @@ Toggles and CSS Properties</h3>
 	</div>
 
 
+<!--
+████████   ███████   ███████  ████████
+██     ██ ██     ██ ██     ██    ██
+██     ██ ██     ██ ██     ██    ██
+████████  ██     ██ ██     ██    ██
+██   ██   ██     ██ ██     ██    ██
+██    ██  ██     ██ ██     ██    ██
+██     ██  ███████   ███████     ██
+-->
+
 <h2 id=toggle-root-property>
 Creating a Toggle: the 'toggle-root' property</h2>
 
@@ -427,6 +437,16 @@ Toggle Creation Details</h3>
 	if 'toggle-root' names a toggle that doesn't exist on the element yet.
 
 
+<!--
+ ██████   ████████   ███████  ██     ██ ████████
+██    ██  ██     ██ ██     ██ ██     ██ ██     ██
+██        ██     ██ ██     ██ ██     ██ ██     ██
+██   ████ ████████  ██     ██ ██     ██ ████████
+██    ██  ██   ██   ██     ██ ██     ██ ██
+██    ██  ██    ██  ██     ██ ██     ██ ██
+ ██████   ██     ██  ███████   ███████  ██
+-->
+
 <h3 id=toggle-group-property>
 Linking Toggle States: the 'toggle-group' property</h3>
 
@@ -536,6 +556,16 @@ Linking Toggle States: the 'toggle-group' property</h3>
 		are there more than these two behaviors to deal with?
 	</div>
 
+
+<!--
+████████ ████████  ████  ██████    ██████   ████████ ████████
+   ██    ██     ██  ██  ██    ██  ██    ██  ██       ██     ██
+   ██    ██     ██  ██  ██        ██        ██       ██     ██
+   ██    ████████   ██  ██   ████ ██   ████ ██████   ████████
+   ██    ██   ██    ██  ██    ██  ██    ██  ██       ██   ██
+   ██    ██    ██   ██  ██    ██  ██    ██  ██       ██    ██
+   ██    ██     ██ ████  ██████    ██████   ████████ ██     ██
+-->
 
 <h3 id='toggle-trigger-property'>
 Activating a Toggle: the 'toggle-trigger' property</h3>
@@ -651,6 +681,16 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	but include buttons that aren't, like, submit buttons.
 
 
+<!--
+ ██████  ██     ██  ███████  ████████  ████████ ██     ██    ███    ██    ██ ████████
+██    ██ ██     ██ ██     ██ ██     ██    ██    ██     ██   ██ ██   ███   ██ ██     ██
+██       ██     ██ ██     ██ ██     ██    ██    ██     ██  ██   ██  ████  ██ ██     ██
+ ██████  █████████ ██     ██ ████████     ██    █████████ ██     ██ ██ ██ ██ ██     ██
+      ██ ██     ██ ██     ██ ██   ██      ██    ██     ██ █████████ ██  ████ ██     ██
+██    ██ ██     ██ ██     ██ ██    ██     ██    ██     ██ ██     ██ ██   ███ ██     ██
+ ██████  ██     ██  ███████  ██     ██    ██    ██     ██ ██     ██ ██    ██ ████████
+-->
+
 <h3 id='toggle-property'>
 Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
@@ -706,6 +746,17 @@ Accessibility Implications of Toggles</h3>
 		* if 'toggle-visibility' is in use,
 			we can also automatically infer all the tab-set ARIA roles
 	</div>
+
+
+<!--
+ ██  ████████  ███████   ██████    ██████   ██       ████████   ███ ███
+████    ██    ██     ██ ██    ██  ██    ██  ██       ██        ██     ██
+ ██     ██    ██     ██ ██        ██        ██       ██       ██       ██
+        ██    ██     ██ ██   ████ ██   ████ ██       ██████   ██       ██
+ ██     ██    ██     ██ ██    ██  ██    ██  ██       ██       ██       ██
+████    ██    ██     ██ ██    ██  ██    ██  ██       ██        ██     ██
+ ██     ██     ███████   ██████    ██████   ████████ ████████   ███ ███
+-->
 
 <h2 id='checked-pseudoclass'>
 Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
@@ -778,6 +829,17 @@ Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
 			}
 		</pre>
 	</div>
+
+
+<!--
+██     ██ ████  ██████  ████ ████████  ████ ██       ████ ████████ ██    ██
+██     ██  ██  ██    ██  ██  ██     ██  ██  ██        ██     ██     ██  ██
+██     ██  ██  ██        ██  ██     ██  ██  ██        ██     ██      ████
+██     ██  ██   ██████   ██  ████████   ██  ██        ██     ██       ██
+ ██   ██   ██        ██  ██  ██     ██  ██  ██        ██     ██       ██
+  ██ ██    ██  ██    ██  ██  ██     ██  ██  ██        ██     ██       ██
+   ███    ████  ██████  ████ ████████  ████ ████████ ████    ██       ██
+-->
 
 <h2 id='toggle-visibility-property'>
 Automatically Hiding With A Toggle</h2>
@@ -881,6 +943,16 @@ Automatically Hiding With A Toggle</h2>
 	which one "wins" is well-defined.
 
 
+
+<!--
+   ███    ████████  ████
+  ██ ██   ██     ██  ██
+ ██   ██  ██     ██  ██
+██     ██ ████████   ██
+█████████ ██         ██
+██     ██ ██         ██
+██     ██ ██        ████
+-->
 
 <h2 id=dom>
 Scripting API</h2>
