@@ -407,7 +407,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 			</ul>
 			<style>
 			li {
-				toggle-root: check self;
+				toggle: check self;
 			}
 			li:toggle(check) {
 				color: silver;
