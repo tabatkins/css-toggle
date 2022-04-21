@@ -337,7 +337,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 
 	<pre class=prod>
 		<dfn><<toggle-specifier>></dfn> =
-			<<cusstom-ident>>
+			<<custom-ident>>
 			[
 				[ <<integer [0, ∞]>> / ]? <<integer [1, ∞]>> ||
 				sticky ||
