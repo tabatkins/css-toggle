@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version dfbc2b297, updated Thu Nov 11 15:52:32 2021 -0800" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="0fab36fead319242a7406d3b0604c5d21ece68de" name="document-revision">
+  <meta content="bedad336fdd537cd4266273c87d06f58b70f77f7" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -905,11 +905,12 @@ and decrementing below 0 returns the toggle to the <span id="ref-for-toggle-spec
       <li data-md>
        <p>For "sticky",
 incrementing beyond the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑤">maximum state</a> or decrementing below 0
-does not change the toggle state.</p>
+does not change the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑧">state</a>.</p>
       <li data-md>
-       <p>If the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑧">state</a> before activation is an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑦">&lt;integer></a> that is higher than the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑥">maximum state</a>,
+       <p>If the <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑨">state</a> before activation is an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value⑦">&lt;integer></a> that is higher than the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑥">maximum state</a>,
 or a <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value①⑤">&lt;custom-ident></a> that is not in the list of <a data-link-type="dfn" href="#toggle-specifier-state-names" id="ref-for-toggle-specifier-state-names">state names</a>,
-then both incrementing and decrementing follow the specified.</p>
+then incrementing follows the specified overflow behavior,
+and decrementing returns the toggle to the <span id="ref-for-toggle-specifier-maximum-state⑦">maximum state</span>.</p>
      </ul>
    </dl>
    <p><a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier">Toggle specifiers</a> are created by the <a class="property" data-link-type="propdesc" href="#propdef-toggle-root" id="ref-for-propdef-toggle-root①">toggle-root</a> property;
@@ -921,7 +922,7 @@ then both incrementing and decrementing follow the specified.</p>
 		a <a data-link-type="dfn" href="#toggle-specifier-state-names" id="ref-for-toggle-specifier-state-names①">state names</a> of an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list②">list</a>,
 		a false <a data-link-type="dfn" href="#toggle-specifier-group" id="ref-for-toggle-specifier-group">group</a>,
 		a <a data-link-type="dfn" href="#toggle-specifier-scope" id="ref-for-toggle-specifier-scope">scope</a> of "wide",
-		a <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑦">maximum state</a> of 1,
+		a <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑧">maximum state</a> of 1,
 		and a <a data-link-type="dfn" href="#toggle-specifier-overflow" id="ref-for-toggle-specifier-overflow">overflow</a> of "cycle". 
     <p class="note" role="note"><span>Note:</span> This produces behavior similar to a checkbox.</p>
    </div>
@@ -1032,11 +1033,11 @@ then both incrementing and decrementing follow the specified.</p>
 as the item’s value.</p>
       <li data-md>
        <p>The <a class="production css" data-link-type="type" href="#typedef-toggle-states" id="ref-for-typedef-toggle-states②">&lt;toggle-states></a>, if specified as an <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value①⓪">&lt;integer></a>,
-specifies the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑧">maximum state</a>.
+specifies the <a data-link-type="dfn" href="#toggle-specifier-maximum-state" id="ref-for-toggle-specifier-maximum-state⑨">maximum state</a>.
 If specified as a bracketed list of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②⓪">&lt;custom-ident></a>s,
 specifies the <a data-link-type="dfn" href="#toggle-specifier-state-names" id="ref-for-toggle-specifier-state-names②">state names</a>,
-and sets the <span id="ref-for-toggle-specifier-maximum-state⑨">maximum state</span> to the (zero-indexed) length of the list.
-If omitted, the <span id="ref-for-toggle-specifier-maximum-state①⓪">maximum state</span> is set to 1.</p>
+and sets the <span id="ref-for-toggle-specifier-maximum-state①⓪">maximum state</span> to the length of the list minus 1.
+If omitted, the <span id="ref-for-toggle-specifier-maximum-state①①">maximum state</span> is set to 1.</p>
       <li data-md>
        <p>The <a class="production css" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state②">&lt;toggle-state></a>, if specified,
 specifies the <a data-link-type="dfn" href="#toggle-specifier-initial-state" id="ref-for-toggle-specifier-initial-state①">initial state</a>.
@@ -1117,7 +1118,7 @@ If omitted, it’s set to "wide".</p>
       <th><a href="https://www.w3.org/TR/web-animations/#animation-type">Animatable:</a>
       <td>no 
    </table>
-   <p>By default, each <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③①">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state⑨">state</a> is independent;
+   <p>By default, each <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③①">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⓪">state</a> is independent;
 	incrementing one has no effect an any other.
 	The <a class="property" data-link-type="propdesc" href="#propdef-toggle-group" id="ref-for-propdef-toggle-group②">toggle-group</a> property allows elements to link their <span id="ref-for-css-toggle③②">toggles</span> together:
 	all <span id="ref-for-css-toggle③③">toggles</span> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑥">name</a> as the <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①④">toggle group</a> that are on elements <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope②">in scope</a> for the <span id="ref-for-css-toggle-group①⑤">toggle group</span> are linked,
@@ -1181,11 +1182,11 @@ If omitted, it’s set to "wide".</p>
 <c- p>}</c->
 <c- p>&lt;/</c-><c- f>style</c-><c- p>></c->
 </pre>
-    <p>Clicking on any tab will increment its corresponding <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑤">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⓪">state</a> from 0 to 1
+    <p>Clicking on any tab will increment its corresponding <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle③⑤">toggle’s</a> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①①">state</a> from 0 to 1
 		(and the <span class="css">cycle-on</span> keyword will keep it at 1 if activated multiple times),
-		while resetting the rest of the tabs' <span id="ref-for-toggle-state①①">states</span> to 0.
+		while resetting the rest of the tabs' <span id="ref-for-toggle-state①②">states</span> to 0.
 		Each panel is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope③">in scope</a> for the <span id="ref-for-css-toggle③⑥">toggle</span> defined by its preceding tab,
-		so it can respond to the <span id="ref-for-toggle-state①②">state</span> as well.</p>
+		so it can respond to the <span id="ref-for-toggle-state①③">state</span> as well.</p>
    </div>
    <div class="issue" id="issue-47da3fb8">
     <a class="self-link" href="#issue-47da3fb8"></a> Radio buttons have one particular tabbing/switching/activation behavior
@@ -1235,7 +1236,7 @@ If omitted, it’s set to "wide".</p>
    </table>
 <pre class="prod"><df><a class="production" data-link-type="type">&lt;toggle-trigger></a> = <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②④">&lt;custom-ident></a> <a class="production" data-link-type="type" href="#typedef-trigger-action" id="ref-for-typedef-trigger-action">&lt;trigger-action></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt③">?</a>
 <dfn class="dfn-paneled" data-dfn-type="type" data-export id="typedef-trigger-action"><a class="production" data-link-type="type" href="#typedef-trigger-action" id="ref-for-typedef-trigger-action①">&lt;trigger-action></a></dfn> =
-  prev <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑦">|</a> next <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑧">|</a>
+  [prev <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑦">|</a> next] <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value①①">&lt;integer [1,∞]></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one" id="ref-for-comb-one⑧">|</a>
   set <a class="production" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state③">&lt;toggle-state></a>
 </df></pre>
    <p>The <a class="property" data-link-type="propdesc" href="#propdef-toggle-trigger" id="ref-for-propdef-toggle-trigger④">toggle-trigger</a> property specifies that an element can be activated
@@ -1268,12 +1269,14 @@ and the <a class="production css" data-link-type="type" href="#typedef-trigger-a
     <dd data-md>
      <p>If unspecified, or specified as the keyword <a class="property" data-link-type="propdesc">next</a>,
 indicates that this activation will increment
-the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⓪">toggle’s</a> current <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①③">state</a>.
+the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⓪">toggle’s</a> current <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①④">state</a> by <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#integer-value" id="ref-for-integer-value①②">&lt;integer></a> steps,
+or a single step if <span class="production" id="ref-for-integer-value①③">&lt;integer></span> is not specified.
 If specified as the keyword <span class="property">prev</span>,
 indicates that this activation will decrement
-the <span id="ref-for-css-toggle④①">toggle’s</span> current <span id="ref-for-toggle-state①④">state</span>.
+the <span id="ref-for-css-toggle④①">toggle’s</span> current <span id="ref-for-toggle-state①⑤">state</span> by <span class="production" id="ref-for-integer-value①④">&lt;integer></span> steps,
+or a single step if <span class="production" id="ref-for-integer-value①⑤">&lt;integer></span> is not specified.
 If specified with the keyword <span class="property">set</span> and a <a class="production css" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state④">&lt;toggle-state></a>,
-indicates the exact <span id="ref-for-toggle-state①⑤">state</span> that this activation will attempt to put the <span id="ref-for-css-toggle④②">toggle</span> into.</p>
+indicates the exact <span id="ref-for-toggle-state①⑥">state</span> that this activation will attempt to put the <span id="ref-for-css-toggle④②">toggle</span> into.</p>
    </dl>
    <div class="algorithm" data-algorithm="fire a toggle activation">
      To <dfn class="dfn-paneled" data-dfn-type="dfn" data-export data-local-lt="fire" id="fire-a-toggle-activation">fire a toggle activation</dfn> on an element <var>initial element</var> with a <a data-link-type="dfn" href="#css-toggle-activation" id="ref-for-css-toggle-activation③">toggle activation</a> <var>activation</var>: 
@@ -1292,15 +1295,15 @@ then:</p>
 let <var>specifier</var> be it.</p>
         <p>Otherwise, let <var>specifier</var> be a new <a data-link-type="dfn" href="#default-toggle-specifier" id="ref-for-default-toggle-specifier">default toggle specifier</a> for <var>activation</var>’s <a data-link-type="dfn" href="#toggle-activation-name" id="ref-for-toggle-activation-name①">name</a>.</p>
        <li data-md>
-        <p>Set <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑥">state</a> to the result of
+        <p>Set <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑦">state</a> to the result of
 the specified <a data-link-type="dfn" href="#toggle-activation-event" id="ref-for-toggle-activation-event">event</a>,
 following the specified <a data-link-type="dfn" href="#toggle-specifier-overflow" id="ref-for-toggle-specifier-overflow②">overflow</a> behavior
 when incrementing or decrementing.</p>
        <li data-md>
-        <p>If <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑦">state</a> is now greater than zero
+        <p>If <var>toggle</var>’s <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑧">state</a> is now greater than zero
 and <var>toggle</var> is <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group①">in a toggle group</a>,
 then for each <em>other</em> <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">toggle</a> in the same <a data-link-type="dfn" href="#css-toggle-group" id="ref-for-css-toggle-group①⑧">toggle group</a>,
-set their <span id="ref-for-toggle-state①⑧">state</span> to 0.</p>
+set their <span id="ref-for-toggle-state①⑨">state</span> to 0.</p>
        <li data-md>
         <p>Return from this algorithm.</p>
       </ol>
@@ -1408,12 +1411,12 @@ we can also automatically infer all the tab-set ARIA roles</p>
 	(as defined by the host language)
 	depending on their "checked" state.</p>
    <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">Toggles</a> provides a very similar functionality,
-	allowing elements to be selected based on their <span id="ref-for-css-toggle⑤②">toggle</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state①⑨">state</a>,
+	allowing elements to be selected based on their <span id="ref-for-css-toggle⑤②">toggle</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state②⓪">state</a>,
 	the <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-toggle">:toggle()</dfn> pseudo-class:</p>
-<pre class="prod">:toggle( <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②⑥">&lt;custom-ident></a> <a class="production" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state⑤">&lt;toggle-state></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt④">?</a> )
+<pre class="prod">:toggle( <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②⑥">&lt;custom-ident></a> <a class="production" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state⑤">&lt;toggle-state></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt⑤">?</a> )
 </pre>
    <p>An element matches <a class="css" data-link-type="maybe" href="#selectordef-toggle" id="ref-for-selectordef-toggle④">:toggle()</a> if the element is <a data-link-type="dfn" href="#toggle-in-scope" id="ref-for-toggle-in-scope⑤">in scope</a> for a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤③">toggle</a> with the <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑨">name</a> given by <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②⑦">&lt;custom-ident></a>,
-	and either the <span id="ref-for-css-toggle⑤④">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state②⓪">state</a> <a data-link-type="dfn" href="#toggle-match-state" id="ref-for-toggle-match-state">matches</a> the provided <a class="production css" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state⑥">&lt;toggle-state></a>,
+	and either the <span id="ref-for-css-toggle⑤④">toggle’s</span> <a data-link-type="dfn" href="#toggle-state" id="ref-for-toggle-state②①">state</a> <a data-link-type="dfn" href="#toggle-match-state" id="ref-for-toggle-match-state">matches</a> the provided <a class="production css" data-link-type="type" href="#typedef-toggle-state" id="ref-for-typedef-toggle-state⑥">&lt;toggle-state></a>,
 	or the <span class="production" id="ref-for-typedef-toggle-state⑦">&lt;toggle-state></span> is omitted
 	and the <span id="ref-for-css-toggle⑤⑤">toggle</span> is in any <a data-link-type="dfn" href="#toggle-active-state" id="ref-for-toggle-active-state⑤">active state</a>.</p>
    <div class="example" id="example-d684b11f">
@@ -1597,6 +1600,7 @@ the element renders normally.</p>
 <c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-csstogglecycle"><code><c- g>CSSToggleCycle</c-></code></dfn> {
   <dfn class="idl-code" data-dfn-for="CSSToggleCycle" data-dfn-type="enum-value" data-export id="dom-csstogglecycle-cycle"><code><c- s>"cycle"</c-></code><a class="self-link" href="#dom-csstogglecycle-cycle"></a></dfn>,
   <dfn class="idl-code" data-dfn-for="CSSToggleCycle" data-dfn-type="enum-value" data-export id="dom-csstogglecycle-cycle-on"><code><c- s>"cycle-on"</c-></code><a class="self-link" href="#dom-csstogglecycle-cycle-on"></a></dfn>,
+  <dfn class="idl-code" data-dfn-for="CSSToggleCycle" data-dfn-type="enum-value" data-export id="dom-csstogglecycle-sticky"><code><c- s>"sticky"</c-></code><a class="self-link" href="#dom-csstogglecycle-sticky"></a></dfn>,
 }
 </pre>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-element-toggles" id="ref-for-dom-element-toggles①">toggles</a></code> attribute on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>s
@@ -1783,6 +1787,7 @@ the element renders normally.</p>
      <li><a href="#toggle-state-names">dfn for toggle</a><span>, in § 2</span>
      <li><a href="#toggle-specifier-state-names">dfn for toggle specifier</a><span>, in § 2</span>
     </ul>
+   <li><a href="#dom-csstogglecycle-sticky">"sticky"</a><span>, in § 6</span>
    <li><a href="#selectordef-toggle">:toggle()</a><span>, in § 4</span>
    <li>
     toggle
@@ -1900,6 +1905,8 @@ Automatically Hiding With A Toggle</a> <a href="#ref-for-identifier-value②⑨"
 Toggle Concepts</a> <a href="#ref-for-integer-value①">(2)</a> <a href="#ref-for-integer-value②">(3)</a> <a href="#ref-for-integer-value③">(4)</a> <a href="#ref-for-integer-value④">(5)</a> <a href="#ref-for-integer-value⑤">(6)</a> <a href="#ref-for-integer-value⑥">(7)</a> <a href="#ref-for-integer-value⑦">(8)</a>
     <li><a href="#ref-for-integer-value⑧">3. 
 Creating a Toggle: the toggle-root property</a> <a href="#ref-for-integer-value⑨">(2)</a> <a href="#ref-for-integer-value①⓪">(3)</a>
+    <li><a href="#ref-for-integer-value①①">3.3. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-integer-value①②">(2)</a> <a href="#ref-for-integer-value①③">(3)</a> <a href="#ref-for-integer-value①④">(4)</a> <a href="#ref-for-integer-value①⑤">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-mult-opt">
@@ -1910,8 +1917,8 @@ Creating a Toggle: the toggle-root property</a> <a href="#ref-for-mult-opt①">(
     <li><a href="#ref-for-mult-opt②">3.2. 
 Linking Toggle States: the toggle-group property</a>
     <li><a href="#ref-for-mult-opt③">3.3. 
-Activating a Toggle: the toggle-trigger property</a>
-    <li><a href="#ref-for-mult-opt④">4. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-mult-opt④">(2)</a>
+    <li><a href="#ref-for-mult-opt⑤">4. 
 Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    </ul>
   </aside>
@@ -2268,6 +2275,7 @@ Scripting API</a> <a href="#ref-for-idl-DOMString①">(2)</a>
 <c- b>enum</c-> <a href="#enumdef-csstogglecycle"><code><c- g>CSSToggleCycle</c-></code></a> {
   <a href="#dom-csstogglecycle-cycle"><code><c- s>"cycle"</c-></code></a>,
   <a href="#dom-csstogglecycle-cycle-on"><code><c- s>"cycle-on"</c-></code></a>,
+  <a href="#dom-csstogglecycle-sticky"><code><c- s>"sticky"</c-></code></a>,
 }
 
 </pre>
@@ -2371,13 +2379,13 @@ Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a>
    <b><a href="#toggle-state">#toggle-state</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-state">2. 
-Toggle Concepts</a> <a href="#ref-for-toggle-state①">(2)</a> <a href="#ref-for-toggle-state②">(3)</a> <a href="#ref-for-toggle-state③">(4)</a> <a href="#ref-for-toggle-state④">(5)</a> <a href="#ref-for-toggle-state⑤">(6)</a> <a href="#ref-for-toggle-state⑥">(7)</a> <a href="#ref-for-toggle-state⑦">(8)</a> <a href="#ref-for-toggle-state⑧">(9)</a>
-    <li><a href="#ref-for-toggle-state⑨">3.2. 
-Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-state①⓪">(2)</a> <a href="#ref-for-toggle-state①①">(3)</a> <a href="#ref-for-toggle-state①②">(4)</a>
-    <li><a href="#ref-for-toggle-state①③">3.3. 
-Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-state①④">(2)</a> <a href="#ref-for-toggle-state①⑤">(3)</a> <a href="#ref-for-toggle-state①⑥">(4)</a> <a href="#ref-for-toggle-state①⑦">(5)</a> <a href="#ref-for-toggle-state①⑧">(6)</a>
-    <li><a href="#ref-for-toggle-state①⑨">4. 
-Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-toggle-state②⓪">(2)</a>
+Toggle Concepts</a> <a href="#ref-for-toggle-state①">(2)</a> <a href="#ref-for-toggle-state②">(3)</a> <a href="#ref-for-toggle-state③">(4)</a> <a href="#ref-for-toggle-state④">(5)</a> <a href="#ref-for-toggle-state⑤">(6)</a> <a href="#ref-for-toggle-state⑥">(7)</a> <a href="#ref-for-toggle-state⑦">(8)</a> <a href="#ref-for-toggle-state⑧">(9)</a> <a href="#ref-for-toggle-state⑨">(10)</a>
+    <li><a href="#ref-for-toggle-state①⓪">3.2. 
+Linking Toggle States: the toggle-group property</a> <a href="#ref-for-toggle-state①①">(2)</a> <a href="#ref-for-toggle-state①②">(3)</a> <a href="#ref-for-toggle-state①③">(4)</a>
+    <li><a href="#ref-for-toggle-state①④">3.3. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-state①⑤">(2)</a> <a href="#ref-for-toggle-state①⑥">(3)</a> <a href="#ref-for-toggle-state①⑦">(4)</a> <a href="#ref-for-toggle-state①⑧">(5)</a> <a href="#ref-for-toggle-state①⑨">(6)</a>
+    <li><a href="#ref-for-toggle-state②⓪">4. 
+Selecting Elements Based on Toggle State: the :toggle() pseudo-class</a> <a href="#ref-for-toggle-state②①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-inactive-state">
@@ -2538,9 +2546,9 @@ Creating a Toggle: the toggle-root property</a>
    <b><a href="#toggle-specifier-maximum-state">#toggle-specifier-maximum-state</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-toggle-specifier-maximum-state">2. 
-Toggle Concepts</a> <a href="#ref-for-toggle-specifier-maximum-state①">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state②">(3)</a> <a href="#ref-for-toggle-specifier-maximum-state③">(4)</a> <a href="#ref-for-toggle-specifier-maximum-state④">(5)</a> <a href="#ref-for-toggle-specifier-maximum-state⑤">(6)</a> <a href="#ref-for-toggle-specifier-maximum-state⑥">(7)</a> <a href="#ref-for-toggle-specifier-maximum-state⑦">(8)</a>
-    <li><a href="#ref-for-toggle-specifier-maximum-state⑧">3. 
-Creating a Toggle: the toggle-root property</a> <a href="#ref-for-toggle-specifier-maximum-state⑨">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state①⓪">(3)</a>
+Toggle Concepts</a> <a href="#ref-for-toggle-specifier-maximum-state①">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state②">(3)</a> <a href="#ref-for-toggle-specifier-maximum-state③">(4)</a> <a href="#ref-for-toggle-specifier-maximum-state④">(5)</a> <a href="#ref-for-toggle-specifier-maximum-state⑤">(6)</a> <a href="#ref-for-toggle-specifier-maximum-state⑥">(7)</a> <a href="#ref-for-toggle-specifier-maximum-state⑦">(8)</a> <a href="#ref-for-toggle-specifier-maximum-state⑧">(9)</a>
+    <li><a href="#ref-for-toggle-specifier-maximum-state⑨">3. 
+Creating a Toggle: the toggle-root property</a> <a href="#ref-for-toggle-specifier-maximum-state①⓪">(2)</a> <a href="#ref-for-toggle-specifier-maximum-state①①">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="toggle-specifier-state-names">

@@ -273,12 +273,13 @@ Toggle Concepts</h2>
 
 			* For "sticky",
 				incrementing beyond the [=maximum state=] or decrementing below 0
-				does not change the toggle state.
+				does not change the [=toggle/state=].
 
 			* If the [=toggle/state=] before activation is an <<integer>>
 				that is higher than the [=toggle specifier/maximum state=],
 				or a <<custom-ident>> that is not in the list of [=toggle specifier/state names=],
-				then both incrementing and decrementing follow the specified.
+				then incrementing follows the specified overflow behavior,
+				and decrementing returns the toggle to the [=maximum state=].
 	</dl>
 
 	[=Toggle specifiers=] are created by the 'toggle-root' property;
@@ -419,7 +420,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 				If specified as a bracketed list of <<custom-ident>>s,
 				specifies the [=toggle specifier/state names=],
 				and sets the [=toggle specifier/maximum state=]
-				to the (zero-indexed) length of the list.
+				to the length of the list minus 1.
 				If omitted, the [=toggle specifier/maximum state=] is set to 1.
 
 			* The <<toggle-state>>, if specified,
@@ -625,7 +626,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	<pre class=prod>
 		<df><<toggle-trigger>></dfn> = <<custom-ident>> <<trigger-action>>?
 		<dfn><<trigger-action>></dfn> =
-			prev | next |
+			[prev | next] <<integer [1, ∞]>>? |
 			set <<toggle-state>>
 	</pre>
 
@@ -667,10 +668,12 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 		: <dfn>event</dfn>
 		:: If unspecified, or specified as the keyword 'next',
 			indicates that this activation will increment
-			the [=toggle's=] current [=toggle/state=].
+			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
+			or a single step if <<integer>> is not specified.
 			If specified as the keyword 'prev',
 			indicates that this activation will decrement
-			the [=toggle's=] current [=toggle/state=].
+			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
+			or a single step if <<integer>> is not specified.
 			If specified with the keyword 'set' and a <<toggle-state>>,
 			indicates the exact [=toggle/state=]
 			that this activation will attempt to put the [=toggle=] into.
@@ -1045,6 +1048,7 @@ Scripting API</h2>
 	enum CSSToggleCycle {
 		"cycle",
 		"cycle-on",
+		"sticky",
 	}
 	</xmp>
 
