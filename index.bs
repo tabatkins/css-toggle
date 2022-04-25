@@ -21,22 +21,28 @@ Introduction</h2>
 
 	<em>This section is not normative.</em>
 
-	Some user-interface languages define elements which can have "toggleable state",
-	which can be modified by user interaction and selected using CSS Selectors.
+	Many user-interface languages define elements which can have "toggleable state",
+	which can be modified by user interaction
+	and responded to by the element.
 	For example, in HTML, the <code>&lt;input type=checkbox></code> has a "checked" state
 	which toggles between true and false when the user activates the element,
 	and which is selected by the '':checked'' pseudoclass.
 
-	<div class='example'>
-		The following markup example shows how to lightly abuse HTML semantics to declaratively use toggleable state:
+	These sorts of elements are extremely useful,
+	to the point that authors sometimes abuse them
+	to get the same functionality on <em>other</em> elements:
 
-		<pre>
-			&lt;ul class='ingredients'>
-			  &lt;li>&lt;label>&lt;input type=checkbox>&lt;span>1 banana&lt;/span>&lt;/label>
-			  &lt;li>&lt;label>&lt;input type=checkbox>&lt;span>1 cup blueberries&lt;/span>&lt;/label>
+	<div class='example'>
+		The following markup example shows how to lightly abuse HTML semantics
+		to declaratively use toggleable state:
+
+		<xmp highlight=markup>
+			<ul class='ingredients'>
+			  <li><label><input type=checkbox><span>1 banana</span></label>
+			  <li><label><input type=checkbox><span>1 cup blueberries</span></label>
 			  ...
-			&lt;/ul>
-			&lt;style>
+			</ul>
+			<style>
 			input[type='checkbox'] {
 			  display: none;
 			}
@@ -44,16 +50,30 @@ Introduction</h2>
 			  color: silver;
 			  text-decoration: line-through;
 			}
-			&lt;/style>
-		</pre>
+			</style>
+		</xmp>
 
 		In this markup,
 		one can cross out ingredients as they're used in the recipe
-		by simply clicking on them.
+		by simply clicking on them,
+		without any scripting being involved.
+		The <{label}> "transfers" the activation
+		to the (hidden) checkboxes,
+		which are then used to style the span.
 	</div>
 
-	This module generalizes this ability and allows it to be applied to any element via CSS,
+	This module generalizes this ability
+	and allows it to be applied to any element via CSS,
 	so authors do not have to abuse host language semantics for styling purposes.
+	It defines a a way of attaching lightweight "state" to an element via CSS
+	('toggle-root'),
+	defining how user interactions can change that state
+	('toggle-trigger'),
+	and responding to that state from CSS
+	('':toggle()'' pseudo-class).
+	Scripting can also create, modify, and respond to this state,
+	to accommodate more complicated scenarios.
+
 	It also defines how to infer reasonable accessibility semantics
 	from the toggle structure,
 	making it simpler and more reliable
