@@ -14,6 +14,7 @@ Ignored Terms: spoiler-text
 
 <pre class=link-defaults>
 spec:css-display-3; type:dfn; text:element
+spec:css-contain-2; type:property; text:content-visiblity
 </pre>
 
 <h2 id="introduction">
@@ -82,7 +83,8 @@ Introduction</h2>
 	without the author having to manually annotate a page
 	with ARIA attributes or similar.
 
-<h3>Terminology</h3>
+<h3 id="terminology">
+Terminology</h3>
 
 	Any element can become a <dfn export>toggle root</dfn>,
 	meaning it hosts one or more [=toggles=].
@@ -644,7 +646,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	</pre>
 
 	<pre class=prod>
-		<df><<toggle-trigger>></dfn> = <<custom-ident>> <<trigger-action>>?
+		<dfn><<toggle-trigger>></dfn> = <<custom-ident>> <<trigger-action>>?
 		<dfn><<trigger-action>></dfn> =
 			[prev | next] <<integer [1, ∞]>>? |
 			set <<toggle-state>>
@@ -675,7 +677,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			for each comma-separated entry in the list,
 			[=fires=] a [=toggle activation=]
 			with the given <<custom-ident>> as a [=toggle activation/name=],
-			and the <<trigger-action>> [=event=], if specified.
+			and the <<trigger-action>> [=toggle activation/event=], if specified.
 	</dl>
 
 	A <dfn for=CSS export>toggle activation</dfn> is a struct with the following items:
@@ -686,15 +688,15 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			this is intended to activate.
 
 		: <dfn>event</dfn>
-		:: If unspecified, or specified as the keyword 'next',
+		:: If unspecified, or specified as the keyword ''next'',
 			indicates that this activation will increment
 			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
 			or a single step if <<integer>> is not specified.
-			If specified as the keyword 'prev',
+			If specified as the keyword ''prev'',
 			indicates that this activation will decrement
 			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
 			or a single step if <<integer>> is not specified.
-			If specified with the keyword 'set' and a <<toggle-state>>,
+			If specified with the keyword ''set'' and a <<toggle-state>>,
 			indicates the exact [=toggle/state=]
 			that this activation will attempt to put the [=toggle=] into.
 	</dl>
@@ -779,7 +781,7 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
 	The 'toggle' shorthand sets both the 'toggle-root' and 'toggle-trigger' properties on an element together.
 	The entire value of the property is assigned to 'toggle-root',
-	while 'toggle-trigger' is assigned to just the <<custom-idents>>s specified in the list,
+	while 'toggle-trigger' is assigned to just the <<custom-ident>>s specified in the list,
 	if any.
 
 	<div class=example>
@@ -967,8 +969,8 @@ Automatically Hiding With A Toggle</h2>
 
 			If the element starts being [=relevant to the user=],
 			it [=fires=] a [=toggle activation=],
-			with a [=toggle activation/name=] of the given <<toggle-name>>
-			and a [=toggle activation/event=] of ‘set 1’.
+			with a [=toggle activation/name=] of the given <<custom-ident>>
+			and a [=toggle activation/event=] of ''set 1''.
 
 			Note: If the [=toggle=] is in an [=active state=],
 			or the element can't see the specified [=toggle=] at all,
@@ -1039,23 +1041,23 @@ Scripting API</h2>
 	interface CSSToggleMap {
 		maplike<DOMString, CSSToggle>;
 
-		CSSToggleMap set(DOMString name, CSSToggleData options);
+		CSSToggleMap set(DOMString name, optional CSSToggleData options);
 	};
 
 	interface CSSToggle {
-		attribute int value;
-		attribute int maximum;
-		attribute bool group;
+		attribute unsigned long value;
+		attribute unsigned long maximum;
+		attribute boolean group;
 		attribute CSSToggleScope scope;
 		attribute CSSToggleCycle cycle;
 
-		constructor(CSSToggleData options);
+		constructor(optional CSSToggleData options);
 	};
 
 	dictionary CSSToggleData {
-		int value;
-		int maximum;
-		bool group;
+		unsigned long value;
+		unsigned long maximum;
+		boolean group;
 		CSSToggleScope scope;
 		CSSToggleCycle cycle;
 	};
@@ -1069,7 +1071,7 @@ Scripting API</h2>
 		"cycle",
 		"cycle-on",
 		"sticky",
-	}
+	};
 	</xmp>
 
 	The {{Element/toggles}} attribute on {{Element}}s
