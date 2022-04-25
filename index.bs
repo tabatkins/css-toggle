@@ -108,9 +108,28 @@ Toggle Concepts</h2>
 		:: A <<custom-ident>>.
 
 		: <dfn>state</dfn>
-		:: A non-negative integer:
+		::
+			A <<custom-ident>> or non-negative <<integer>>:
 			either 0 (the <dfn>inactive state</dfn>)
 			or a value 1 or higher (the <dfn lt="active state">active states</dfn>).
+			In order to <dfn lt="match state">match states</dfn>:
+
+			* If the [=toggle/state=] is specified as an <<integer>>,
+				and there is a corresponding <<custom-ident>> at that (zero-indexed)
+				position in the list of [=toggle/state names=],
+				then the [=toggle/state=] will match either
+				the specified <<integer>> or that <<custom-ident>>.
+
+			* If the [=toggle/state=] is specified as a <<custom-ident>> that
+				is available in the list of [=toggle/state names=],
+				then the [=toggle/state=] will match either
+				the specified <<custom-ident>>,
+				or the (zero-indexed) <<integer>> position of that <<custom-ident>>
+				in [=toggle/state names=].
+
+			* If there are no corresponding <<integer>> and <<custom-ident>> values,
+				an <<integer>> [=toggle/state=] will only match the same <<integer>>,
+				and a <<custom-ident>> [=toggle/state=] will only match the same <<custom-ident>>.
 
 		: <dfn>state names</dfn>
 		::
@@ -214,16 +233,16 @@ Toggle Concepts</h2>
 		:: A <<custom-ident>> specifying the [=toggle's=] [=toggle/name=].
 
 		: <dfn>initial state</dfn>
-		:: A non-negative integer
+		:: A non-negative integer or a <<custom-ident>>
 			specifying the [=toggle's=] initial [=toggle/state=] upon creation.
 
 		: <dfn>maximum state</dfn>
 		:: A positive integer
-			specifying the highest [=active state=] the [=toggle=] can reach.
+			specifying the highest [=active state=] the [=toggle=] can reach
+			throught default transitions.
 
 		: <dfn>state names</dfn>
-		::
-			A [=/list=] of state names,
+		:: A [=/list=] of state names,
 			each of which are <<custom-ident>>s,
 			assigned to the [=toggle=] initially upon creation.
 
@@ -235,11 +254,32 @@ Toggle Concepts</h2>
 		:: An enum (either "wide" or "narrow"),
 			specifying the [=toggle's=] initial [=toggle/scope=] upon creation.
 
-		: <dfn>sticky</dfn>
-		:: A [=boolean=] specifying how to react
-			when a [=toggle activation=] would push the [=toggle/state=] past the specified [=maximum state=]:
-			the state either stays within the [=active states=] and returns to 1 (if true)
-			or cycles back to the [=inactive state=] (if false).
+		: <dfn>overflow</dfn>
+		:: An enum (either "cycle" or "cycle-on" or "sticky"),
+			specifying how to react when a [=toggle activation=]
+			would increment the [=toggle/state=]
+			above the specified [=maximum state=],
+			or decrement the state below the (overflow-defined) minimum:
+
+			* For "cycle-on",
+				incrementing beyond the [=maximum state=]
+				returns the toggle to the first active state (1),
+				and decrementing below 1 returns the toggle to the [=maximum state=].
+
+			* For "cycle",
+				incrementing beyond the [=maximum state=]
+				returns the toggle to the inactive state (0),
+				and decrementing below 0 returns the toggle to the [=maximum state=].
+
+			* For "sticky",
+				incrementing beyond the [=maximum state=] or decrementing below 0
+				does not change the [=toggle/state=].
+
+			* If the [=toggle/state=] before activation is an <<integer>>
+				that is higher than the [=toggle specifier/maximum state=],
+				or a <<custom-ident>> that is not in the list of [=toggle specifier/state names=],
+				then incrementing follows the specified overflow behavior,
+				and decrementing returns the toggle to the [=maximum state=].
 	</dl>
 
 	[=Toggle specifiers=] are created by the 'toggle-root' property;
@@ -255,7 +295,7 @@ Toggle Concepts</h2>
 		a false [=toggle specifier/group=],
 		a [=toggle specifier/scope=] of "wide",
 		a [=toggle specifier/maximum state=] of 1,
-		and a false [=toggle specifier/sticky=].
+		and a [=toggle specifier/overflow=] of "cycle".
 
 		Note: This produces behavior similar to a checkbox.
 	</div>
@@ -339,11 +379,14 @@ Creating a Toggle: the 'toggle-root' property</h2>
 		<dfn><<toggle-specifier>></dfn> =
 			<<custom-ident>>
 			[
-				[ <<integer [0, ∞]>> / ]? <<integer [1, ∞]>> ||
-				sticky ||
+				<<toggle-states>> [at <<toggle-state>>]? ||
+				<<toggle-overflow>> ||
 				group ||
 				self
 			]?
+		<dfn><<toggle-states>></dfn> = <<integer [1, ∞]>> | '[' <<custom-ident>>* ']'
+		<dfn><<toggle-state>></dfn> = <<integer [0, ∞]>> | <<custom-ident>>
+		<dfn><<toggle-overflow>></dfn> = cycle | cycle-on | sticky
 	</pre>
 
 	The 'toggle-root' property causes [=toggles=] to be created on an element,
@@ -354,7 +397,8 @@ Creating a Toggle: the 'toggle-root' property</h2>
 		<dd>
 			The element has no [=toggle specifiers=].
 
-			(This does not remove any [=toggles=] that have already been established on the element.)
+			(This does not remove any [=toggles=] that have already been established
+			on the element.)
 
 		<dt><dfn><<toggle-specifier>>#</dfn>
 		<dd>
@@ -371,20 +415,21 @@ Creating a Toggle: the 'toggle-root' property</h2>
 				specifies the [=toggle specifier/name=],
 				as the item's value.
 
-			* The first <<integer>>, if specified,
+			* The <<toggle-states>>, if specified as an <<integer>>,
+				specifies the [=toggle specifier/maximum state=].
+				If specified as a bracketed list of <<custom-ident>>s,
+				specifies the [=toggle specifier/state names=],
+				and sets the [=toggle specifier/maximum state=]
+				to the length of the list minus 1.
+				If omitted, the [=toggle specifier/maximum state=] is set to 1.
+
+			* The <<toggle-state>>, if specified,
 				specifies the [=toggle specifier/initial state=].
 				If omitted, it's set to 0.
 
-				It must be less than or equal to the second <<integer>>,
-				or else the declaration is invalid.
-
-			* The second <<integer>>, if specified,
-				specifies the [=toggle specifier/maximum state=].
-				If omitted, it's set to 1.
-
-			* The <dfn>sticky</dfn> keyword, if specified,
-				sets the [=toggle specifier/sticky=] boolean to true.
-				If omitted, it's set to false.
+			* The <<toggle-overflow>> keyword, if specified,
+				specifies the [=toggle specifier/overflow=] enum.
+				If omitted, it's set to "cycle".
 
 			* The <dfn>group</dfn> keyword, if specified,
 				sets the [=toggle specifier/group=] boolean to true.
@@ -419,10 +464,6 @@ Creating a Toggle: the 'toggle-root' property</h2>
 		The effect is identical to what was specified in the Introduction example,
 		except the markup is much simpler and more semantic.
 	</div>
-
-	Issue: TODO create the <css>toggle-states</css> property
-	that defines [=toggle/state names=] for a [=toggle=],
-	and amend the various properties to allow them to take a <<toggle-name>> instead of an <<integer>>.
 
 <h3 id='toggle-creation'>
 Toggle Creation Details</h3>
@@ -511,16 +552,16 @@ Linking Toggle States: the 'toggle-group' property</h3>
 				toggle-group: tab;
 			}
 			panel-tab {
-				/* Each tab creates a sticky toggle
+				/* Each tab creates a cycle-on toggle
 					(so once it's open, clicking again won't close it),
 					opts into the group,
 					and declares itself a toggle activator */
-				toggle: tab 1 group sticky;
+				toggle: tab 1 group cycle-on;
 			}
 			panel-tab:first-of-type {
 				/* The first tab also sets its initial state
 					to be active */
-				toggle: tab 1/1 group sticky;
+				toggle: tab 1 at 1 group cycle-on;
 			}
 			panel-tab:toggle(tab) {
 				/* styling for the active tab */
@@ -536,7 +577,7 @@ Linking Toggle States: the 'toggle-group' property</h3>
 		</xmp>
 
 		Clicking on any tab will increment its corresponding [=toggle's=] [=toggle/state=] from 0 to 1
-		(and the ''sticky'' keyword will keep it at 1 if activated multiple times),
+		(and the ''cycle-on'' keyword will keep it at 1 if activated multiple times),
 		while resetting the rest of the tabs' [=toggle/states=] to 0.
 		Each panel is [=in scope=] for the [=toggle=] defined by its preceding tab,
 		so it can respond to the [=toggle/state=] as well.
@@ -572,7 +613,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-trigger
-	Value: none | [ <<custom-ident>> <<integer [0, ∞]>>? ]#
+	Value: none | <<toggle-trigger>>#
 	Initial: none
 	Applies to: elements without existing activation behavior (see prose)
 	Inherited: no
@@ -582,16 +623,29 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	Animatable: no
 	</pre>
 
+	<pre class=prod>
+		<df><<toggle-trigger>></dfn> = <<custom-ident>> <<trigger-action>>?
+		<dfn><<trigger-action>></dfn> =
+			[prev | next] <<integer [1, ∞]>>? |
+			set <<toggle-state>>
+	</pre>
+
 	The 'toggle-trigger' property specifies that an element can be activated
 	to change the state of one or more [=toggles=].
 	It has the following values:
 
+	ISSUE: Consider adding support for an at-rule that defines machine states,
+	the available events to trigger from each state,
+	and the resulting state of each event.
+	In that case <<trigger-action>> would need to also accept custom events,
+	possibly marked by a new keyword or function.
+
 	<dl dfn-type=value dfn-for=toggle-trigger>
 		: <dfn>none</dfn>
 		::
-			The element does not manipulated any [=toggles=].
+			The element does not manipulate any [=toggles=].
 
-		: <dfn><<custom-ident>> <<integer [0, ∞]>>?</dfn>
+		: <<toggle-trigger>>
 		::
 			If the element already has existing activation behavior from the host language,
 			this value does nothing.
@@ -600,9 +654,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			and when activated,
 			for each comma-separated entry in the list,
 			[=fires=] a [=toggle activation=]
-			with the given <<custom-ident>>
-			and, if an <<integer>> is specified,
-			a target state of that integer.
+			with the given <<custom-ident>> as a [=toggle activation/name=],
+			and the <<trigger-action>> [=event=], if specified.
 	</dl>
 
 	A <dfn for=CSS export>toggle activation</dfn> is a struct with the following items:
@@ -610,15 +663,20 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	<dl dfn-for="toggle activation" export>
 		: <dfn>name</dfn>
 		:: The [=toggle/name=] of the [=toggle=]
-			this is intended activate.
+			this is intended to activate.
 
-		: <dfn>target state</dfn>
-		:: An optional non-negative integer.
-
-			If specified, gives the [=toggle/state=]
+		: <dfn>event</dfn>
+		:: If unspecified, or specified as the keyword 'next',
+			indicates that this activation will increment
+			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
+			or a single step if <<integer>> is not specified.
+			If specified as the keyword 'prev',
+			indicates that this activation will decrement
+			the [=toggle's=] current [=toggle/state=] by <<integer>> steps,
+			or a single step if <<integer>> is not specified.
+			If specified with the keyword 'set' and a <<toggle-state>>,
+			indicates the exact [=toggle/state=]
 			that this activation will attempt to put the [=toggle=] into.
-			If unspecified,
-			indicates that this activation will increment the [=toggle's=] current [=toggle/state=].
 	</dl>
 
 	<div algorithm>
@@ -641,16 +699,10 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 				Otherwise, let |specifier| be a new [=default toggle specifier=]
 				for |activation|'s [=toggle activation/name=].
 
-			3. If |activation|'s [=target state=] is specified,
-				set |toggle|'s [=toggle/state=] to the smaller of the [=target state=]
-				and |specifier|'s [=toggle specifier/maximum state=].
-
-				Otherwise,
-				increment |toggle|'s [=toggle/state=] by 1.
-				If the [=toggle/state=] is now higher than |specifier|'s [=toggle specifier/maximum state=],
-				then set the [=toggle/state=] to 1
-				if |specifier|'s [=toggle specifier/sticky=] flag is true,
-				and to 0 if it's false.
+			3. Set |toggle|'s [=toggle/state=] to the result of
+				the specified [=toggle activation/event=],
+				following the specified [=toggle specifier/overflow=] behavior
+				when incrementing or decrementing.
 
 			4. If |toggle|'s [=toggle/state=] is now greater than zero
 				and |toggle| is [=in a toggle group=],
@@ -742,7 +794,7 @@ Accessibility Implications of Toggles</h3>
 			and communicate in the a11y tree that it's a checkbox/radio/etc
 		* we can infer what type of control it is
 			by examining the properties of the toggle:
-			if it's part of a group, sticky, etc.
+			if it's part of a group, cycle-on, etc.
 		* if 'toggle-visibility' is in use,
 			we can also automatically infer all the tab-set ARIA roles
 	</div>
@@ -771,14 +823,16 @@ Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
 	the <dfn>:toggle()</dfn> pseudo-class:
 
 	<pre class=prod>
-		:toggle( <<custom-ident>> <<integer>>? )
+		:toggle( <<custom-ident>> <<toggle-state>>? )
 	</pre>
 
 	An element matches '':toggle()''
 	if the element is [=in scope=] for a [=toggle=]
 	with the [=toggle/name=] given by <<custom-ident>>,
-	and either the [=toggle's=] [=toggle/state=] matches the provided <<integer>>,
-	or the <<integer>> is omitted and the [=toggle=] is in any [=active state=].
+	and either the [=toggle's=] [=toggle/state=]
+	[=toggle/match states|matches=] the provided <<toggle-state>>,
+	or the <<toggle-state>> is omitted
+	and the [=toggle=] is in any [=active state=].
 
 	<div class=example>
 		For example, if a [=toggle=] named "used"
@@ -802,7 +856,7 @@ Selecting Elements Based on Toggle State: the '':toggle()'' pseudo-class</h2>
 
 		<pre class=lang-css>
 			.tristate-check {
-				toggle: check 0/2;
+				toggle: check 2 at 0;
 			}
 			.tristate-check:toggle(check 1) {
 				/* "checked" styles */
@@ -894,7 +948,7 @@ Automatically Hiding With A Toggle</h2>
 			If the element starts being [=relevant to the user=],
 			it [=fires=] a [=toggle activation=],
 			with a [=toggle activation/name=] of the given <<toggle-name>>
-			and a [=toggle activation/target state=] of 1.
+			and a [=toggle activation/event=] of ‘set 1’.
 
 			Note: If the [=toggle=] is in an [=active state=],
 			or the element can't see the specified [=toggle=] at all,
@@ -993,6 +1047,7 @@ Scripting API</h2>
 
 	enum CSSToggleCycle {
 		"cycle",
+		"cycle-on",
 		"sticky",
 	}
 	</xmp>
