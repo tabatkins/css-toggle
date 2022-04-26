@@ -9,13 +9,31 @@ Level: 1
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
 Editor: Miriam E. Suzanne, Invited Expert, http://miriamsuzanne.com/contact
 Abstract: This specification defines a way to associate a toggleable state with an element which can be used in Selectors to select an element, and declarative ways to set and modify the state on the element.
-Ignored Terms: spoiler-text
+Ignored Terms: spoiler-text, content-visibility
 </pre>
 
 <pre class=link-defaults>
 spec:css-display-3; type:dfn; text:element
 spec:css-contain-2; type:property; text:content-visiblity
 </pre>
+
+<style>
+/* Put nice boxes around each algorithm. */
+[data-algorithm]:not(.heading) {
+  padding: .5em;
+  border: thin solid #ddd; border-radius: .5em;
+  margin: .5em calc(-0.5em - 1px);
+}
+[data-algorithm]:not(.heading) > :first-child {
+  margin-top: 0;
+}
+[data-algorithm]:not(.heading) > :last-child {
+  margin-bottom: 0;
+}
+[data-algorithm] [data-algorithm] {
+    margin: 1em 0;
+}
+</style>
 
 <h2 id="introduction">
 Introduction</h2>
@@ -1040,13 +1058,22 @@ Scripting API</h2>
 
 	interface CSSToggleMap {
 		maplike<DOMString, CSSToggle>;
-
-		CSSToggleMap set(DOMString name, optional CSSToggleData options);
 	};
+	</xmp>
 
-	interface CSSToggle {
-		attribute unsigned long value;
-		attribute unsigned long maximum;
+	The {{Element/toggles}} attribute on {{Element}}s
+	exposes the [=established toggles=] on the element:
+	each [=toggle=] is represented by an [=map/entry=] in the map,
+	with its key equal to its [=toggle/name=]
+	and its value a {{CSSToggle}} representing the rest of the [=toggle's=] data.
+
+	<xmp class=idl>
+	interface CSSToggle : EventTarget {
+		attribute (unsigned long or DOMString) value;
+		attribute unsigned long? valueAsNumber;
+		attribute DOMString? valueAsString;
+
+		attribute (unsigned long or FrozenArray<DOMString>) states;
 		attribute boolean group;
 		attribute CSSToggleScope scope;
 		attribute CSSToggleCycle cycle;
@@ -1055,11 +1082,11 @@ Scripting API</h2>
 	};
 
 	dictionary CSSToggleData {
-		unsigned long value;
-		unsigned long maximum;
-		boolean group;
-		CSSToggleScope scope;
-		CSSToggleCycle cycle;
+		(unsigned long or DOMString) value = 0;
+		(unsigned long or sequence<DOMString>) states = 1;
+		boolean group = false;
+		CSSToggleScope scope = "wide";
+		CSSToggleCycle cycle = "cycle";
 	};
 
 	enum CSSToggleScope {
@@ -1074,10 +1101,92 @@ Scripting API</h2>
 	};
 	</xmp>
 
-	The {{Element/toggles}} attribute on {{Element}}s
-	exposes the [=established toggles=] on the element:
-	each [=toggle=] is represented by an [=map/entry=] in the map,
-	with its key equal to its name
-	and its value a {{CSSToggle}} representing the state of the [=toggle=].
 
+	<div algorithm="CSSToggle()">
+		The <code>new <dfn constructor for=CSSToggle>CSSToggle(|options|)</dfn></code> [=constructor steps=] are to,
+		[=map/for each=] |name|→|value| in |options|,
+		set the internal slot named |name| of [=this=]
+		to |value|,
+		then return [=this=].
+	</div>
 
+	<div algorithm="CSSToggle.valueAsNumber">
+		The <dfn for=CSSToggle attribute>{{valueAsNumber}}</dfn> [=getter steps=] are:
+
+		1. If [=this's=] {{CSSToggle/value}} slot contains an integer,
+			return that.
+
+		2. If [=this's=] {{CSSToggle/value}} slot contains a string,
+			[=this's=] {{CSSToggle/states}} internal slot is a list,
+			and the string is present in that list,
+			return the index of the first instance of that string in the list.
+
+		3. Otherwise, return <code>null</code>.
+
+		The {{valueAsNumber}} [=setter steps=] are:
+
+		1. If [=the given value=] is an integer,
+			set [=this's=] {{CSSToggle/value}} internal slot to [=the given value=]
+			and return.
+
+		2. Otherwise, [=throw=] a {{TypeError}} exception.
+
+		The {{valueAsNumber}} attribute does not have a corresponding internal slot.
+	</div>
+
+	<div algorithm="CSSToggle.valueAsString">
+		The <dfn attribute for=CSSToggle>{{valueAsString}}</dfn> [=getter steps=]
+		are:
+
+		1. If [=this's=] {{CSSToggle/value}} internal slot contains an string,
+			return that.
+
+		2. If [=this's=] {{CSSToggle/value}} internal slot contains an index,
+			and [=this's=] {{CSSToggle/states}} internal slot is a list
+			and has an entry corresponding to that index,
+			return that entry.
+
+		3. Otherwise, return <code>null</code>.
+
+		The {{valueAsString}} [=setter steps=] are:
+
+		1. If [=the given value=] is an string,
+			set [=this's=] {{CSSToggle/value}} internal slot to [=the given value=]
+			and return.
+
+		2. Otherwise, [=throw=] a {{TypeError}} exception.
+
+		The {{valueAsString}} attribute does not have a corresponding internal slot.
+	</div>
+
+	<xmp class=idl>
+	interface CSSToggleEvent : Event {
+		constructor(CSSToggleEventInit eventInitDict);
+		readonly attribute DOMString toggleName;
+		readonly attribute CSSToggle? toggle;
+	};
+
+	dictionary CSSToggleEventInit {
+		DOMString toggleName = "";
+		CSSToggle? toggle = null;
+	};
+	</xmp>
+
+	Issue: <a href="https://github.com/whatwg/dom/issues/600">whatwg/dom#600</a>
+	means apparently events don't yet work
+	if their init dictionaries have required members.
+	Neither of these have reasonable defaults,
+	especially the toggle part,
+	but oh well I guess.
+
+	<div algorithm>
+		To <dfn export>fire a toggle change event</dfn>
+		at an {{Element}} |el|
+		for a [=toggle=] |toggle|
+		means to
+		[=fire an event=] named "togglechange"
+		using {{CSSToggleEvent}},
+		setting {{CSSToggleEvent/toggleName}} to |toggle|'s [=toggle/name=]
+		and {{CSSToggleEvent/toggle}} to the entry of |el|'s {{Element/toggles}} map
+		with |toggle|'s [=toggle/name=] as the key.
+	</div>
