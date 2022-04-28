@@ -743,7 +743,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 			[=Change a toggle=] |t|,
 			passing |activation|'s [=toggle activation/action=],
-			and an |override spec| of |tSpec|
+			and an <var ignore>override spec</var> of |tSpec|
 			if it exists.
 
 		4. [=Fire a toggle change event=] at |el| for the toggle |t|.
@@ -1142,6 +1142,29 @@ Scripting API</h2>
 	each [=toggle=] is represented by an [=map/entry=] in the map,
 	with its key equal to its [=toggle/name=]
 	and its value a {{CSSToggle}} representing the rest of the [=toggle's=] data.
+
+	Entries can be automatically added to {{Element/toggles}}
+	by the 'toggle-root' property
+	when [=update the rendering=] occurs,
+	if 'toggle-root' defines a [=toggle specifier=]
+	whose name doesn't exist in {{Element/toggles}} yet;
+	see [[#toggle-creation]] for details.
+
+	Issue: We probably don't want it to be possible to take a toggle from one element
+	and add it to a second element,
+	such that updating it in one place would update it in the other;
+	or at least, we don't want to do that
+	without it also being possible to do declaratively.
+	This probably means adding an internal slot to {{CSSToggle}}
+	referencing a (nullable) element it's established on,
+	hooking set/delete/clear() to update that slot,
+	and checking
+	(at the same time as we'd create fresh toggles from 'toggle-root'?)
+	that all the established toggles have the right element,
+	and removing (and replacing, if 'toggle-root' says so)
+	if their element is wrong?
+	(See <a href="https://github.com/whatwg/webidl/issues/824">webidl#824</a>
+	about complexity in hooking set/delete/clear, tho.)
 
 	<xmp class=idl>
 	interface CSSToggle : EventTarget {
