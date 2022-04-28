@@ -743,7 +743,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 			[=Change a toggle=] |t|,
 			passing |activation|'s [=toggle activation/action=],
-			and an |override specification| of |tSpec|
+			and an |override spec| of |tSpec|
 			if it exists.
 
 		4. [=Fire a toggle change event=] at |el| for the toggle |t|.
@@ -753,9 +753,6 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 		To <dfn>change a toggle</dfn> |t|,
 		given an [=toggle activation/action=] |action|,
 		and optionally a [=toggle specifier=] |override spec|:
-		a [=toggle/states=] value |states|,
-		a [=toggle/group=] value |group|,
-		and a [=toggle/overflow=] value |overflow|:
 
 		1. If |override spec| was passed,
 			let |states|, |group|, and |overflow|
@@ -1203,7 +1200,7 @@ Scripting API</h2>
 	</div>
 
 	<div algorithm="CSSToggle.valueAsNumber">
-		The <dfn for=CSSToggle attribute>{{valueAsNumber}}</dfn> [=getter steps=] are:
+		The <dfn for=CSSToggle attribute>valueAsNumber</dfn> [=getter steps=] are:
 
 		1. If [=this's=] {{CSSToggle/value}} slot contains an integer,
 			return that.
@@ -1218,8 +1215,7 @@ Scripting API</h2>
 		The {{valueAsNumber}} [=setter steps=] are:
 
 		1. If [=the given value=] is an integer,
-
-			set [=this's=] {{CSSToggle/value}} internal slot to [=the given value=]
+			[=update the value slot=] of [=this=] to [=the given value=]
 			and return.
 
 		2. Otherwise, [=throw=] a {{TypeError}} exception.
@@ -1228,7 +1224,7 @@ Scripting API</h2>
 	</div>
 
 	<div algorithm="CSSToggle.valueAsString">
-		The <dfn attribute for=CSSToggle>{{valueAsString}}</dfn> [=getter steps=]
+		The <dfn attribute for=CSSToggle>valueAsString</dfn> [=getter steps=]
 		are:
 
 		1. If [=this's=] {{CSSToggle/value}} internal slot contains an string,
@@ -1244,7 +1240,7 @@ Scripting API</h2>
 		The {{valueAsString}} [=setter steps=] are:
 
 		1. If [=the given value=] is an string,
-			set [=this's=] {{CSSToggle/value}} internal slot to [=the given value=]
+			[=update the value slot=] of [=this=] to [=the given value=]
 			and return.
 
 		2. Otherwise, [=throw=] a {{TypeError}} exception.
@@ -1252,12 +1248,17 @@ Scripting API</h2>
 		The {{valueAsString}} attribute does not have a corresponding internal slot.
 	</div>
 
+	<div algorithm="CSSToggle.value">
+		The <dfn attribute for=CSSToggle>value</dfn> [=setter steps=]
+		are to [=update the value slot=] of [=this=] to [=the given value=].
+	</div>
+
 	<div algorithm>
 		To <dfn>update the value slot</dfn>
 		of a {{CSSToggle}} [=this=]
 		to a new value |val|:
 
-		1. If [=this=] represents an [=established toggle=]:
+		1. If [=this=] is an [=established toggle=],
 			then [=change a toggle=] [=this=],
 			with an [=toggle activation/action=]
 			of ''set'' followed by |val|.
@@ -1272,13 +1273,13 @@ Scripting API</h2>
 	</div>
 
 	<div algorithm="CSSToggleValue.states">
-		The <dfn attribute for=CSSToggleValue>{{states}}</dfn> [=setter steps=] are:
+		The <dfn attribute for=CSSToggleValue>states</dfn> [=setter steps=] are:
 
 		1. If [=the given value=] is a sequence of {{DOMString}}s,
 			and any of the sequence's items are [=identical to=] each other,
 			[=throw=] a {{SyntaxError}}.
 
-		2. Set [=this's=] {{states}} internal slot to [=the given value=].
+		2. Set [=this's=] {{CSSToggle/states}} internal slot to [=the given value=].
 	</div>
 
 	<xmp class=idl>
