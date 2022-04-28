@@ -143,7 +143,7 @@ Toggle Concepts</h2>
 	and matched with Selectors.
 	Toggles have the following [=struct/items=]:
 
-	<dl dfn-for="toggle, toggle-specifier" export>
+	<dl dfn-for="toggle, toggle specifier" export>
 		: <dfn>name</dfn>
 		:: A <<custom-ident>>.
 
@@ -212,16 +212,16 @@ Toggle Concepts</h2>
 			or below its minimum.
 
 			<div class=note>
-				The precise details are defined in [=FIXME=],
+				The precise details are defined in [=change a toggle=],
 				but in short:
 
-				* For [="cycle"=],
+				* For ''cycle'',
 					incrementing past the maximum
 					resets the value to 0,
 					and decrementing below 0
 					resets it to the maximum.
 
-				* For [="cycle-on"=],
+				* For ''cycle-on'',
 					incrementing past the maximum
 					resets the value to 1,
 					and decrementing it below 1
@@ -232,7 +232,7 @@ Toggle Concepts</h2>
 					once it reaches an [=active value=],
 					rather than cycling back to an [=inactive value=].)
 
-				* For [="sticky"=],
+				* For ''sticky'',
 					incrementing past the maximum value
 					resets the value to the maximum,
 					and decrementing it below 0
@@ -240,8 +240,11 @@ Toggle Concepts</h2>
 			</div>
 	</dl>
 
-	[=Toggles=] are persistent state on an element,
-	and are not <em>directly</em> affected by any CSS properties.
+	[=Toggles=] are persistent state on an element.
+	Once created, none of their items are affected by CSS,
+	and only their [=toggle/value=] can be changed by user interaction.
+	(Scripting can change the other items, however;
+	see [[#dom]].)
 	An element can have any number of [=toggles=].
 
 	----
@@ -424,18 +427,20 @@ Creating a Toggle: the 'toggle-root' property</h2>
 		<dd>
 			The element has one or more [=toggle specifiers=],
 			one per <<toggle-specifier>>,
-			which determine how toggles will be initially created,
+			which determine how toggles will be initially created
+			if they don't already exist on the element,
 			and how they react to being activated.
 
 			Each <<toggle-specifier>> is composed of several parts,
 			most of which are optional,
-			corresponding to the [=struct/items=] of a [=toggle specifier=]:
+			corresponding to the [=struct/items=] of a [=toggle specifier=].
+			They specify how the newly-created [=toggle=]
+			will be set up:
 
 			* The initial <<custom-ident>>
-				specifies the [=toggle specifier/name=],
-				as the item's value.
+				specifies the [=toggle specifier/name=].
 
-			* The <<toggle-states>> specifies to [=toggle specifier/states=].
+			* The <<toggle-states>> specifies the [=toggle specifier/states=].
 				If specified as an <<integer>>,
 				it sets [=toggle specifier/states=] to the given number;
 				if specified as a bracketed list of <<custom-ident>>s,
@@ -444,7 +449,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 				If omitted, defaults to ''1''.
 
 			* The <<toggle-value>>, if specified,
-				specifies the [=toggle specifier/initial value=].
+				specifies the initial [=toggle specifier/value=].
 				If omitted, it's set to 0.
 
 			* The <<toggle-overflow>> keyword, if specified,
@@ -458,6 +463,15 @@ Creating a Toggle: the 'toggle-root' property</h2>
 			* The <dfn>self</dfn> keyword, if specified,
 				sets the [=toggle specifier/scope=] enum to "narrow".
 				If omitted, it's set to "wide".
+
+			In addition to specifying how to create new [=toggles=],
+			a [=toggle specifier=] overrides the existing [=toggle's=]
+			[=toggle/states=],
+			[=toggle/overflow=],
+			and [=toggle/group=],
+			if they differ,
+			allowing an existing [=toggle=] to have its behavior changed
+			if necessary.
 	</dl>
 
 	<div class='example'>
@@ -745,8 +759,15 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 		1. If |action| starts with the keyword ''set'',
 			then change |t|'s value
-			to the value specified by |action|,
-			and return.
+			to the value specified by |action|.
+
+			If |t|'s value does not [=match values|match=] 0,
+			and |group| is true,
+			then set the [=toggle/value=] of all other [=toggles=]
+			[=in a toggle group|in the same toggle group=] as |t|
+			to 0.
+
+			Return.
 
 		2. If |t|'s [=toggle/value=] is an integer,
 			let |index| be that integer.
@@ -765,21 +786,53 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			Then, based on the value of |overflow|:
 
 			<dl class=switch>
-				: [="cycle"=]
+				: ''cycle''
 				:: If |index| is greater than |maximum index|,
 					set |index| to 0.
 
-				: [="cycle-on"=]
+				: ''cycle-on''
 				:: If |index| is greater than |maximum index|,
 					set |index| to 1.
 
-				: [="sticky"=]
+				: ''sticky''
 				:: If |index| is greater than |maximum index|,
 					set |index| to |maximum index|.
 			</dl>
 
-		5. FIXME: Do the same for ''prev''.
+		 	Otherwise, if |action| starts with the keyword ''prev'',
+			then decrement |index| by |action|'s value.
+			Then, based on the value of |overflow|:
 
+			<dl class=switch>
+				: ''cycle''
+				:: If |index| is less than 0
+					or greater than |maximum index|,
+					set |index| to |maximum index|.
+
+				: ''cycle-on''
+				:: If |index| is less than 1
+					or greater than |maximum index|,
+					set |index| to |maximum index|.
+
+				: ''sticky''
+				:: If |index| is less than 0,
+					set |index| to 0.
+
+					If |index| is greater than |maximum index|,
+					set |index| to |maximum index|.
+			</dl>
+
+		5. If |t|'s [=toggle/value=] is a list of idents,
+			and |index| is the index of one of the entries in that list,
+			set |t|'s [=toggle/value=] to that entry.
+
+			Otherwise, set [=toggle/value=] to |index|.
+
+		6. If |t|'s value does not [=match values|match=] 0,
+			and |group| is true,
+			then set the [=toggle/value=] of all other [=toggles=]
+			[=in a toggle group|in the same toggle group=] as |t|
+			to 0.
 	</div>
 
 	Issue: Define in much greater precision what it means to "become activatable".
@@ -1007,7 +1060,7 @@ Automatically Hiding With A Toggle</h2>
 			If the element starts being [=relevant to the user=],
 			it [=fires=] a [=toggle activation=],
 			with a [=toggle activation/name=] of the given <<custom-ident>>
-			and a [=toggle activation/event=] of ''set 1''.
+			and a [=toggle activation/action=] of ''set 1''.
 
 			Note: If the [=toggle=] is in an [=active value=],
 			or the element can't see the specified [=toggle=] at all,
@@ -1120,6 +1173,10 @@ Scripting API</h2>
 	};
 	</xmp>
 
+	A {{CSSToggle}} represents a [=toggle=].
+	It will usually be an [=established toggle=] on an element,
+	present in the element's {{Element/toggles}} attribute,
+	but can also be used independently.
 
 	<div algorithm="CSSToggle()">
 		The <code>new <dfn constructor for=CSSToggle>CSSToggle(|options|)</dfn></code> [=constructor steps=] are to,
@@ -1176,6 +1233,14 @@ Scripting API</h2>
 		2. Otherwise, [=throw=] a {{TypeError}} exception.
 
 		The {{valueAsString}} attribute does not have a corresponding internal slot.
+	</div>
+
+	<div algorithm=CSSToggle.value>
+		If [=this=] represents an [=established toggle=],
+		then its {{CSSToggle/value}} internal slot
+		reflects the [=toggle's=] [=toggle/value=]:
+		changing the {{CSSToggle/value}} attribute
+		changes the
 	</div>
 
 	<xmp class=idl>
