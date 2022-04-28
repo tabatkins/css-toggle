@@ -175,7 +175,7 @@ Toggle Concepts</h2>
 		::
 			Either an integer greater than or equal to 1,
 			indicating the nominally maximum integer [=toggle/value=],
-			or a [=/list=] of state names,
+			or a [=/list=] of unique state names,
 			each of which are <<custom-ident>>s.
 
 			This also defines the <dfn>maximum state</dfn> of a toggle
@@ -448,6 +448,10 @@ Creating a Toggle: the 'toggle-root' property</h2>
 				to a list containing those identifiers.
 				If omitted, defaults to ''1''.
 
+				If <<toggle-states>> is a bracketed list,
+				and there are any repeated <<custom-ident>>s among its items,
+				the property is invalid.
+
 			* The <<toggle-value>>, if specified,
 				specifies the initial [=toggle specifier/value=].
 				If omitted, it's set to 0.
@@ -503,7 +507,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 Toggle Creation Details</h3>
 
 	Each [=element=] has a list of <dfn export for=element>established toggles</dfn>,
-	representing [=toggles=] that are active on the element.
+	representing [=toggles=] on the element.
 	These are created automatically by the 'toggle-root' property,
 	and/or manually by interacting with the {{Element/toggles|Element.toggles}} map.
 
@@ -737,15 +741,10 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			with the same [=toggle specifier/name=] as |activation|,
 			if one exists.
 
-			Let |states|,
-			|group|,
-			and |overflow|
-			be the values of the same-named items of |tSpec| if it exists,
-			or of |t| otherwise.
-
 			[=Change a toggle=] |t|,
 			passing |activation|'s [=toggle activation/action=],
-			and |states|, |group|, and |overflow|.
+			and an |override specification| of |tSpec|
+			if it exists.
 
 		4. [=Fire a toggle change event=] at |el| for the toggle |t|.
 	</div>
@@ -753,11 +752,19 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	<div algorithm>
 		To <dfn>change a toggle</dfn> |t|,
 		given an [=toggle activation/action=] |action|,
+		and optionally a [=toggle specifier=] |override spec|:
 		a [=toggle/states=] value |states|,
 		a [=toggle/group=] value |group|,
 		and a [=toggle/overflow=] value |overflow|:
 
-		1. If |action| starts with the keyword ''set'',
+		1. If |override spec| was passed,
+			let |states|, |group|, and |overflow|
+			be the correspondingly-named items from |override spec|.
+
+			Otherwise, let |states|, |group|, and |overflow|
+			be the correspondingly-named items from |t|.
+
+		2. If |action| starts with the keyword ''set'',
 			then change |t|'s value
 			to the value specified by |action|.
 
@@ -769,19 +776,19 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 			Return.
 
-		2. If |t|'s [=toggle/value=] is an integer,
+		3. If |t|'s [=toggle/value=] is an integer,
 			let |index| be that integer.
 			Otherwise, if |states| is a list of idents
 			and |t|'s [=toggle/value=] is in the list,
 			let |index| be the index of the first occurence of the value.
 			Otherwise, let |index| be infinity.
 
-		3. If |states| is an integer,
+		4. If |states| is an integer,
 			let |max index| be that integer.
 			Otherwise, let |max index|
 			be one less than the length of |states|.
 
-		4. If |action| starts with the keyword ''next'',
+		5. If |action| starts with the keyword ''next'',
 			then increment |index| by |action|'s value.
 			Then, based on the value of |overflow|:
 
@@ -822,13 +829,13 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 					set |index| to |maximum index|.
 			</dl>
 
-		5. If |t|'s [=toggle/value=] is a list of idents,
+		6. If |t|'s [=toggle/value=] is a list of idents,
 			and |index| is the index of one of the entries in that list,
 			set |t|'s [=toggle/value=] to that entry.
 
 			Otherwise, set [=toggle/value=] to |index|.
 
-		6. If |t|'s value does not [=match values|match=] 0,
+		7. If |t|'s value does not [=match values|match=] 0,
 			and |group| is true,
 			then set the [=toggle/value=] of all other [=toggles=]
 			[=in a toggle group|in the same toggle group=] as |t|
@@ -1134,7 +1141,7 @@ Scripting API</h2>
 	</xmp>
 
 	The {{Element/toggles}} attribute on {{Element}}s
-	exposes the [=established toggles=] on the element:
+	represents the [=established toggles=] on the element:
 	each [=toggle=] is represented by an [=map/entry=] in the map,
 	with its key equal to its [=toggle/name=]
 	and its value a {{CSSToggle}} representing the rest of the [=toggle's=] data.
@@ -1173,8 +1180,17 @@ Scripting API</h2>
 	};
 	</xmp>
 
-	A {{CSSToggle}} represents a [=toggle=].
-	It will usually be an [=established toggle=] on an element,
+	A {{CSSToggle}} represents a [=toggle=];
+	changing any attribute on the {{CSSToggle}}
+	will change the corresponding items of the [=toggle=] it represents,
+	and vice versa.
+
+	Note: Only the [=toggle/value=] will change directly on a [=toggle=]
+	and get reflected back to the {{CSSToggle}};
+	the rest of its items are fixed on creation
+	unless manually changed on its associated {{CSSToggle}}.
+
+	A {{CSSToggle}} will usually be an [=established toggle=] on an element,
 	present in the element's {{Element/toggles}} attribute,
 	but can also be used independently.
 
@@ -1202,6 +1218,7 @@ Scripting API</h2>
 		The {{valueAsNumber}} [=setter steps=] are:
 
 		1. If [=the given value=] is an integer,
+
 			set [=this's=] {{CSSToggle/value}} internal slot to [=the given value=]
 			and return.
 
@@ -1235,12 +1252,33 @@ Scripting API</h2>
 		The {{valueAsString}} attribute does not have a corresponding internal slot.
 	</div>
 
-	<div algorithm=CSSToggle.value>
-		If [=this=] represents an [=established toggle=],
-		then its {{CSSToggle/value}} internal slot
-		reflects the [=toggle's=] [=toggle/value=]:
-		changing the {{CSSToggle/value}} attribute
-		changes the
+	<div algorithm>
+		To <dfn>update the value slot</dfn>
+		of a {{CSSToggle}} [=this=]
+		to a new value |val|:
+
+		1. If [=this=] represents an [=established toggle=]:
+			then [=change a toggle=] [=this=],
+			with an [=toggle activation/action=]
+			of ''set'' followed by |val|.
+
+			Note: Due to the reflection,
+			this will automatically update
+			the {{CSSToggle/value}} internal slot of [=this=] as well.
+
+		2. Otherwise,
+			set the {{CSSToggle/value}} internal slot of [=this=]
+			to |val|.
+	</div>
+
+	<div algorithm="CSSToggleValue.states">
+		The <dfn attribute for=CSSToggleValue>{{states}}</dfn> [=setter steps=] are:
+
+		1. If [=the given value=] is a sequence of {{DOMString}}s,
+			and any of the sequence's items are [=identical to=] each other,
+			[=throw=] a {{SyntaxError}}.
+
+		2. Set [=this's=] {{states}} internal slot to [=the given value=].
 	</div>
 
 	<xmp class=idl>
