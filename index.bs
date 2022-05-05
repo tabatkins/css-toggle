@@ -1134,6 +1134,7 @@ Scripting API</h2>
 
 	interface CSSToggleMap {
 		maplike<DOMString, CSSToggle>;
+		CSSToggleMap set(DOMString key, CSSToggle value);
 	};
 	</xmp>
 
@@ -1150,21 +1151,23 @@ Scripting API</h2>
 	whose name doesn't exist in {{Element/toggles}} yet;
 	see [[#toggle-creation]] for details.
 
-	Issue: We probably don't want it to be possible to take a toggle from one element
-	and add it to a second element,
-	such that updating it in one place would update it in the other;
-	or at least, we don't want to do that
-	without it also being possible to do declaratively.
-	This probably means adding an internal slot to {{CSSToggle}}
-	referencing a (nullable) element it's established on,
-	hooking set/delete/clear() to update that slot,
-	and checking
-	(at the same time as we'd create fresh toggles from 'toggle-root'?)
-	that all the established toggles have the right element,
-	and removing (and replacing, if 'toggle-root' says so)
-	if their element is wrong?
-	(See <a href="https://github.com/whatwg/webidl/issues/824">webidl#824</a>
-	about complexity in hooking set/delete/clear, tho.)
+	<div algorithm="CSSToggleMap.set()">
+		The <dfn method for=CSSToggleMap>set(|key|, |value|)</dfn>
+		[=method steps=] are:
+
+		1. If |value|'s {{[[ToggleMap]]}} internal slot is non-{{undefined}},
+			then let |oldMap| be the [=map entries=] of the slot's value,
+			and [=map/remove=] the entry from |oldMap| whose value is |value|.
+
+		2. Set |value|'s {{[[ToggleMap]]}} internal slot to [=this=].
+
+		3. Let |map| be [=this's=] [=map entries=]. Set |map|[|key|] to |value|.
+
+		4. Return [=this=].
+
+		Note: A given {{CSSToggle}} can only live in one {{CSSToggleMap}} at a time.
+		This avoids some otherwise confusing or ambiguous situations.
+	</div>
 
 	<xmp class=idl>
 	interface CSSToggle : EventTarget {
@@ -1213,6 +1216,9 @@ Scripting API</h2>
 	A {{CSSToggle}} will usually be an [=established toggle=] on an element,
 	present in the element's {{Element/toggles}} attribute,
 	but can also be used independently.
+	This is tracked by a <dfn attribute for=CSSToggle>\[[ToggleMap]]</dfn> internal slot,
+	containing either {{undefined}} (the initial value)
+	or a weak reference to the {{CSSToggleMap}} the {{CSSToggle}} is in.
 
 	<div algorithm="CSSToggle()">
 		The <code>new <dfn constructor for=CSSToggle>CSSToggle(|options|)</dfn></code> [=constructor steps=] are to,
