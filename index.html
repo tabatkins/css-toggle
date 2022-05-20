@@ -6,9 +6,9 @@
   <meta content="UD" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 616204878, updated Tue Mar 8 15:25:09 2022 -0800" name="generator">
+  <meta content="Bikeshed version c453dd3df, updated Wed May 18 14:24:51 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="0a7febd2fcee57bf14cd3482a41255b7d1f2b108" name="document-revision">
+  <meta content="20efd6843a179f73f2befec7a5ad0617b3e27819" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -607,7 +607,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">CSS Toggles</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2022-05-05">5 May 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2022-05-20">20 May 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1668,9 +1668,32 @@ the element renders normally.</p>
 
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="csstogglemap"><code><c- g>CSSToggleMap</c-></code></dfn> {
   <c- b>maplike</c->&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a>, <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle"><c- n>CSSToggle</c-></a>>;
-  <a data-link-type="idl-name" href="#csstogglemap" id="ref-for-csstogglemap①"><c- n>CSSToggleMap</c-></a> <a class="idl-code" data-link-type="method" href="#dom-csstogglemap-set" id="ref-for-dom-csstogglemap-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="CSSToggleMap/set(key, value)" data-dfn-type="argument" data-export id="dom-csstogglemap-set-key-value-key"><code><c- g>key</c-></code><a class="self-link" href="#dom-csstogglemap-set-key-value-key"></a></dfn>, <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①"><c- n>CSSToggle</c-></a> <dfn class="idl-code" data-dfn-for="CSSToggleMap/set(key, value)" data-dfn-type="argument" data-export id="dom-csstogglemap-set-key-value-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-csstogglemap-set-key-value-value"></a></dfn>);
+  <a data-link-type="idl-name" href="#csstogglemap" id="ref-for-csstogglemap①"><c- n>CSSToggleMap</c-></a> <a class="idl-code" data-link-type="method" href="#dom-csstogglemap-set" id="ref-for-dom-csstogglemap-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-key" id="ref-for-dom-csstogglemap-set-key-value-key"><c- g>key</c-></a>, <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①"><c- n>CSSToggle</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-value" id="ref-for-dom-csstogglemap-set-key-value-value"><c- g>value</c-></a>);
 };
 </pre>
+   <table class="argumentdef data">
+    <caption>Arguments for the <a data-link-type="idl" href="#dom-csstogglemap-set" id="ref-for-dom-csstogglemap-set①">CSSToggleMap.set(key, value)</a> method.</caption>
+    <thead>
+     <tr>
+      <th>Parameter 
+      <th>Type 
+      <th style="text-align:center">Nullable 
+      <th style="text-align:center">Optional 
+      <th>Description 
+    <tbody>
+     <tr>
+      <td><dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleMap/set(key, value)" data-dfn-type="argument" data-export id="dom-csstogglemap-set-key-value-key"><code>key</code></dfn> 
+      <td> DOMString 
+      <td style="text-align:center"> <span class="no">✘</span>
+      <td style="text-align:center"> <span class="no">✘</span>
+      <td>the key 
+     <tr>
+      <td><dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleMap/set(key, value)" data-dfn-type="argument" data-export id="dom-csstogglemap-set-key-value-value"><code>value</code></dfn> 
+      <td> CSSToggle 
+      <td style="text-align:center"> <span class="no">✘</span>
+      <td style="text-align:center"> <span class="no">✘</span>
+      <td>the value 
+   </table>
    <p>The <code class="idl"><a data-link-type="idl" href="#dom-element-toggles" id="ref-for-dom-element-toggles①">toggles</a></code> attribute on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#element" id="ref-for-element①">Element</a></code>s
 	represents the <a data-link-type="dfn" href="#element-established-toggles" id="ref-for-element-established-toggles">established toggles</a> on the element:
 	each <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⑤">toggle</a> is represented by an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-entry" id="ref-for-map-entry">entry</a> in the map,
@@ -2694,7 +2717,7 @@ Scripting API</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-
 
 <c- b>interface</c-> <a href="#csstogglemap"><code><c- g>CSSToggleMap</c-></code></a> {
   <c- b>maplike</c->&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>, <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a>>;
-  <a data-link-type="idl-name" href="#csstogglemap"><c- n>CSSToggleMap</c-></a> <a class="idl-code" data-link-type="method" href="#dom-csstogglemap-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a href="#dom-csstogglemap-set-key-value-key"><code><c- g>key</c-></code></a>, <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a> <a href="#dom-csstogglemap-set-key-value-value"><code><c- g>value</c-></code></a>);
+  <a data-link-type="idl-name" href="#csstogglemap"><c- n>CSSToggleMap</c-></a> <a class="idl-code" data-link-type="method" href="#dom-csstogglemap-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-key"><c- g>key</c-></a>, <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-value"><c- g>value</c-></a>);
 };
 
 <c- b>interface</c-> <a href="#csstoggle"><code><c- g>CSSToggle</c-></code></a> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget"><c- n>EventTarget</c-></a> {
@@ -3230,11 +3253,25 @@ Scripting API</a> <a href="#ref-for-dom-element-toggles②">(2)</a> <a href="#re
 Scripting API</a> <a href="#ref-for-csstogglemap①">(2)</a> <a href="#ref-for-csstogglemap②">(3)</a> <a href="#ref-for-csstogglemap③">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="dom-csstogglemap-set-key-value-key">
+   <b><a href="#dom-csstogglemap-set-key-value-key">#dom-csstogglemap-set-key-value-key</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-csstogglemap-set-key-value-key">6. 
+Scripting API</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-csstogglemap-set-key-value-value">
+   <b><a href="#dom-csstogglemap-set-key-value-value">#dom-csstogglemap-set-key-value-value</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-csstogglemap-set-key-value-value">6. 
+Scripting API</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="dom-csstogglemap-set">
    <b><a href="#dom-csstogglemap-set">#dom-csstogglemap-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dom-csstogglemap-set">6. 
-Scripting API</a>
+Scripting API</a> <a href="#ref-for-dom-csstogglemap-set①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="csstoggle">

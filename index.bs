@@ -1138,6 +1138,11 @@ Scripting API</h2>
 	};
 	</xmp>
 
+	<pre class=argumentdef for="CSSToggleMap/set(key, value)">
+	key: the key
+	value: the value
+	</pre>
+
 	The {{Element/toggles}} attribute on {{Element}}s
 	represents the [=established toggles=] on the element:
 	each [=toggle=] is represented by an [=map/entry=] in the map,
