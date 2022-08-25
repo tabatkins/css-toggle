@@ -1226,11 +1226,20 @@ Scripting API</h2>
 	or a weak reference to the {{CSSToggleMap}} the {{CSSToggle}} is in.
 
 	<div algorithm="CSSToggle()">
-		The <code>new <dfn constructor for=CSSToggle>CSSToggle(|options|)</dfn></code> [=constructor steps=] are to,
-		[=map/for each=] |name|→|value| in |options|,
-		set the internal slot named |name| of [=this=]
-		to |value|,
-		then return [=this=].
+		The <code>new <dfn constructor for=CSSToggle>CSSToggle(|options|)</dfn></code> [=constructor steps=] are:
+
+		1. [=map/For each=] |name|→|value| in |options|:
+
+			1. If |name| is <code>"states"</code>,
+				|value| is a [=list=],
+				and any of the [=list/items=] of |value|
+				are [=string/identical to=] each other,
+				[=throw=] a {{SyntaxError}}.
+
+			2. Set the internal slot named |name| of [=this=]
+				to |value|.
+
+		2. Return [=this=].
 	</div>
 
 	<div algorithm="CSSToggle.valueAsNumber">

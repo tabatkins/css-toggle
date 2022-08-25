@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version f669112af, updated Tue Aug 23 17:02:35 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="f61a993d6e45ecba4b8c6477f9e0c64b9ee30988" name="document-revision">
+  <meta content="d3fed09ee64dadbc854b355a57888c8e02984996" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -1763,9 +1763,22 @@ and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id=
 	This is tracked by a <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggle" data-dfn-type="attribute" data-export id="dom-csstoggle-togglemap-slot"><code>[[ToggleMap]]</code></dfn> internal slot,
 	containing either <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined①">undefined</a></code> (the initial value)
 	or a weak reference to the <code class="idl"><a data-link-type="idl" href="#csstogglemap" id="ref-for-csstogglemap③">CSSToggleMap</a></code> the <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle①⓪">CSSToggle</a></code> is in.</p>
-   <div class="algorithm" data-algorithm="CSSToggle()"> The <code>new <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggle" data-dfn-type="constructor" data-export data-lt="CSSToggle(options)|constructor(options)|CSSToggle()|constructor()" id="dom-csstoggle-csstoggle"><code>CSSToggle(<var>options</var>)</code></dfn></code> <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#constructor-steps" id="ref-for-constructor-steps">constructor steps</a> are to, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-iterate" id="ref-for-map-iterate">for each</a> <var>name</var>→<var>value</var> in <var>options</var>,
-		set the internal slot named <var>name</var> of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a> to <var>value</var>,
-		then return <span id="ref-for-this④">this</span>. </div>
+   <div class="algorithm" data-algorithm="CSSToggle()">
+     The <code>new <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggle" data-dfn-type="constructor" data-export data-lt="CSSToggle(options)|constructor(options)|CSSToggle()|constructor()" id="dom-csstoggle-csstoggle"><code>CSSToggle(<var>options</var>)</code></dfn></code> <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#constructor-steps" id="ref-for-constructor-steps">constructor steps</a> are: 
+    <ol>
+     <li data-md>
+      <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-iterate" id="ref-for-map-iterate">For each</a> <var>name</var>→<var>value</var> in <var>options</var>:</p>
+      <ol>
+       <li data-md>
+        <p>If <var>name</var> is <code>"states"</code>, <var>value</var> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list①">list</a>,
+and any of the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-item" id="ref-for-list-item">items</a> of <var>value</var> are <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-is" id="ref-for-string-is">identical to</a> each other, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#syntaxerror" id="ref-for-syntaxerror">SyntaxError</a></code>.</p>
+       <li data-md>
+        <p>Set the internal slot named <var>name</var> of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this③">this</a> to <var>value</var>.</p>
+      </ol>
+     <li data-md>
+      <p>Return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this④">this</a>.</p>
+    </ol>
+   </div>
    <div class="algorithm" data-algorithm="CSSToggle.valueAsNumber">
      The <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggle" data-dfn-type="attribute" data-export id="dom-csstoggle-valueasnumber"><code>valueAsNumber</code></dfn> <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#getter-steps" id="ref-for-getter-steps">getter steps</a> are: 
     <ol>
@@ -1784,7 +1797,7 @@ return the index of the first instance of that string in the list.</p>
      <li data-md>
       <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#the-given-value" id="ref-for-the-given-value">the given value</a> is an integer, <a data-link-type="dfn" href="#update-the-value-slot" id="ref-for-update-the-value-slot">update the value slot</a> of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this⑧">this</a> to <span id="ref-for-the-given-value①">the given value</span> and return.</p>
      <li data-md>
-      <p>Otherwise, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code> exception.</p>
+      <p>Otherwise, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw①">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code> exception.</p>
     </ol>
     <p>The <code class="idl"><a data-link-type="idl" href="#dom-csstoggle-valueasnumber" id="ref-for-dom-csstoggle-valueasnumber②">valueAsNumber</a></code> attribute does not have a corresponding internal slot.</p>
    </div>
@@ -1807,7 +1820,7 @@ return that entry.</p>
      <li data-md>
       <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#the-given-value" id="ref-for-the-given-value②">the given value</a> is an string, <a data-link-type="dfn" href="#update-the-value-slot" id="ref-for-update-the-value-slot①">update the value slot</a> of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①②">this</a> to <span id="ref-for-the-given-value③">the given value</span> and return.</p>
      <li data-md>
-      <p>Otherwise, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw①">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code> exception.</p>
+      <p>Otherwise, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw②">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror①">TypeError</a></code> exception.</p>
     </ol>
     <p>The <code class="idl"><a data-link-type="idl" href="#dom-csstoggle-valueasstring" id="ref-for-dom-csstoggle-valueasstring②">valueAsString</a></code> attribute does not have a corresponding internal slot.</p>
    </div>
@@ -1832,7 +1845,7 @@ set the <code class="idl"><a data-link-type="idl" href="#dom-csstoggle-value" id
     <ol>
      <li data-md>
       <p>If <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#the-given-value" id="ref-for-the-given-value⑤">the given value</a> is a sequence of <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString⑧">DOMString</a></code>s,
-and any of the sequence’s items are <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-is" id="ref-for-string-is">identical to</a> each other, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw②">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#syntaxerror" id="ref-for-syntaxerror">SyntaxError</a></code>.</p>
+and any of the sequence’s items are <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string-is" id="ref-for-string-is①">identical to</a> each other, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#dfn-throw" id="ref-for-dfn-throw③">throw</a> a <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#syntaxerror" id="ref-for-syntaxerror①">SyntaxError</a></code>.</p>
      <li data-md>
       <p>Set <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①⑨">this’s</a> <code class="idl"><a data-link-type="idl" href="#dom-csstoggle-states" id="ref-for-dom-csstoggle-states②">states</a></code> internal slot to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#the-given-value" id="ref-for-the-given-value⑥">the given value</a>.</p>
     </ol>
@@ -2356,7 +2369,7 @@ Scripting API</a>
    <a href="https://infra.spec.whatwg.org/#string-is">https://infra.spec.whatwg.org/#string-is</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-string-is">6. 
-Scripting API</a>
+Scripting API</a> <a href="#ref-for-string-is①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-struct-item">
@@ -2373,6 +2386,8 @@ Creating a Toggle: the toggle-root property</a>
    <ul>
     <li><a href="#ref-for-list">2. 
 Toggle Concepts</a>
+    <li><a href="#ref-for-list①">6. 
+Scripting API</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-map-remove">
@@ -2423,7 +2438,7 @@ Scripting API</a>
    <a href="https://webidl.spec.whatwg.org/#syntaxerror">https://webidl.spec.whatwg.org/#syntaxerror</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-syntaxerror">6. 
-Scripting API</a>
+Scripting API</a> <a href="#ref-for-syntaxerror①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-exceptiondef-typeerror">
@@ -2500,7 +2515,7 @@ Scripting API</a> <a href="#ref-for-this①">(2)</a> <a href="#ref-for-this②">
    <a href="https://webidl.spec.whatwg.org/#dfn-throw">https://webidl.spec.whatwg.org/#dfn-throw</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-dfn-throw">6. 
-Scripting API</a> <a href="#ref-for-dfn-throw①">(2)</a> <a href="#ref-for-dfn-throw②">(3)</a>
+Scripting API</a> <a href="#ref-for-dfn-throw①">(2)</a> <a href="#ref-for-dfn-throw②">(3)</a> <a href="#ref-for-dfn-throw③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-undefined">
@@ -2577,7 +2592,7 @@ Scripting API</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-
      <li><span class="dfn-paneled" id="term-for-map-entry">entry</span>
      <li><span class="dfn-paneled" id="term-for-map-iterate">for each</span>
      <li><span class="dfn-paneled" id="term-for-string-is">identical to</span>
-     <li><span class="dfn-paneled" id="term-for-struct-item">item</span>
+     <li><span class="dfn-paneled" id="term-for-struct-item">item <small>(for struct)</small></span>
      <li><span class="dfn-paneled" id="term-for-list">list</span>
      <li><span class="dfn-paneled" id="term-for-map-remove">remove</span>
      <li><span class="dfn-paneled" id="term-for-struct">struct</span>
