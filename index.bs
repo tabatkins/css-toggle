@@ -152,24 +152,7 @@ Toggle Concepts</h2>
 			A <<custom-ident>> or non-negative <<integer>>:
 			either 0 (the <dfn>inactive value</dfn>)
 			or a value 1 or higher (the <dfn lt="active value">active values</dfn>).
-			In order to <dfn lt="match value">match values</dfn>:
 
-			* If the [=toggle/value=] is specified as an <<integer>>,
-				and there is a corresponding <<custom-ident>> at that (zero-indexed)
-				position in the list of [=toggle/states=],
-				then the [=toggle/value=] will match either
-				the specified <<integer>> or that <<custom-ident>>.
-
-			* If the [=toggle/value=] is specified as a <<custom-ident>> that
-				is available in the list of [=toggle/states=],
-				then the [=toggle/value=] will match either
-				the specified <<custom-ident>>,
-				or the (zero-indexed) <<integer>> position of that <<custom-ident>>
-				in [=toggle/states=].
-
-			* If there are no corresponding <<integer>> and <<custom-ident>> values,
-				an <<integer>> [=toggle/state=] will only match the same <<integer>>,
-				and a <<custom-ident>> [=toggle/state=] will only match the same <<custom-ident>>.
 
 		: <dfn>states</dfn>
 		::
@@ -178,7 +161,9 @@ Toggle Concepts</h2>
 			or a [=/list=] of unique state names,
 			each of which are <<custom-ident>>s.
 
-			This also defines the <dfn>maximum state</dfn> of a toggle
+			This also defines the <dfn>maximum state</dfn> of a toggle,
+			as either the [=toggle/states=] value (if it's an integer)
+			or the length of [=toggle/states=] minus 1 (if it's a list).
 
 			Note: Toggles can be set to integer values larger than than the "maximum",
 			or to ident values not given in the list of names,
@@ -246,6 +231,38 @@ Toggle Concepts</h2>
 	(Scripting can change the other items, however;
 	see [[#dom]].)
 	An element can have any number of [=toggles=].
+
+	<div algorithm>
+		To <dfn>match values</dfn>,
+		given |toggle| (a [=toggle=]),
+		a test value |test value| (an integer or <<custom-ident>>),
+		and optionally |states|
+		(a [=toggle/states=] value):
+
+		1. If |states| was not passed,
+			let |states| be |toggle|'s own [=toggle/states=] value.
+
+		2. Let |toggle value| be |toggle|'s value.
+
+		3. If |toggle value| and |test value| are both integers,
+			and the same integer,
+			return true.
+
+		4. If |toggle value| and |test value| are both <<custom-ident>>s,
+			and are [=identical to=] each other,
+			return true.
+
+		5. If |states| is a list of <<custom-ident>>s,
+			and |toggle value| is a <<custom-ident>> in the list,
+			set |toggle value| to its index in the list.
+
+			Do the same for |test value| if it is a <<custom-ident>>.
+
+			If |toggle value| and |test value| are now both the same integer,
+			return true.
+
+		6. Otherwise, return false.
+	</div>
 
 	----
 
@@ -769,7 +786,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			then change |t|'s value
 			to the value specified by |action|.
 
-			If |t|'s value does not [=match values|match=] 0,
+			If |t| does not [=match values|match=] 0,
+			given |states|,
 			and |group| is true,
 			then set the [=toggle/value=] of all other [=toggles=]
 			[=in a toggle group|in the same toggle group=] as |t|
@@ -836,7 +854,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 
 			Otherwise, set [=toggle/value=] to |index|.
 
-		7. If |t|'s value does not [=match values|match=] 0,
+		7. If |t| does not [=match values|match=] 0,
+			given |states|,
 			and |group| is true,
 			then set the [=toggle/value=] of all other [=toggles=]
 			[=in a toggle group|in the same toggle group=] as |t|
@@ -949,8 +968,8 @@ Selecting Elements Based on Toggle Value: the '':toggle()'' pseudo-class</h2>
 	An element matches '':toggle()''
 	if the element is [=in scope=] for a [=toggle=]
 	with the [=toggle/name=] given by <<custom-ident>>,
-	and either the [=toggle's=] [=toggle/value=]
-	[=toggle/match values|matches=] the provided <<toggle-value>>,
+	and either the [=toggle=]
+	[=match values|matches=] the provided <<toggle-value>>,
 	or the <<toggle-value>> is omitted
 	and the [=toggle=] is in any [=active value=].
 
