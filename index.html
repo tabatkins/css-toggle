@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version f669112af, updated Tue Aug 23 17:02:35 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="b6bc3ab9f89a963b74003385a64de81777aa6609" name="document-revision">
+  <meta content="f61a993d6e45ecba4b8c6477f9e0c64b9ee30988" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -1719,7 +1719,7 @@ and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id=
     <p class="note" role="note"><span>Note:</span> A given <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle④">CSSToggle</a></code> can only live in one <code class="idl"><a data-link-type="idl" href="#csstogglemap" id="ref-for-csstogglemap②">CSSToggleMap</a></code> at a time.
 		This avoids some otherwise confusing or ambiguous situations.</p>
    </div>
-<pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="csstoggle"><code><c- g>CSSToggle</c-></code></dfn> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget" id="ref-for-eventtarget"><c- n>EventTarget</c-></a> {
+<pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="csstoggle"><code><c- g>CSSToggle</c-></code></dfn> {
   <c- b>attribute</c-> (<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-unsigned-long" id="ref-for-idl-unsigned-long"><c- b>unsigned</c-> <c- b>long</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a>) <a class="idl-code" data-link-type="attribute" data-type="(unsigned long or DOMString)" href="#dom-csstoggle-value" id="ref-for-dom-csstoggle-value"><c- g>value</c-></a>;
   <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-unsigned-long" id="ref-for-idl-unsigned-long①"><c- b>unsigned</c-> <c- b>long</c-></a>? <a class="idl-code" data-link-type="attribute" data-type="unsigned long?" href="#dom-csstoggle-valueasnumber" id="ref-for-dom-csstoggle-valueasnumber"><c- g>valueAsNumber</c-></a>;
   <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString④"><c- b>DOMString</c-></a>? <a class="idl-code" data-link-type="attribute" data-type="DOMString?" href="#dom-csstoggle-valueasstring" id="ref-for-dom-csstoggle-valueasstring"><c- g>valueAsString</c-></a>;
@@ -2245,13 +2245,6 @@ Scripting API</a> <a href="#ref-for-element①">(2)</a> <a href="#ref-for-elemen
 Scripting API</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-eventtarget">
-   <a href="https://dom.spec.whatwg.org/#eventtarget">https://dom.spec.whatwg.org/#eventtarget</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-eventtarget">6. 
-Scripting API</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-descendant">
    <a href="https://dom.spec.whatwg.org/#concept-tree-descendant">https://dom.spec.whatwg.org/#concept-tree-descendant</a><b>Referenced in:</b>
    <ul>
@@ -2560,7 +2553,6 @@ Scripting API</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-
     <ul>
      <li><span class="dfn-paneled" id="term-for-element">Element</span>
      <li><span class="dfn-paneled" id="term-for-event">Event</span>
-     <li><span class="dfn-paneled" id="term-for-eventtarget">EventTarget</span>
      <li><span class="dfn-paneled" id="term-for-concept-tree-descendant">descendant</span>
      <li><span class="dfn-paneled" id="term-for-concept-event-fire">fire an event</span>
      <li><span class="dfn-paneled" id="term-for-concept-tree-following">following</span>
@@ -2730,7 +2722,7 @@ Scripting API</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-
   <a data-link-type="idl-name" href="#csstogglemap"><c- n>CSSToggleMap</c-></a> <a class="idl-code" data-link-type="method" href="#dom-csstogglemap-set"><c- g>set</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-key"><c- g>key</c-></a>, <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a> <a class="idl-code" data-link-type="argument" href="#dom-csstogglemap-set-key-value-value"><c- g>value</c-></a>);
 };
 
-<c- b>interface</c-> <a href="#csstoggle"><code><c- g>CSSToggle</c-></code></a> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#eventtarget"><c- n>EventTarget</c-></a> {
+<c- b>interface</c-> <a href="#csstoggle"><code><c- g>CSSToggle</c-></code></a> {
   <c- b>attribute</c-> (<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-unsigned-long"><c- b>unsigned</c-> <c- b>long</c-></a> <c- b>or</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>) <a class="idl-code" data-link-type="attribute" data-type="(unsigned long or DOMString)" href="#dom-csstoggle-value"><c- g>value</c-></a>;
   <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-unsigned-long"><c- b>unsigned</c-> <c- b>long</c-></a>? <a class="idl-code" data-link-type="attribute" data-type="unsigned long?" href="#dom-csstoggle-valueasnumber"><c- g>valueAsNumber</c-></a>;
   <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>? <a class="idl-code" data-link-type="attribute" data-type="DOMString?" href="#dom-csstoggle-valueasstring"><c- g>valueAsString</c-></a>;

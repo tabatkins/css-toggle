@@ -1175,7 +1175,7 @@ Scripting API</h2>
 	</div>
 
 	<xmp class=idl>
-	interface CSSToggle : EventTarget {
+	interface CSSToggle {
 		attribute (unsigned long or DOMString) value;
 		attribute unsigned long? valueAsNumber;
 		attribute DOMString? valueAsString;
