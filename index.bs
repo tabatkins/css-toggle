@@ -439,6 +439,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 
 			* The initial <<custom-ident>>
 				specifies the [=toggle specifier/name=].
+				The <<custom-ident>> cannot be the keyword <css>none</css>.
 
 			* The <<toggle-states>> specifies the [=toggle specifier/states=].
 				If specified as an <<integer>>,
@@ -563,6 +564,7 @@ Linking Toggle Values: the 'toggle-group' property</h3>
 			* The <<custom-ident>>
 				specifies the [=toggle group/name=],
 				as the item's value.
+				The <<custom-ident>> cannot be the keyword <css>none</css>.
 
 			* The ''toggle-group/self'' keyword, if specified,
 				sets the [=toggle group/scope=] enum to "narrow".
@@ -700,6 +702,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			[=fires a toggle activation=]
 			with the given <<custom-ident>> as a [=toggle activation/name=],
 			and the <<trigger-action>> [=toggle activation/action=].
+
+			The <<custom-ident>> cannot be the keyword <css>none</css>.
 	</dl>
 
 	A <dfn for=CSS export>toggle activation</dfn> is a struct with the following items:
@@ -1158,15 +1162,18 @@ Scripting API</h2>
 		The <dfn method for=CSSToggleMap>set(|key|, |value|)</dfn>
 		[=method steps=] are:
 
-		1. If |value|'s {{[[ToggleMap]]}} internal slot is non-{{undefined}},
+		1. If |key| is an [=ASCII case-insensitive=] match for "none",
+			[=throw=] a {{SyntaxError}}.
+
+		2. If |value|'s {{[[ToggleMap]]}} internal slot is non-{{undefined}},
 			then let |oldMap| be the [=map entries=] of the slot's value,
 			and [=map/remove=] the entry from |oldMap| whose value is |value|.
 
-		2. Set |value|'s {{[[ToggleMap]]}} internal slot to [=this=].
+		3. Set |value|'s {{[[ToggleMap]]}} internal slot to [=this=].
 
-		3. Let |map| be [=this's=] [=map entries=]. Set |map|[|key|] to |value|.
+		4. Let |map| be [=this's=] [=map entries=]. Set |map|[|key|] to |value|.
 
-		4. Return [=this=].
+		5. Return [=this=].
 
 		Note: A given {{CSSToggle}} can only live in one {{CSSToggleMap}} at a time.
 		This avoids some otherwise confusing or ambiguous situations.
