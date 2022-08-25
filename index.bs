@@ -1129,7 +1129,7 @@ Scripting API</h2>
 
 	<xmp class=idl>
 	partial interface Element {
-		attribute CSSToggleMap toggles;
+		[SameObject] readonly attribute CSSToggleMap toggles;
 	};
 
 	interface CSSToggleMap {
