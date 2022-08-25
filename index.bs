@@ -1127,6 +1127,9 @@ Automatically Hiding With A Toggle</h2>
 <h2 id=dom>
 Scripting API</h2>
 
+<h3 id='csstogglemap' dfn-type=interface lt="CSSToggleMap">
+{{CSSToggleMap}}</h3>
+
 	<xmp class=idl>
 	partial interface Element {
 		[SameObject] readonly attribute CSSToggleMap toggles;
@@ -1137,11 +1140,6 @@ Scripting API</h2>
 		CSSToggleMap set(DOMString key, CSSToggle value);
 	};
 	</xmp>
-
-	<pre class=argumentdef for="CSSToggleMap/set(key, value)">
-	key: the key
-	value: the value
-	</pre>
 
 	The {{Element/toggles}} attribute on {{Element}}s
 	represents the [=established toggles=] on the element:
@@ -1173,6 +1171,9 @@ Scripting API</h2>
 		Note: A given {{CSSToggle}} can only live in one {{CSSToggleMap}} at a time.
 		This avoids some otherwise confusing or ambiguous situations.
 	</div>
+
+<h3 id=csstoggle dfn-type=interface lt="CSSToggle">
+{{CSSToggle}}</h3>
 
 	<xmp class=idl>
 	interface CSSToggle {
@@ -1231,7 +1232,7 @@ Scripting API</h2>
 		1. [=map/For each=] |name|→|value| in |options|:
 
 			1. If |name| is <code>"states"</code>,
-				|value| is a [=list=],
+				|value| is a [=/list=],
 				and any of the [=list/items=] of |value|
 				are [=string/identical to=] each other,
 				[=throw=] a {{SyntaxError}}.
@@ -1324,6 +1325,9 @@ Scripting API</h2>
 
 		2. Set [=this's=] {{CSSToggle/states}} internal slot to [=the given value=].
 	</div>
+
+<h3 id=csstoggleevent dfn-type=interface lt="CSSToggleEvent">
+{{CSSToggleEvent}}</h3>
 
 	<xmp class=idl>
 	interface CSSToggleEvent : Event {
