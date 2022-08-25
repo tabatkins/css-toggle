@@ -830,7 +830,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 					set |index| to |maximum index|.
 			</dl>
 
-		6. If |t|'s [=toggle/value=] is a list of idents,
+		6. If |states| is a list of idents,
 			and |index| is the index of one of the entries in that list,
 			set |t|'s [=toggle/value=] to that entry.
 
