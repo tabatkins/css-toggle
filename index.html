@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version f669112af, updated Tue Aug 23 17:02:35 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="0711523aa189346a6ef9a8cbf40b8d8e56f10c0d" name="document-revision">
+  <meta content="774704207d788eecf0383559b72a31bf69c6f1b0" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -1862,7 +1862,7 @@ and any of the sequence’s items are <a data-link-type="dfn" href="https://infr
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①③"><c- n>CSSToggle</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="attribute" data-export data-readonly data-type="CSSToggle?" id="dom-csstoggleevent-toggle"><code><c- g>toggle</c-></code></dfn>;
 };
 
-<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-csstoggleeventinit"><code><c- g>CSSToggleEventInit</c-></code></dfn> {
+<c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-csstoggleeventinit"><code><c- g>CSSToggleEventInit</c-></code></dfn> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#dictdef-eventinit" id="ref-for-dictdef-eventinit"><c- n>EventInit</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①⓪"><c- b>DOMString</c-></a> <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="CSSToggleEventInit" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-csstoggleeventinit-togglename"><code><c- g>toggleName</c-></code><a class="self-link" href="#dom-csstoggleeventinit-togglename"></a></dfn> = "";
   <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①④"><c- n>CSSToggle</c-></a>? <dfn class="idl-code" data-default="null" data-dfn-for="CSSToggleEventInit" data-dfn-type="dict-member" data-export data-type="CSSToggle? " id="dom-csstoggleeventinit-toggle"><code><c- g>toggle</c-></code><a class="self-link" href="#dom-csstoggleeventinit-toggle"></a></dfn> = <c- b>null</c->;
 };
@@ -2266,6 +2266,13 @@ CSSToggleEvent</a>
 CSSToggleEvent</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-dictdef-eventinit">
+   <a href="https://dom.spec.whatwg.org/#dictdef-eventinit">https://dom.spec.whatwg.org/#dictdef-eventinit</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dictdef-eventinit">6.3. 
+CSSToggleEvent</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-tree-descendant">
    <a href="https://dom.spec.whatwg.org/#concept-tree-descendant">https://dom.spec.whatwg.org/#concept-tree-descendant</a><b>Referenced in:</b>
    <ul>
@@ -2597,6 +2604,7 @@ CSSToggle</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-for-
     <ul>
      <li><span class="dfn-paneled" id="term-for-element">Element</span>
      <li><span class="dfn-paneled" id="term-for-event">Event</span>
+     <li><span class="dfn-paneled" id="term-for-dictdef-eventinit">EventInit</span>
      <li><span class="dfn-paneled" id="term-for-concept-tree-descendant">descendant</span>
      <li><span class="dfn-paneled" id="term-for-concept-event-fire">fire an event</span>
      <li><span class="dfn-paneled" id="term-for-concept-tree-following">following</span>
@@ -2805,7 +2813,7 @@ CSSToggle</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-for-
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a>? <a data-readonly data-type="CSSToggle?" href="#dom-csstoggleevent-toggle"><code><c- g>toggle</c-></code></a>;
 };
 
-<c- b>dictionary</c-> <a href="#dictdef-csstoggleeventinit"><code><c- g>CSSToggleEventInit</c-></code></a> {
+<c- b>dictionary</c-> <a href="#dictdef-csstoggleeventinit"><code><c- g>CSSToggleEventInit</c-></code></a> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#dictdef-eventinit"><c- n>EventInit</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-csstoggleeventinit-togglename"><code><c- g>toggleName</c-></code></a> = "";
   <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a>? <a data-default="null" data-type="CSSToggle? " href="#dom-csstoggleeventinit-toggle"><code><c- g>toggle</c-></code></a> = <c- b>null</c->;
 };
