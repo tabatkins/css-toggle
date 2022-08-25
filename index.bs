@@ -1318,7 +1318,7 @@ Scripting API</h2>
 
 	<xmp class=idl>
 	interface CSSToggleEvent : Event {
-		constructor(CSSToggleEventInit eventInitDict);
+		constructor(DOMString type, optional CSSToggleEventInit eventInitDict = {});
 		readonly attribute DOMString toggleName;
 		readonly attribute CSSToggle? toggle;
 	};

@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version f669112af, updated Tue Aug 23 17:02:35 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="eb9f186881d295344496648d9f7b042dd3f42d38" name="document-revision">
+  <meta content="b6bc3ab9f89a963b74003385a64de81777aa6609" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -1838,13 +1838,13 @@ and any of the sequence’s items are <a data-link-type="dfn" href="https://infr
     </ol>
    </div>
 <pre class="idl highlight def"><c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="csstoggleevent"><code><c- g>CSSToggleEvent</c-></code></dfn> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#event" id="ref-for-event"><c- n>Event</c-></a> {
-  <dfn class="idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="constructor" data-export data-lt="CSSToggleEvent(eventInitDict)|constructor(eventInitDict)" id="dom-csstoggleevent-csstoggleevent"><code><c- g>constructor</c-></code><a class="self-link" href="#dom-csstoggleevent-csstoggleevent"></a></dfn>(<a data-link-type="idl-name" href="#dictdef-csstoggleeventinit" id="ref-for-dictdef-csstoggleeventinit"><c- n>CSSToggleEventInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSToggleEvent/CSSToggleEvent(eventInitDict), CSSToggleEvent/constructor(eventInitDict)" data-dfn-type="argument" data-export id="dom-csstoggleevent-csstoggleevent-eventinitdict-eventinitdict"><code><c- g>eventInitDict</c-></code><a class="self-link" href="#dom-csstoggleevent-csstoggleevent-eventinitdict-eventinitdict"></a></dfn>);
-  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString⑨"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-csstoggleevent-togglename"><code><c- g>toggleName</c-></code></dfn>;
+  <dfn class="idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="constructor" data-export data-lt="CSSToggleEvent(type, eventInitDict)|constructor(type, eventInitDict)|CSSToggleEvent(type)|constructor(type)" id="dom-csstoggleevent-csstoggleevent"><code><c- g>constructor</c-></code><a class="self-link" href="#dom-csstoggleevent-csstoggleevent"></a></dfn>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString⑨"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="CSSToggleEvent/CSSToggleEvent(type, eventInitDict), CSSToggleEvent/constructor(type, eventInitDict), CSSToggleEvent/CSSToggleEvent(type), CSSToggleEvent/constructor(type)" data-dfn-type="argument" data-export id="dom-csstoggleevent-csstoggleevent-type-eventinitdict-type"><code><c- g>type</c-></code><a class="self-link" href="#dom-csstoggleevent-csstoggleevent-type-eventinitdict-type"></a></dfn>, <c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-csstoggleeventinit" id="ref-for-dictdef-csstoggleeventinit"><c- n>CSSToggleEventInit</c-></a> <dfn class="idl-code" data-dfn-for="CSSToggleEvent/CSSToggleEvent(type, eventInitDict), CSSToggleEvent/constructor(type, eventInitDict), CSSToggleEvent/CSSToggleEvent(type), CSSToggleEvent/constructor(type)" data-dfn-type="argument" data-export id="dom-csstoggleevent-csstoggleevent-type-eventinitdict-eventinitdict"><code><c- g>eventInitDict</c-></code><a class="self-link" href="#dom-csstoggleevent-csstoggleevent-type-eventinitdict-eventinitdict"></a></dfn> = {});
+  <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①⓪"><c- b>DOMString</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-csstoggleevent-togglename"><code><c- g>toggleName</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①②"><c- n>CSSToggle</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="CSSToggleEvent" data-dfn-type="attribute" data-export data-readonly data-type="CSSToggle?" id="dom-csstoggleevent-toggle"><code><c- g>toggle</c-></code></dfn>;
 };
 
 <c- b>dictionary</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="dictionary" data-export id="dictdef-csstoggleeventinit"><code><c- g>CSSToggleEventInit</c-></code></dfn> {
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①⓪"><c- b>DOMString</c-></a> <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="CSSToggleEventInit" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-csstoggleeventinit-togglename"><code><c- g>toggleName</c-></code><a class="self-link" href="#dom-csstoggleeventinit-togglename"></a></dfn> = "";
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①①"><c- b>DOMString</c-></a> <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="CSSToggleEventInit" data-dfn-type="dict-member" data-export data-type="DOMString " id="dom-csstoggleeventinit-togglename"><code><c- g>toggleName</c-></code><a class="self-link" href="#dom-csstoggleeventinit-togglename"></a></dfn> = "";
   <a data-link-type="idl-name" href="#csstoggle" id="ref-for-csstoggle①③"><c- n>CSSToggle</c-></a>? <dfn class="idl-code" data-default="null" data-dfn-for="CSSToggleEventInit" data-dfn-type="dict-member" data-export data-type="CSSToggle? " id="dom-csstoggleeventinit-toggle"><code><c- g>toggle</c-></code><a class="self-link" href="#dom-csstoggleeventinit-toggle"></a></dfn> = <c- b>null</c->;
 };
 </pre>
@@ -1948,15 +1948,17 @@ and any of the sequence’s items are <a data-link-type="dfn" href="https://infr
    <li><a href="#toggle-active-value">active value</a><span>, in § 2</span>
    <li><a href="#change-a-toggle">change a toggle</a><span>, in § 3.3</span>
    <li><a href="#dom-csstoggle-csstoggle">constructor()</a><span>, in § 6</span>
-   <li><a href="#dom-csstoggleevent-csstoggleevent">constructor(eventInitDict)</a><span>, in § 6</span>
    <li><a href="#dom-csstoggle-csstoggle">constructor(options)</a><span>, in § 6</span>
+   <li><a href="#dom-csstoggleevent-csstoggleevent">constructor(type)</a><span>, in § 6</span>
+   <li><a href="#dom-csstoggleevent-csstoggleevent">constructor(type, eventInitDict)</a><span>, in § 6</span>
    <li><a href="#csstoggle">CSSToggle</a><span>, in § 6</span>
    <li><a href="#dom-csstoggle-csstoggle">CSSToggle()</a><span>, in § 6</span>
    <li><a href="#enumdef-csstogglecycle">CSSToggleCycle</a><span>, in § 6</span>
    <li><a href="#dictdef-csstoggledata">CSSToggleData</a><span>, in § 6</span>
    <li><a href="#csstoggleevent">CSSToggleEvent</a><span>, in § 6</span>
-   <li><a href="#dom-csstoggleevent-csstoggleevent">CSSToggleEvent(eventInitDict)</a><span>, in § 6</span>
    <li><a href="#dictdef-csstoggleeventinit">CSSToggleEventInit</a><span>, in § 6</span>
+   <li><a href="#dom-csstoggleevent-csstoggleevent">CSSToggleEvent(type)</a><span>, in § 6</span>
+   <li><a href="#dom-csstoggleevent-csstoggleevent">CSSToggleEvent(type, eventInitDict)</a><span>, in § 6</span>
    <li><a href="#csstogglemap">CSSToggleMap</a><span>, in § 6</span>
    <li><a href="#dom-csstoggle-csstoggle">CSSToggle(options)</a><span>, in § 6</span>
    <li><a href="#enumdef-csstogglescope">CSSToggleScope</a><span>, in § 6</span>
@@ -2407,7 +2409,7 @@ Selecting Elements Based on Toggle Value: the :toggle() pseudo-class</a>
    <a href="https://webidl.spec.whatwg.org/#idl-DOMString">https://webidl.spec.whatwg.org/#idl-DOMString</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-idl-DOMString">6. 
-Scripting API</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a> <a href="#ref-for-idl-DOMString⑤">(6)</a> <a href="#ref-for-idl-DOMString⑥">(7)</a> <a href="#ref-for-idl-DOMString⑦">(8)</a> <a href="#ref-for-idl-DOMString⑧">(9)</a> <a href="#ref-for-idl-DOMString⑨">(10)</a> <a href="#ref-for-idl-DOMString①⓪">(11)</a>
+Scripting API</a> <a href="#ref-for-idl-DOMString①">(2)</a> <a href="#ref-for-idl-DOMString②">(3)</a> <a href="#ref-for-idl-DOMString③">(4)</a> <a href="#ref-for-idl-DOMString④">(5)</a> <a href="#ref-for-idl-DOMString⑤">(6)</a> <a href="#ref-for-idl-DOMString⑥">(7)</a> <a href="#ref-for-idl-DOMString⑦">(8)</a> <a href="#ref-for-idl-DOMString⑧">(9)</a> <a href="#ref-for-idl-DOMString⑨">(10)</a> <a href="#ref-for-idl-DOMString①⓪">(11)</a> <a href="#ref-for-idl-DOMString①①">(12)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-frozen-array">
@@ -2761,7 +2763,7 @@ Scripting API</a> <a href="#ref-for-idl-unsigned-long①">(2)</a> <a href="#ref-
 };
 
 <c- b>interface</c-> <a href="#csstoggleevent"><code><c- g>CSSToggleEvent</c-></code></a> : <a data-link-type="idl-name" href="https://dom.spec.whatwg.org/#event"><c- n>Event</c-></a> {
-  <a href="#dom-csstoggleevent-csstoggleevent"><code><c- g>constructor</c-></code></a>(<a data-link-type="idl-name" href="#dictdef-csstoggleeventinit"><c- n>CSSToggleEventInit</c-></a> <a href="#dom-csstoggleevent-csstoggleevent-eventinitdict-eventinitdict"><code><c- g>eventInitDict</c-></code></a>);
+  <a href="#dom-csstoggleevent-csstoggleevent"><code><c- g>constructor</c-></code></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a href="#dom-csstoggleevent-csstoggleevent-type-eventinitdict-type"><code><c- g>type</c-></code></a>, <c- b>optional</c-> <a data-link-type="idl-name" href="#dictdef-csstoggleeventinit"><c- n>CSSToggleEventInit</c-></a> <a href="#dom-csstoggleevent-csstoggleevent-type-eventinitdict-eventinitdict"><code><c- g>eventInitDict</c-></code></a> = {});
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a data-readonly data-type="DOMString" href="#dom-csstoggleevent-togglename"><code><c- g>toggleName</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#csstoggle"><c- n>CSSToggle</c-></a>? <a data-readonly data-type="CSSToggle?" href="#dom-csstoggleevent-toggle"><code><c- g>toggle</c-></code></a>;
 };
