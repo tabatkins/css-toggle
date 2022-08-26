@@ -424,7 +424,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 				group ||
 				self
 			]?
-		<dfn><<toggle-states>></dfn> = <<integer [1, ∞]>> | '[' <<custom-ident>>* ']'
+		<dfn><<toggle-states>></dfn> = <<integer [1, ∞]>> | '[' <<custom-ident>>{2,} ']'
 		<dfn><<toggle-value>></dfn> = <<integer [0, ∞]>> | <<custom-ident>>
 		<dfn><<toggle-overflow>></dfn> = cycle | cycle-on | sticky
 	</pre>
@@ -1268,7 +1268,12 @@ Scripting API</h2>
 				are [=string/identical to=] each other,
 				[=throw=] a {{SyntaxError}}.
 
-			2. Set the internal slot named |name| of [=this=]
+			2. If |name| is <code>"states"</code>,
+				|value| is a [=/list=],
+				and |value|'s [=list/length=] is less than 2,
+				[=throw=] a {{SyntaxError}}.
+
+			3. Set the internal slot named |name| of [=this=]
 				to |value|.
 
 		2. Return [=this=].
