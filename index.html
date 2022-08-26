@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version f669112af, updated Tue Aug 23 17:02:35 2022 -0700" name="generator">
   <link href="http://tabatkins.github.io/css-toggle/" rel="canonical">
-  <meta content="774704207d788eecf0383559b72a31bf69c6f1b0" name="document-revision">
+  <meta content="c3beb167ea3c5b350a11e23ca9189690e5a47df7" name="document-revision">
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
@@ -607,7 +607,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">CSS Toggles</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2022-08-25">25 August 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2022-08-26">26 August 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1355,13 +1355,15 @@ and return to step 2.</p>
       </ul>
      <li data-md>
       <p>Let <var>t</var> be the <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑤">toggle</a> on <var>el</var> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name⑨">name</a> as <var>activation</var>.</p>
+      <p>Let <var>old value</var> be <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value⑧">value</a>.</p>
       <p>Let <var>tSpec</var> be the <a data-link-type="dfn" href="#toggle-toggle-specifier" id="ref-for-toggle-toggle-specifier⑥">toggle specifier</a> on <var>el</var> with the same <a data-link-type="dfn" href="#toggle-name" id="ref-for-toggle-name①⓪">name</a> as <var>activation</var>,
 if one exists.</p>
       <p><a data-link-type="dfn" href="#change-a-toggle" id="ref-for-change-a-toggle①">Change a toggle</a> <var>t</var>,
 passing <var>activation</var>’s <a data-link-type="dfn" href="#toggle-activation-action" id="ref-for-toggle-activation-action①">action</a>,
 and an <var>override spec</var> of <var>tSpec</var> if it exists.</p>
+      <p>Let <var>new value</var> be <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value⑨">value</a>.</p>
      <li data-md>
-      <p><a data-link-type="dfn" href="#fire-a-toggle-change-event" id="ref-for-fire-a-toggle-change-event">Fire a toggle change event</a> at <var>el</var> for the toggle <var>t</var>.</p>
+      <p>If <var>old value</var> and <var>new value</var> are different, <a data-link-type="dfn" href="#fire-a-toggle-change-event" id="ref-for-fire-a-toggle-change-event">fire a toggle change event</a> at <var>el</var> for the toggle <var>t</var>.</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="change a toggle">
@@ -1380,13 +1382,13 @@ to the value specified by <var>action</var>.</p>
       <p>If <var>t</var> does not <a data-link-type="dfn" href="#match-values" id="ref-for-match-values">match</a> 0,
 given <var>states</var>,
 and <var>group</var> is true,
-then set the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value⑧">value</a> of all other <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">toggles</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group①">in the same toggle group</a> as <var>t</var> to 0.</p>
+then set the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①⓪">value</a> of all other <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑥">toggles</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group①">in the same toggle group</a> as <var>t</var> to 0.</p>
       <p>Return.</p>
      <li data-md>
-      <p>If <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value⑨">value</a> is an integer,
+      <p>If <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①①">value</a> is an integer,
 let <var>index</var> be that integer.
 Otherwise, if <var>states</var> is a list of idents
-and <var>t</var>’s <span id="ref-for-toggle-value①⓪">value</span> is in the list,
+and <var>t</var>’s <span id="ref-for-toggle-value①②">value</span> is in the list,
 let <var>index</var> be the index of the first occurence of the value.
 Otherwise, let <var>index</var> be infinity.</p>
      <li data-md>
@@ -1437,13 +1439,13 @@ set <var>index</var> to <var>maximum index</var>.</p>
      <li data-md>
       <p>If <var>states</var> is a list of idents,
 and <var>index</var> is the index of one of the entries in that list,
-set <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①①">value</a> to that entry.</p>
-      <p>Otherwise, set <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①②">value</a> to <var>index</var>.</p>
+set <var>t</var>’s <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①③">value</a> to that entry.</p>
+      <p>Otherwise, set <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①④">value</a> to <var>index</var>.</p>
      <li data-md>
       <p>If <var>t</var> does not <a data-link-type="dfn" href="#match-values" id="ref-for-match-values①">match</a> 0,
 given <var>states</var>,
 and <var>group</var> is true,
-then set the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①③">value</a> of all other <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑦">toggles</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group②">in the same toggle group</a> as <var>t</var> to 0.</p>
+then set the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①⑤">value</a> of all other <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle④⑦">toggles</a> <a data-link-type="dfn" href="#toggle-in-a-toggle-group" id="ref-for-toggle-in-a-toggle-group②">in the same toggle group</a> as <var>t</var> to 0.</p>
     </ol>
    </div>
    <p class="issue" id="issue-d2059411"><a class="self-link" href="#issue-d2059411"></a> Define in much greater precision what it means to "become activatable".
@@ -1533,7 +1535,7 @@ we can also automatically infer all the tab-set ARIA roles</p>
 	(as defined by the host language)
 	depending on their "checked" state.</p>
    <p><a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑤①">Toggles</a> provides a very similar functionality,
-	allowing elements to be selected based on their <span id="ref-for-css-toggle⑤②">toggle</span> <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①④">value</a>,
+	allowing elements to be selected based on their <span id="ref-for-css-toggle⑤②">toggle</span> <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①⑥">value</a>,
 	the <dfn class="dfn-paneled css" data-dfn-type="selector" data-export id="selectordef-toggle">:toggle()</dfn> pseudo-class:</p>
 <pre class="prod">:toggle( <a class="production" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#identifier-value" id="ref-for-identifier-value②④">&lt;custom-ident></a> <a class="production" data-link-type="type" href="#typedef-toggle-value" id="ref-for-typedef-toggle-value④">&lt;toggle-value></a><a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#mult-opt" id="ref-for-mult-opt⑤">?</a> )
 </pre>
@@ -1759,7 +1761,7 @@ and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-remove" id=
    <p>A <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle⑥">CSSToggle</a></code> represents a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑥⑧">toggle</a>;
 	changing any attribute on the <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle⑦">CSSToggle</a></code> will change the corresponding items of the <span id="ref-for-css-toggle⑥⑨">toggle</span> it represents,
 	and vice versa.</p>
-   <p class="note" role="note"><span>Note:</span> Only the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①⑤">value</a> will change directly on a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑦⓪">toggle</a> and get reflected back to the <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle⑧">CSSToggle</a></code>;
+   <p class="note" role="note"><span>Note:</span> Only the <a data-link-type="dfn" href="#toggle-value" id="ref-for-toggle-value①⑦">value</a> will change directly on a <a data-link-type="dfn" href="#css-toggle" id="ref-for-css-toggle⑦⓪">toggle</a> and get reflected back to the <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle⑧">CSSToggle</a></code>;
 	the rest of its items are fixed on creation
 	unless manually changed on its associated <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle⑨">CSSToggle</a></code>.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="#csstoggle" id="ref-for-csstoggle①⓪">CSSToggle</a></code> will usually be an <a data-link-type="dfn" href="#element-established-toggles" id="ref-for-element-established-toggles①">established toggle</a> on an element,
@@ -2942,10 +2944,10 @@ Creating a Toggle: the toggle-root property</a>
     <li><a href="#ref-for-toggle-value④">3.2. 
 Linking Toggle Values: the toggle-group property</a> <a href="#ref-for-toggle-value⑤">(2)</a> <a href="#ref-for-toggle-value⑥">(3)</a> <a href="#ref-for-toggle-value⑦">(4)</a>
     <li><a href="#ref-for-toggle-value⑧">3.3. 
-Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-value⑨">(2)</a> <a href="#ref-for-toggle-value①⓪">(3)</a> <a href="#ref-for-toggle-value①①">(4)</a> <a href="#ref-for-toggle-value①②">(5)</a> <a href="#ref-for-toggle-value①③">(6)</a>
-    <li><a href="#ref-for-toggle-value①④">4. 
+Activating a Toggle: the toggle-trigger property</a> <a href="#ref-for-toggle-value⑨">(2)</a> <a href="#ref-for-toggle-value①⓪">(3)</a> <a href="#ref-for-toggle-value①①">(4)</a> <a href="#ref-for-toggle-value①②">(5)</a> <a href="#ref-for-toggle-value①③">(6)</a> <a href="#ref-for-toggle-value①④">(7)</a> <a href="#ref-for-toggle-value①⑤">(8)</a>
+    <li><a href="#ref-for-toggle-value①⑥">4. 
 Selecting Elements Based on Toggle Value: the :toggle() pseudo-class</a>
-    <li><a href="#ref-for-toggle-value①⑤">6.2. 
+    <li><a href="#ref-for-toggle-value①⑦">6.2. 
 CSSToggle</a>
    </ul>
   </aside>

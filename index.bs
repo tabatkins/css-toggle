@@ -758,6 +758,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 		3. Let |t| be the [=toggle=] on |el|
 			with the same [=toggle/name=] as |activation|.
 
+			Let |old value| be |t|'s [=toggle/value=].
+
 			Let |tSpec| be the [=toggle specifier=] on |el|
 			with the same [=toggle specifier/name=] as |activation|,
 			if one exists.
@@ -767,7 +769,10 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			and an <var ignore>override spec</var> of |tSpec|
 			if it exists.
 
-		4. [=Fire a toggle change event=] at |el| for the toggle |t|.
+			Let |new value| be |t|'s [=toggle/value=].
+
+		4. If |old value| and |new value| are different,
+			[=fire a toggle change event=] at |el| for the toggle |t|.
 	</div>
 
 	<div algorithm>
