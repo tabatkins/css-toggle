@@ -1270,7 +1270,7 @@ Scripting API</h2>
 
 			2. If |name| is <code>"states"</code>,
 				|value| is a [=/list=],
-				and |value|'s [=list/length=] is less than 2,
+				and |value|'s [=list/size=] is less than 2,
 				[=throw=] a {{SyntaxError}}.
 
 			3. Set the internal slot named |name| of [=this=]
