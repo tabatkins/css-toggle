@@ -1262,16 +1262,14 @@ Scripting API</h2>
 
 		1. [=map/For each=] |name|→|value| in |options|:
 
-			1. If |name| is <code>"states"</code>,
-				|value| is a [=/list=],
-				and any of the [=list/items=] of |value|
-				are [=string/identical to=] each other,
-				[=throw=] a {{SyntaxError}}.
+			1. If |name| is <code>"states"</code>
+				and |value| is a [=/list=]:
 
-			2. If |name| is <code>"states"</code>,
-				|value| is a [=/list=],
-				and |value|'s [=list/size=] is less than 2,
-				[=throw=] a {{SyntaxError}}.
+				* If any of the [=list/items=] of |value|
+					are [=string/identical to=] each other,
+					[=throw=] a {{SyntaxError}}.
+				* If |value|'s [=list/size=] is less than 2,
+					[=throw=] a {{SyntaxError}}.
 
 			3. Set the internal slot named |name| of [=this=]
 				to |value|.
@@ -1355,9 +1353,13 @@ Scripting API</h2>
 	<div algorithm="CSSToggleValue.states">
 		The <dfn attribute for=CSSToggleValue>states</dfn> [=setter steps=] are:
 
-		1. If [=the given value=] is a sequence of {{DOMString}}s,
-			and any of the sequence's items are [=identical to=] each other,
-			[=throw=] a {{SyntaxError}}.
+		1. If [=the given value=] is a sequence of {{DOMString}}s:
+
+			* If any of the [=list/items=] of [=the given value=]
+				are [=string/identical to=] each other,
+				[=throw=] a {{SyntaxError}}.
+			* If [=the given value's=] [=list/size=] is less than 2,
+				[=throw=] a {{SyntaxError}}.
 
 		2. Set [=this's=] {{CSSToggle/states}} internal slot to [=the given value=].
 	</div>
