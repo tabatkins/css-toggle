@@ -9,7 +9,7 @@ Level: 1
 Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
 Editor: Miriam E. Suzanne, Invited Expert, http://miriamsuzanne.com/contact
 Abstract: This specification defines a way to associate a "toggleable value" with an element which can be used in Selectors to select an element, and declarative ways to set and modify this value on the element.
-Ignored Terms: spoiler-text, content-visibility
+Ignored Terms: spoiler-text
 </pre>
 
 <pre class=link-defaults>
@@ -145,7 +145,7 @@ Toggle Concepts</h2>
 
 	<dl dfn-for="toggle, toggle specifier" export>
 		: <dfn>name</dfn>
-		:: A <<custom-ident>>.
+		:: A <<dashed-ident>>.
 
 		: <dfn>value</dfn>
 		::
@@ -288,7 +288,7 @@ Toggle Concepts</h2>
 
 	<dl dfn-for="toggle group" export>
 		: <dfn>name</dfn>
-		:: A <<custom-ident>>.
+		:: A <<dashed-ident>>.
 
 		: <dfn>scope</dfn>
 		::
@@ -359,10 +359,10 @@ Toggles and CSS Properties</h3>
 
 		<pre class=lang-css>
 		.toggleable {
-			toggle-root: foo 1;
-			toggle-trigger: foo;
+			toggle-root: --foo 1;
+			toggle-trigger: --foo;
 		}
-		.toggleable:toggle(foo) {
+		.toggleable:toggle(--foo) {
 			toggle-root: none;
 			toggle-trigger: none;
 		}
@@ -375,7 +375,7 @@ Toggles and CSS Properties</h3>
 		(initially with a value of 0, its [=inactive value=]);
 		when the element is clicked, it's incremented to its [=active value=] (1).
 
-		At this point, the '':toggle(foo)'' rule begins to match,
+		At this point, the '':toggle(--foo)'' rule begins to match,
 		and removes the ''toggle-*'' properties.
 		This does not remove the ''foo'' toggle or affect its value, however;
 		it still exists and is still set to ''1'',
@@ -417,7 +417,7 @@ Creating a Toggle: the 'toggle-root' property</h2>
 
 	<pre class=prod>
 		<dfn><<toggle-specifier>></dfn> =
-			<<custom-ident>>
+			<<dashed-ident>>
 			[
 				<<toggle-states>> [at <<toggle-value>>]? ||
 				<<toggle-overflow>> ||
@@ -454,9 +454,8 @@ Creating a Toggle: the 'toggle-root' property</h2>
 			They specify how the newly-created [=toggle=]
 			will be set up:
 
-			* The initial <<custom-ident>>
+			* The initial <<dashed-ident>>
 				specifies the [=toggle specifier/name=].
-				The <<custom-ident>> cannot be the keyword <css>none</css>.
 
 			* The <<toggle-states>> specifies the [=toggle specifier/states=].
 				If specified as an <<integer>>,
@@ -508,9 +507,9 @@ Creating a Toggle: the 'toggle-root' property</h2>
 			</ul>
 			<style>
 			li {
-				toggle: check self;
+				toggle: --check self;
 			}
-			li:toggle(check) {
+			li:toggle(--check) {
 				color: silver;
 				text-decoration: line-through;
 			}
@@ -549,7 +548,7 @@ Linking Toggle Values: the 'toggle-group' property</h3>
 
 	<pre class='propdef'>
 	Name: toggle-group
-	Value: none | [ <<custom-ident>> self? ]#
+	Value: none | [ <<dashed-ident>> self? ]#
 	Initial: none
 	Applies to: all elements
 	Inherited: no
@@ -573,15 +572,14 @@ Linking Toggle Values: the 'toggle-group' property</h3>
 		<dd>
 			The element does not define a [=toggle group=].
 
-		<dt><dfn lt="<custom-ident> | self">[<<custom-ident>> self?]#</dfn>
+		<dt><dfn lt="<dashed-ident> | self">[<<dashed-ident>> self?]#</dfn>
 		<dd>
 			The element defines one or more [=toggle groups=],
 			one per comma-separated item:
 
-			* The <<custom-ident>>
+			* The <<dashed-ident>>
 				specifies the [=toggle group/name=],
 				as the item's value.
-				The <<custom-ident>> cannot be the keyword <css>none</css>.
 
 			* The ''toggle-group/self'' keyword, if specified,
 				sets the [=toggle group/scope=] enum to "narrow".
@@ -606,28 +604,28 @@ Linking Toggle Values: the 'toggle-group' property</h3>
 			<style>
 			panel-set {
 				/* The common ancestor sets up a group */
-				toggle-group: tab;
+				toggle-group: --tab;
 			}
 			panel-tab {
 				/* Each tab creates a cycle-on toggle
 					(so once it's open, clicking again won't close it),
 					opts into the group,
 					and declares itself a toggle activator */
-				toggle: tab 1 group cycle-on;
+				toggle: --tab 1 group cycle-on;
 			}
 			panel-tab:first-of-type {
 				/* The first tab also sets its initial value
 					to be active */
-				toggle: tab 1 at 1 group cycle-on;
+				toggle: --tab 1 at 1 group cycle-on;
 			}
-			panel-tab:toggle(tab) {
+			panel-tab:toggle(--tab) {
 				/* styling for the active tab */
 			}
 			panel-card {
 				/* cards are hidden by default */
 				display: none;
 			}
-			panel-card:toggle(tab) {
+			panel-card:toggle(--tab) {
 				display: block;
 			}
 			</style>
@@ -638,6 +636,10 @@ Linking Toggle Values: the 'toggle-group' property</h3>
 		while resetting the rest of the tabs' [=toggle/values=] to 0.
 		Each panel is [=in scope=] for the [=toggle=] defined by its preceding tab,
 		so it can respond to the [=toggle/value=] as well.
+
+		Issue: Using 'toggle-visibility' rather than 'display'
+		is a much better practice;
+		I should probably change this to that.
 	</div>
 
 	<div class=issue>
@@ -681,7 +683,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 	</pre>
 
 	<pre class=prod>
-		<dfn><<toggle-trigger>></dfn> = <<custom-ident>> <<trigger-action>>?
+		<dfn><<toggle-trigger>></dfn> = <<dashed-ident>> <<trigger-action>>?
 		<dfn><<trigger-action>></dfn> =
 			[prev | next] <<integer [1, ∞]>>? |
 			set <<toggle-value>>
@@ -717,10 +719,8 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			and when activated,
 			for each comma-separated entry in the list,
 			[=fires a toggle activation=]
-			with the given <<custom-ident>> as a [=toggle activation/name=],
+			with the given <<dashed-ident>> as a [=toggle activation/name=],
 			and the <<trigger-action>> [=toggle activation/action=].
-
-			The <<custom-ident>> cannot be the keyword <css>none</css>.
 	</dl>
 
 	A <dfn for=CSS export>toggle activation</dfn> is a struct with the following items:
@@ -830,7 +830,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 					set |index| to |maximum index|.
 			</dl>
 
-		 	Otherwise, if |action| starts with the keyword ''prev'',
+			Otherwise, if |action| starts with the keyword ''prev'',
 			then decrement |index| by |action|'s value.
 			Then, based on the value of |overflow|:
 
@@ -903,7 +903,7 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 
 	The 'toggle' shorthand sets both the 'toggle-root' and 'toggle-trigger' properties on an element together.
 	The entire value of the property is assigned to 'toggle-root',
-	while 'toggle-trigger' is assigned to just the <<custom-ident>>s specified in the list,
+	while 'toggle-trigger' is assigned to just the <<dashed-ident>>s specified in the list,
 	if any.
 
 	<div class=example>
@@ -919,10 +919,10 @@ Creating and Activating Toggles Simultaneously: the 'toggle' shorthand</h3>
 			</spoiler-text>
 			<style>
 				spoiler-text > summary {
-					toggle: show;
+					toggle: --show;
 				}
 				spoiler-text > content {
-					toggle-visibility: toggle show;
+					toggle-visibility: --show;
 				}
 			</style>
 		</xmp>
@@ -967,12 +967,12 @@ Selecting Elements Based on Toggle Value: the '':toggle()'' pseudo-class</h2>
 	the <dfn>:toggle()</dfn> pseudo-class:
 
 	<pre class=prod>
-		:toggle( <<custom-ident>> <<toggle-value>>? )
+		:toggle( <<dashed-ident>> <<toggle-value>>? )
 	</pre>
 
 	An element matches '':toggle()''
 	if the element is [=in scope=] for a [=toggle=]
-	with the [=toggle/name=] given by <<custom-ident>>,
+	with the [=toggle/name=] given by <<dashed-ident>>,
 	and either the [=toggle=]
 	[=match values|matches=] the provided <<toggle-value>>,
 	or the <<toggle-value>> is omitted
@@ -985,9 +985,9 @@ Selecting Elements Based on Toggle Value: the '':toggle()'' pseudo-class</h2>
 
 		<pre class=lang-css>
 			.ingredient {
-				toggle: used;
+				toggle: --used;
 			}
-			.ingredient:toggle(used) {
+			.ingredient:toggle(--used) {
 				color: silver;
 				text-decoration: line-through;
 			}
@@ -1000,19 +1000,19 @@ Selecting Elements Based on Toggle Value: the '':toggle()'' pseudo-class</h2>
 
 		<pre class=lang-css>
 			.tristate-check {
-				toggle: check 2 at 0;
+				toggle: --check 2 at 0;
 			}
-			.tristate-check:toggle(check 1) {
+			.tristate-check:toggle(--check 1) {
 				/* "checked" styles */
 			}
-			.tristate-check:toggle(check 2) {
+			.tristate-check:toggle(--check 2) {
 				/* "indeterminate" styles */
 			}
 		</pre>
 	</div>
 
 	<div class=example>
-		While '':not(:toggle(foo))'' will correctly match an element
+		While '':not(:toggle(--foo))'' will correctly match an element
 		whose "foo" toggle is in an [=inactive value=],
 		it will <em>also</em> match any element
 		that doesn't see a "foo" toggle at all.
@@ -1022,7 +1022,7 @@ Selecting Elements Based on Toggle Value: the '':toggle()'' pseudo-class</h2>
 		can be targeted by specifying the [=inactive value=] specifically:
 
 		<pre class=lang-css>
-			.card:toggle(show 0) {
+			.card:toggle(--show 0) {
 				/* Definitely *not* shown */
 			}
 		</pre>
@@ -1063,7 +1063,7 @@ Automatically Hiding With A Toggle</h2>
 
 	<pre class="propdef">
 	Name: toggle-visibility
-	Value: normal | toggle <<custom-ident>>
+	Value: normal | <<dashed-ident>>
 	Initial: normal
 	Inherited: no
 	Applies to: all elements
@@ -1081,17 +1081,17 @@ Automatically Hiding With A Toggle</h2>
 		::
 			The property has no effect.
 
-		: <dfn lt="toggle">toggle <<custom-ident>></dfn>
+		: <dfn lt="toggle"><<dashed-ident>></dfn>
 		::
 			If the element is [=in scope=]
-			for a [=toggle=] whose name matches the <<custom-ident>>,
+			for a [=toggle=] whose name matches the <<dashed-ident>>,
 			and that [=toggle=] is in the [=inactive value=],
-			then the element acts as if ''content-visiblity: auto'' is specified,
+			then the element acts as if ''content-visibility: auto'' is specified,
 			except that being on-screen does not make it [=relevant to the user=].
 
 			If the element starts being [=relevant to the user=],
 			it [=fires=] a [=toggle activation=],
-			with a [=toggle activation/name=] of the given <<custom-ident>>
+			with a [=toggle activation/name=] of the given <<dashed-ident>>
 			and a [=toggle activation/action=] of ''set 1''.
 
 			Note: If the [=toggle=] is in an [=active value=],
@@ -1114,10 +1114,10 @@ Automatically Hiding With A Toggle</h2>
 			</dl>
 			<style>
 				.accordion > dt {
-					toggle: show;
+					toggle: --show;
 				}
 				.accordion > dd {
-					toggle-visibility: toggle show;
+					toggle-visibility: --show;
 				}
 			</style>
 		</xmp>
@@ -1186,7 +1186,7 @@ Scripting API</h2>
 		The <dfn method for=CSSToggleMap>set(|key|, |value|)</dfn>
 		[=method steps=] are:
 
-		1. If |key| is an [=ASCII case-insensitive=] match for "none",
+		1. If |key| does not start with "--" (two U+002D HYPHEN-MINUS characters),
 			[=throw=] a {{SyntaxError}}.
 
 		2. If |value|'s {{[[ToggleMap]]}} internal slot is non-{{undefined}},
