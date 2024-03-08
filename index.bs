@@ -10,6 +10,9 @@ Editor: Tab Atkins Jr., Google, http://xanthir.com/contact
 Editor: Miriam E. Suzanne, Invited Expert, http://miriamsuzanne.com/contact
 Abstract: This specification defines a way to associate a "toggleable value" with an element which can be used in Selectors to select an element, and declarative ways to set and modify this value on the element.
 Ignored Terms: spoiler-text
+Warning: custom
+Custom Warning Title: Abandoned
+Custom Warning Text: This spec attempted to handle too many things at once; the distinct behaviors may have an underlying mechanic driving them, but end up needing very different interaction/accessibility behaviors to be usable in practice. Instead, multiple more targeted proposals (`<details>` groups, carousel styling, etc) are being pursued.
 </pre>
 
 <pre class=link-defaults>
@@ -20,18 +23,18 @@ spec:css-contain-2; type:property; text:content-visiblity
 <style>
 /* Put nice boxes around each algorithm. */
 [data-algorithm]:not(.heading) {
-  padding: .5em;
-  border: thin solid #ddd; border-radius: .5em;
-  margin: .5em calc(-0.5em - 1px);
+	padding: .5em;
+	border: thin solid #ddd; border-radius: .5em;
+	margin: .5em calc(-0.5em - 1px);
 }
 [data-algorithm]:not(.heading) > :first-child {
-  margin-top: 0;
+	margin-top: 0;
 }
 [data-algorithm]:not(.heading) > :last-child {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 [data-algorithm] [data-algorithm] {
-    margin: 1em 0;
+	margin: 1em 0;
 }
 </style>
 
@@ -501,8 +504,8 @@ Creating a Toggle: the 'toggle-root' property</h2>
 
 		<xmp class=lang-html>
 			<ul class='ingredients'>
-			 	<li>1 banana
-			 	<li>1 cup blueberries
+				<li>1 banana
+				<li>1 cup blueberries
 				...
 			</ul>
 			<style>
@@ -750,7 +753,7 @@ Activating a Toggle: the 'toggle-trigger' property</h3>
 			* If |el| has a [=previous sibling=],
 				set |el| to that element
 				and return to step 2.
-			* Otherwise, if |el| has a [=parent=] element,
+			* Otherwise, if |el| has a <l spec=dom>[=parent=]</l> element,
 				set |el| to that element
 				and return to step 2.
 			* Otherwise, return. (No toggle was found, so nothing happens.)
